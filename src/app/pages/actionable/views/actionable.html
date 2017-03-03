@@ -1,0 +1,5 @@
+<md-checkbox class="Marght" id="IsOpenActionable" name="IsOpenActionable" [ngModel]="IsOpenActionable"
+    (change)="OpenActionable($event)" aria-label="IsOpenActionable">
+    </md-checkbox>
+    <actionable-active [hidden]="!showActive" [DepartmentId]="'24'" [IncidentId]="'92'"></actionable-active>
+    <actionable-close [hidden]="!showClose" [DepartmentId]="'24'" [IncidentId]="'92'"></actionable-close>

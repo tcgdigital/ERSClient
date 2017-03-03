@@ -151,7 +151,7 @@ export class ChecklistEntryComponent implements OnInit {
     }
 
     ngOnDestroy(): void {
-        this.dataExchange.Unsubscribe("checklistModelEdited");
+        //this.dataExchange.Unsubscribe("checklistModelEdited");
     }
 
     initiateCheckListModel(): void {

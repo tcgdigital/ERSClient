@@ -1,0 +1,60 @@
+<div>
+    <h3>Closed Actionable Data</h3>
+    <table style="width:100%;">
+        <tr>
+            <td><strong><i>Serial Number</i></strong></td>
+            <td><strong><i>Description:</i></strong></td>
+            <td><strong><i>Schedule Close Time:</i></strong></td>
+            <td><strong><i>Actual Close Time:</i></strong></td>
+            <td><strong><i>Reopen:</i></strong></td>
+            <td><strong><i>Download:</i></strong></td>
+            <td><strong><i>View:</i></strong></td>
+        </tr>
+        <div *ngFor="let actionable of closeActionables; let i = index;">
+        <tr>
+            <td>{{i+1}}</td>
+            <td>{{actionable.Description}}</td>
+            <td>{{actionable.ScheduleClose | amDateFormat:'LL - HH:mm:ss'}}</td>
+            <td>{{actionable.ActualClose | amDateFormat:'LL - HH:mm:ss'}}</td>
+            <td>
+                <md-checkbox class="Marght" [disabled]="actionable.IsReopen" id="Reopen" name="Reopen" [ngModel]="actionable.Reopen" (change)="IsReopen($event,actionable)"
+                    aria-label="Reopen">
+                    </md-checkbox>
+            </td>
+            <td>
+                <a class="glyphicon glyphicon-download-alt" target="_self" *ngIf="actionable.UploadLinks!=null" href="{{actionable.UploadLinks}}"
+                    download="{{actionable.FileName}}">Download</a>
+            </td>
+            <td><a (click)="actionableDetail(actionable)">View</a></td>
+
+        </tr>
+        <tr [hidden]="!actionable.show">
+                <form [formGroup]="form">
+                    <td colspan="6">
+                        <div>
+                            <div class="Comments">
+                                <div class="Comments">
+                                    <strong><i>Comments:</i></strong>
+                                    <input disabled type="text" [ngModel]="actionable.Comments" formControlName="Comments" value="{{actionable.Comments}}" placeholder="Comments"
+                                    />
+                                </div>
+                                <div>
+                                    <strong><i>URL:</i></strong>
+                                    <input disabled type="text" [ngModel]="actionable.URL" formControlName="URL" value="{{actionable.URL}}" placeholder="URL"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <button disabled class="btn btn-primary" type="submit">Save</button>
+                                    <button class="btn btn-primary" type="button" (click)="cancelUpdateCommentAndURL(actionable)">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </form>
+            </tr>
+        </div>
+    </table>
+    <button class="btn btn-primary" type="submit" (click)="closedActionableClick(closeActionables)">Save</button>
+</div>

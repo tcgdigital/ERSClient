@@ -7,5 +7,6 @@ export class Response<T extends any>{
 
 export class ResponseModel<T extends BaseModel>{
     public Records: T[];
+    public StatusCodes: string[];
     public Count: number;
 }
