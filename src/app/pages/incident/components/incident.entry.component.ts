@@ -23,7 +23,6 @@ import { IncidentDataExchangeModel } from './incidentDataExchange.model';
 })
 export class IncidentEntryComponent implements OnInit {
     @Input() DepartmentId: any;
-    public form: FormGroup;
     showInsert: boolean = null;
     isFlightRelated: boolean = false;
     buttonValue: String = "";
@@ -35,6 +34,8 @@ export class IncidentEntryComponent implements OnInit {
     activeEmergencyTypes: EmergencyTypeModel[] = [];
     severities: KeyValue[] = [];
     incidentStatuses: KeyValue[] = [];
+    public form: FormGroup;
+    
     constructor(formBuilder: FormBuilder,
         private emergencyTypeService: EmergencyTypeService,
         private dataExchange: DataExchangeService<IncidentDataExchangeModel>,
@@ -43,6 +44,7 @@ export class IncidentEntryComponent implements OnInit {
         this.severities = UtilityService.GetKeyValues(Severity);
         this.incidentStatuses = UtilityService.GetKeyValues(IncidentStatus);
     }
+
     initiateIncidentModel(): void {
         this.incidentModel = new IncidentModel();
         this.incidentModel.IncidentId = 0;
@@ -69,20 +71,13 @@ export class IncidentEntryComponent implements OnInit {
     getAllActiveEmergencyTypes(): void {
         this.emergencyTypeService.GetAll()
             .subscribe((response: ResponseModel<EmergencyTypeModel>) => {
-                console.log(response);
-                for (var x of response.Records) {
-                    if (x.ActiveFlag == 'Active') {
-                        x.Active = true;
-                    }
-                    else {
-                        x.Active = false;
-                    }
-                }
                 this.activeEmergencyTypes = response.Records;
                 console.log(this.activeEmergencyTypes);
-
+            }, (error: any) => {
+                console.log(`Error: ${error}`);
             });
     }
+    
     emergencyTypeChange(emergencyTypeId: string, emergencyTypes: EmergencyTypeModel[]): void {
         console.log(emergencyTypeId);
 
@@ -95,9 +90,11 @@ export class IncidentEntryComponent implements OnInit {
         }
 
     }
+
     IsDrill(event: any): void {
         console.log(event.checked);
     }
+
     ngOnInit(): any {
         console.log('Hello ' + this.DepartmentId);
         //this.showAdd = true;
@@ -108,11 +105,13 @@ export class IncidentEntryComponent implements OnInit {
         this.resetIncidentForm();
         this.dataExchangeDecision.Subscribe("incidentViewPreCheck", model => this.onIncidentViewPreCheck(model));
     }
+
     onIncidentViewPreCheck(isInsertShow: Boolean): void {
 
         this.showInsert = true;
 
     }
+
     resetIncidentForm(): void {
         console.log(this.activeEmergencyTypes);
         this.form = new FormGroup({
@@ -136,6 +135,7 @@ export class IncidentEntryComponent implements OnInit {
             FlightTailNumber: new FormControl('')
         });
     }
+
     onSubmit(values: Object): void {
         if (this.form.controls['EmergencyTypeId'].value != '0' && this.form.controls['Severity'].value != '0') {
             this.createIncidentModel();
@@ -176,6 +176,7 @@ export class IncidentEntryComponent implements OnInit {
         this.dataExchangeDecision.Publish("instructionToCloseInsertOpenViewCommand", true);
         this.dataExchange.Publish("incidentCreatedPreCheck", this.incidentDataExchangeModel);
     }
+
     createInvolvedPartyModel(isFlightRelated: boolean): void {
         this.involvedPartyModel = new InvolvedPartyModel();
         this.involvedPartyModel.InvolvedPartyId = 0;
@@ -192,6 +193,7 @@ export class IncidentEntryComponent implements OnInit {
         this.involvedPartyModel.CreatedBy = 1;
         this.involvedPartyModel.CreatedOn = this.date;
     }
+
     createFlightModel(): void {
         this.flightModel = new FlightModel();
         this.flightModel.FlightId = 0;
@@ -209,6 +211,7 @@ export class IncidentEntryComponent implements OnInit {
         this.flightModel.CreatedBy = 1;
         this.flightModel.CreatedOn = this.date;
     }
+
     createIncidentModel(): void {
         this.initiateIncidentModel();
         this.incidentModel.IsDrill = this.form.controls['IsDrill'].value;

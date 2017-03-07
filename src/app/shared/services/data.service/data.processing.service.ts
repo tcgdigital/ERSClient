@@ -35,7 +35,7 @@ export class DataProcessingService {
      */
     public GetUri(typeName: string, entityKey: string = '', actionSuffix: string = '') {
         let uri: string = '';
-        
+
         if (this.EndPoint === GlobalConstants.TOKEN || this.EndPoint === GlobalConstants.BATCH)
             uri = `${this.BaseUri}`;
         else {
@@ -192,9 +192,15 @@ export class DataProcessingService {
         }
         let responseModel: ResponseModel<T> = new ResponseModel<T>();
         let dataItems: T[] = [];
+        let responseBody: string = response.text();
         let pattern: RegExp = new RegExp('--batchresponse_(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}', 'gi');
 
-        let responseItems: string[] = response.text()
+        let statusCodes: string[] = responseBody.match(/HTTP\/1\.1.*/gim); 
+        if (statusCodes.length > 0) {
+            responseModel.StatusCodes = statusCodes;
+        }
+
+        let responseItems: string[] = responseBody
             .split(pattern).filter((value: string, index: number) => {
                 return value !== undefined && value !== '' && value !== '--';
             });
@@ -203,17 +209,15 @@ export class DataProcessingService {
             responseItems.forEach((value: string, index: number) => {
                 let jsonStartingPosition = value.indexOf('[');
                 let jsonEndingPosition = value.lastIndexOf(']');
-                if (jsonStartingPosition < 0 || jsonEndingPosition < 0) {
-                    return;
+
+                if (jsonStartingPosition > 0 && jsonEndingPosition > 0) {
+                    let responseJson = value.substr(jsonStartingPosition,
+                        (jsonEndingPosition - jsonStartingPosition) + 1);
+
+                    let item = JSON.parse(responseJson);
+                    console.log(item);
+                    dataItems.push(item);
                 }
-                let responseJson = value.substr(jsonStartingPosition,
-                    (jsonEndingPosition - jsonStartingPosition) + 1);
-
-
-                let item = JSON.parse(responseJson);
-                console.log(item);
-
-                dataItems.push(item);
             });
         }
         responseModel.Records = dataItems;
@@ -283,6 +287,7 @@ export class DataProcessingService {
         batchCommand.push(request.Method.toString() + ' ' + request.Url + ' HTTP/1.1');
         batchCommand.push('Content-Type: application/json; charset=utf-8');
         batchCommand.push('accept: application/json; charset=utf-8; odata.metadata=none');
+        batchCommand.push('Authorization: Bearer ' + UtilityService.GetFromSession('access_token'))
         batchCommand.push('Content-Length: ' + payload.length.toString());
         batchCommand.push('');
         batchCommand.push(payload);

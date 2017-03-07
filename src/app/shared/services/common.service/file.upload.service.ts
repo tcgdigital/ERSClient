@@ -41,43 +41,47 @@ export class FileUploadService {
      * 
      * @memberOf FileUploadService
      */
-    public uploadFiles<T>(url: string, files: File[], fieldName: string = ''): Observable<T> {
+    public uploadFiles<T>(url: string, files: Array<File>, fieldName: string = ''): Observable<T> {
         //return Observable.fromPromise(
-        let fileUploadPromise: Promise<T> = new Promise((resolve, reject) => {
-            let formData: FormData = new FormData(),
-                xhr: XMLHttpRequest = new XMLHttpRequest();
+        if (files.length > 0) {
 
-            files.forEach(x => {
-                formData.append(fieldName === '' ?
-                    'uploads[]' : `${fieldName}[]`, x, x.name)
+
+            let fileUploadPromise: Promise<T> = new Promise((resolve, reject) => {
+                let formData: FormData = new FormData(),
+                    xhr: XMLHttpRequest = new XMLHttpRequest();
+
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("uploads[]", files[i], files[i].name);
+                }
+                
+
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            resolve(<T>JSON.parse(xhr.response));
+                        } else {
+                            reject(xhr.response);
+                        }
+                    }
+                };
+
+                //FileUploadService.setUploadUpdateInterval(500);
+
+                xhr.upload.onprogress = (event: ProgressEvent) => {
+                    this.progress = Math.round(event.loaded / event.total * 100);
+                    //this.progressObserver.next(this.progress);
+                };
+
+                xhr.upload.ontimeout = (event: ProgressEvent) => {
+                    this.progressObserver.error('Upload timed out');
+                }
+
+                xhr.open('POST', url, true);
+                xhr.send(formData);
             });
 
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        resolve(<T>JSON.parse(xhr.response));
-                    } else {
-                        reject(xhr.response);
-                    }
-                }
-            };
-
-            //FileUploadService.setUploadUpdateInterval(500);
-
-            xhr.upload.onprogress = (event: ProgressEvent) => {
-                this.progress = Math.round(event.loaded / event.total * 100);
-                this.progressObserver.next(this.progress);
-            };
-
-            xhr.upload.ontimeout = (event: ProgressEvent) => {
-                this.progressObserver.error('Upload timed out');
-            }
-
-            xhr.open('POST', url, true);
-            xhr.send(formData);
-        });
-
-        return Observable.fromPromise(fileUploadPromise);
+            return Observable.fromPromise(fileUploadPromise);
+        }
     }
 
     /**

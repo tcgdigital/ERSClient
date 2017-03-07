@@ -18,7 +18,12 @@ export class PatchOperation<T extends BaseModel | any> extends DataOperation<Bas
         private typeName: string,
         private entity: T,
         private key: string) {
-        super(dataProcessingService, httpService, typeName, entity);       
+        super(dataProcessingService, httpService, typeName, entity);
+        this.Key = key;
+        this.RequestHeaders = new Headers({
+            'Content-Type': 'application/json; charset=utf-8; odata.metadata=none',
+            'Accept': 'application/json; charset=utf-8; odata.metadata=none'
+        });
     }
 
     /**
@@ -32,6 +37,7 @@ export class PatchOperation<T extends BaseModel | any> extends DataOperation<Bas
         let body = JSON.stringify(this.entity);
         let uri: string = this.DataProcessingService
             .GetUri(this.TypeName, this.Key, this.ActionSuffix);
+            console.log(`Patch key: ${this.Key}`);
         let requestOps = this.DataProcessingService
             .SetRequestOptions(WEB_METHOD.PATCH, this.RequestHeaders);
 

@@ -9,7 +9,8 @@ const dashboardRoutes: Routes = [
         children: [
             { path: 'affectedPeople', loadChildren: './affected.people/affected.people.module#AffectedPeopleModule' },
             { path: 'affectedObjects', loadChildren: './affected.objects/affected.objects.module#AffectedObjectsModule' },
-            { path: 'callCentre', loadChildren: './call.centre/call.centre.module#CallCentreModule' }            
+            { path: 'callCentre', loadChildren: './call.centre/call.centre.module#CallCentreModule' },
+            { path: 'actionable', loadChildren: './actionable/actionable.module#ActionableModule' }           
         ]
     }
 ];

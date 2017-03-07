@@ -1,0 +1,74 @@
+<div>
+    <h3>Active Actionable Data</h3>
+    <table>
+
+        <tr>
+            <td><strong><i>Serial Number</i></strong></td>
+            <td><strong><i>Description:</i></strong></td>
+            <td><strong><i>Schedule Close Time:</i></strong></td>
+            <td><strong><i>Done:</i></strong></td>
+            <td><strong><i>RAG:</i></strong></td>
+            <td><strong><i>Download:</i></strong></td>
+            <td><strong><i>Details:</i></strong></td>
+        </tr>
+
+        <div *ngFor="let actionable of activeActionables; let i = index;">
+            <tr>
+                <td>{{i+1}}</td>
+                <td>{{actionable.Description}}</td>
+                <td>{{actionable.ScheduleClose | amDateFormat:'LL - HH:mm:ss'}}</td>
+                <td>
+                    <md-checkbox class="Marght" [disabled]="actionable.IsDisabled" id="Done" name="Done" [ngModel]="actionable.Done" (change)="IsDone($event,actionable)"
+                        aria-label="Done">
+                        </md-checkbox>
+                </td>
+                <td>
+                    <div [class]="actionable.RagColor"></div>
+                </td>
+                <td>
+                    <a class="glyphicon glyphicon-download-alt" target="_self" *ngIf="actionable.UploadLinks!=null" href="{{actionable.UploadLinks}}"
+                        download="{{actionable.FileName}}">Download</a>
+                </td>
+                <td><a (click)="actionableDetail(actionable)">View</a>
+
+                </td>
+
+            </tr>
+            <tr [hidden]="!actionable.show">
+                <form [formGroup]="form" (ngSubmit)="updateCommentAndURL(form.value,actionable)">
+                    <td colspan="6">
+                        <div>
+                            <div class="Comments">
+                                <div class="Comments">
+                                    <strong><i>Comments:</i></strong>
+                                    <input type="text" [ngModel]="actionable.Comments" formControlName="Comments" value="{{actionable.Comments}}" placeholder="Comments"
+                                    />
+                                </div>
+                                <div>
+                                    <strong><i>URL:</i></strong>
+                                    <input disabled type="text" [ngModel]="actionable.URL" formControlName="URL" value="{{actionable.URL}}" placeholder="URL"
+                                    />
+                                </div>
+                                <div>
+                                    <input #myFileInput type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
+                                    <button type="button" (click)="upload(actionable)">Upload</button>
+                                    <button class="btn btn-primary" type="button" (click)="clearFileUpload($event)">Clear</button>
+                                </div>
+                                <div>
+                                    <a class="glyphicon glyphicon-download-alt" target="_self" *ngIf="filepathWithLinks!=null" href="{{filepathWithLinks}}"
+                                        download="{{fileName}}">Download</a>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <button class="btn btn-primary" type="button" (click)="cancelUpdateCommentAndURL(actionable)">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </form>
+            </tr>
+        </div>
+    </table>
+    <button class="btn btn-primary" type="submit" (click)="activeActionableClick(activeActionables)">Save</button>
+</div>
