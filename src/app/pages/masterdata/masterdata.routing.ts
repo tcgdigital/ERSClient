@@ -14,6 +14,7 @@ const pageRoutes: Routes = [
             { path: 'emergencytype', loadChildren: './emergencytype/emergencytype.module#EmergencyTypeModule' },
             { path: 'quicklink', loadChildren: './quicklink/quicklink.module#QuickLinkModule' },
             { path: 'emergencydepartment', loadChildren: './emergency.department/emergency.department.module#EmergencyDepartmentModule' },
+            { path: 'userpermission', loadChildren: './userpermission/userpermission.module#UserPermissionModule' },
             { path: 'departmentfunctionality', loadChildren: './department.functionality/department.functionality.module#DepartmentFunctionalityModule' },
             { path: 'userprofile', loadChildren: './userprofile/userprofile.module#UserProfileModule' }
         ]

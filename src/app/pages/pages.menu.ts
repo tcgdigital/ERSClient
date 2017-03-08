@@ -141,6 +141,17 @@ export const PAGES_MENU: IMenuItem[] = <IMenuItem[]>[
                         }
                     },
                     {
+                        path: 'userpermission',
+                        data: {
+                            menu: {
+                                title: 'User Permission',
+                                icon: 'fa fa-home fa-lg',
+                                selected: false,
+                                expanded: false,
+                            }
+                        }
+                    },
+                    {
                         path: 'departmentfunctionality',
                         data: {
                             menu: {
