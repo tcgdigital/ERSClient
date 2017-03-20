@@ -1,7 +1,10 @@
 <div class="container">
     <div class="input-field col s12">
-        <input id="item" type="text" class="validate filter-input" [(ngModel)]="query" (keyup)="filter()" (click)="filter()">
-        <label for="item">Item</label>
+        <input id="item" type="text" class="validate filter-input"
+         [(ngModel)]="query" (keyup)="filter()" (click)="filter()">
+        <!--<label for="item">Item</label>-->
+        <a *ngIf="showClose()" class="close" class="validate filter-input" aria-label="Close" (click)="clear()">Close</a>
+
     </div>
     <!--<pre>{{filteredList | json}}</pre>-->
     <div class="suggestions" *ngIf="filteredList.length > 0">

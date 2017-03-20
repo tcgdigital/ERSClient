@@ -1,0 +1,27 @@
+<div>
+
+<h3>Users</h3>
+    <autocomplete [items]="items" (notify)='onNotify($event)' (InvokeAutoCompleteReset)="invokeReset();"></autocomplete>
+    <br/>
+    <button class="btn btn-primary" type="button" (click)="save()">Save</button>
+    <table style="width:100%;">
+        <tr>
+            <td style="width:35%;"><strong><i>Department Name:</i></strong>
+            </td>
+            <td style="width:30%;"><strong><i>Member Of</i></strong>
+            </td>
+            <td style="width:30%;"><strong><i>Is HOD</i></strong>
+            </td>
+        </tr>
+        <tr *ngFor="let departmentToView of departmentsToView">
+            <td>{{departmentToView.DepartmentName}}</td>
+            <td>
+                <md-checkbox class="Marght" id="IsAutoApproved" [(ngModel)]="departmentToView.IsMemberOf" aria-label="Add"></md-checkbox>
+            </td>
+            <td>
+                <md-checkbox class="Marght" id="IsAutoApproved" [(ngModel)]="departmentToView.IsHod" aria-label="Add"></md-checkbox>
+            </td>
+        </tr>
+    </table>
+    <button class="btn btn-primary" type="button" (click)="save()">Save</button>
+</div>

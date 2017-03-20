@@ -19,4 +19,18 @@ export class ChecklistModel extends BaseModel {
     public TargetDepartment: DepartmentModel;
     public ParentCheckList?: ChecklistModel;
     public EmergencyType: EmergencyTypeModel;
+
+    constructor() {
+        super();
+        this.CheckListId = 0;
+        this.CheckListCode = '';
+        this.CheckListDetails = '';
+        this.ParentCheckListId = 0;
+        this.Duration = 0;
+        this.DepartmentId = 0;
+        this.URL = '';
+        this.EmergencyTypeId = 0;
+        this.Sequence = 0;
+        this.Active = false;
+    }
 }

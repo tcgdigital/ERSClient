@@ -13,18 +13,18 @@ import { DataExchangeService } from '../../services/data.exchange';
     },
     templateUrl: './autocomplete.view.html'
 })
-export class AutocompleteComponent  implements OnInit{
+export class AutocompleteComponent implements OnInit {
     @Input('items') Items: Array<KeyValue> = [];
     @Output() notify: EventEmitter<KeyValue> = new EventEmitter<KeyValue>();
-
+    @Output('InvokeAutoCompleteReset') InvokeAutoCompleteReset: EventEmitter<any> = new EventEmitter();
     // public query = '';
     // public filteredList;
     public elementRef;
     public filteredList: Array<KeyValue> = [];
     public query: string = '';
 
-    constructor(public myElement: ElementRef,private dataExchange: DataExchangeService<string>) {
-         this.elementRef = myElement;
+    constructor(public myElement: ElementRef, private dataExchange: DataExchangeService<string>) {
+        this.elementRef = myElement;
         this.filteredList = this.Items;
     }
 
@@ -38,6 +38,17 @@ export class AutocompleteComponent  implements OnInit{
         }
     }
 
+    clear(): void {
+        this.filteredList = [];
+        this.query = '';
+        this.InvokeAutoCompleteReset.emit();
+    }
+    showClose(): boolean {
+        if (this.filteredList.length > 0 || this.query != '') {
+            return true;
+        }
+        return false;
+    }
     select(item: KeyValue) {
         this.query = item.Key;
         this.filteredList = [];
@@ -59,10 +70,10 @@ export class AutocompleteComponent  implements OnInit{
         }
 
     }
-    ngOnInit(){
-             this.dataExchange.Subscribe("clearAutoCompleteInput",model => this.query = model);
+    ngOnInit() {
+        this.dataExchange.Subscribe("clearAutoCompleteInput", model => this.query = model);
     };
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.dataExchange.Unsubscribe("clearAutoCompleteInput");
     };
 }

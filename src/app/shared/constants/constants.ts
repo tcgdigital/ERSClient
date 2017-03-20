@@ -13,6 +13,12 @@ export class GlobalConstants {
         { value: "NonFlightRelated", key: 2 }
     ];
     public static ActiveFlag: Object = [{ value: "Active", key: 0 }, { value: "InActive", key: 1 }];
+    public static TemplateMediaType: any[] = [
+        { value: "Sms", key: 1 },
+        { value: "PushNotification", key: 2 },
+        { value: "Email", key: 3 },
+        { value: "Pdf", key: 4 }
+        ];
     public static EnquiryType: Object = [
         {
             value: "1",

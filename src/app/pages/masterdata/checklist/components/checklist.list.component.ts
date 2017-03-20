@@ -25,7 +25,6 @@ export class ChecklistListComponent implements OnInit {
 
     initiateCheckListModelPatch(): void {
         this.checkListModelPatch = new ChecklistModel();
-        this.checkListModelPatch.CheckListId = 0;
         this.checkListModelPatch.ActiveFlag = 'Active';
         this.checkListModelPatch.CreatedBy = 1;
         this.checkListModelPatch.CreatedOn = this.date;

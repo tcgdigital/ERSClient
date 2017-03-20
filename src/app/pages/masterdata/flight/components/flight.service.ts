@@ -25,14 +25,12 @@ export class FlightService {
     }
 
     GetAllFlights(): Observable<ResponseModel<FlightModel>> {
-        debugger;
         return this._dataService.Query()
             .Expand('InvolvedParty($select=InvolvedPartyId,InvolvedPartyDesc)')
             .OrderBy("CreatedOn desc")
             .Execute();
     }
     GetAllActiveFlights(): Observable<ResponseModel<FlightModel>> {
-        debugger;
         return this._dataService.Query()
             .Select('FlightId', 'FlightNo', 'FlightTaleNumber', 'OriginCode',
                 'DestinationCode', 'DepartureDate', 'ArrivalDate', 'LoadAndTrimInfo', 'CreatedBy', 'CreatedOn')
@@ -64,7 +62,6 @@ export class FlightService {
 
     EditFlight(flightModel: FlightModel): Observable<FlightModel> {
         let key: string = flightModel.FlightId.toString()
-        let flight: FlightModel;
         return this._dataService.Patch(flightModel, key)
             .Execute();
 

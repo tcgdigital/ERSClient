@@ -1,0 +1,17 @@
+<div>
+    <generic-search [filterConfigs] = "searchConfigs" 
+        (InvokeSearch)="invokeSearch($event);" (InvokeReset)="invokeReset();"></generic-search>
+    
+    <table>
+        <tr>
+            <td><strong><i>Media</i></strong></td>
+            <td><strong><i>Situation</i></strong></td>
+            <td><strong><i>Description</i></strong></td>
+        </tr>
+        <tr *ngFor="let template of templates">
+            <td>{{template.TemplateMediaId}}</td>
+            <td>{{template.EmergencySituation.EmergencySituationName}}</td>
+            <td>{{template.Description}}</td>
+            </tr>
+    </table>
+</div>

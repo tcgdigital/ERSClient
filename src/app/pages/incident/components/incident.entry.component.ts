@@ -47,21 +47,8 @@ export class IncidentEntryComponent implements OnInit {
 
     initiateIncidentModel(): void {
         this.incidentModel = new IncidentModel();
-        this.incidentModel.IncidentId = 0;
-        this.incidentModel.IsDrill = false;
-        this.incidentModel.EmergencyTypeId = 0;
         this.incidentModel.IncidentStatus = UtilityService.GetKeyValues(IncidentStatus)[0].Key;
-        this.incidentModel.EmergencyName = '';
-        this.incidentModel.AlertMessage = '';
-        this.incidentModel.Description = '';
-        this.incidentModel.ClosureNote = '';
-        this.incidentModel.EmergencyDate = this.date;
         this.incidentModel.Severity = UtilityService.GetKeyValues(Severity)[0].Key;
-        this.incidentModel.EmergencyLocation = '';
-        this.incidentModel.IsSubmitted = false;
-        this.incidentModel.IsSaved = false;
-        this.incidentModel.Remarks = '';
-        this.incidentModel.DepartmentId = 0;
 
         this.incidentModel.ActiveFlag = 'Active';
         this.incidentModel.CreatedBy = 1;

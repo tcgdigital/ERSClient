@@ -156,10 +156,6 @@ export class ChecklistEntryComponent implements OnInit {
 
     initiateCheckListModel(): void {
         this.checkListModel = new ChecklistModel();
-        this.checkListModel.CheckListId = 0;
-        this.checkListModel.ParentCheckListId = 0;
-        this.checkListModel.DepartmentId = 0;
-        this.checkListModel.EmergencyTypeId = 0;
         this.checkListModel.ActiveFlag = 'Active';
         this.checkListModel.CreatedBy = 1;
         this.checkListModel.CreatedOn = this.date;

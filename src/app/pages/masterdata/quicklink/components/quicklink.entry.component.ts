@@ -50,7 +50,6 @@ export class QuickLinkEntryComponent implements OnInit, OnDestroy {
 
     initiateQuickLinkModel(): void {
         this.quickLinkModel = new QuickLinkModel();
-        this.quickLinkModel.QuickLinkId = 0;
         this.quickLinkModel.ActiveFlag = 'Active';
         this.quickLinkModel.CreatedBy = 1;
         this.quickLinkModel.CreatedOn = this.date;
