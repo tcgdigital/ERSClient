@@ -3,7 +3,7 @@
         <div class="message-icon">
             <i class="fa fa-newspaper-o fa-3x" aria-hidden="true"></i>
             <span>media release</span>
-            <a href="#">view all</a>
+            <a href="javascript: void(0)" (click)="openMediaReleases()">view all</a>
         </div>
     </div>
     <div class="col-9 col-md-12 col-lg-9">
@@ -11,42 +11,31 @@
     </div>
 </div>
 
-<!--<h2>Media Releases</h2>
-<ul>
-    <li *ngFor="let mediaRelease of mediaReleases | async">
-        <span>{{mediaRelease.Message}}
-            <i>{{mediaRelease.PublishedOn}}</i>
-        </span>
-    </li>
-</ul>-->
-
-<!-- "View All Media Releases" Modal Panel -->
-<!--<a (click)="openMediaReleases(false,$event)" href="">View All Media Releases</a>
-
-<div class="modal-body" [hidden]="isHidden">
-    <div class="modalcross">
-        <a (click)="openMediaReleases(true,$event)" href=""><i class="fa fa-times" aria-hidden="true" ></i> </a>
+<div bsModal #childModalMediaRelease="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Media Releases</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideMediaReleases()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table footable default ">
+            <thead>
+                <tr>
+                    <th width="80%">Media Releases</th>
+                    <th width="20%">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let mediaRelease of AllMediaReleases | async">
+                    <td width="80%">{{mediaRelease.Message}}</td>
+                    <td width="20%">{{mediaRelease.PublishedOn}}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
     </div>
-    <br />
-    <h4>All Media Releases</h4>
-    <div class="col-sm-12 innerBodyContent">
-        <div class="MainSearch">
-            <div class="WidthHun">
-                <table class="table footable default ">
-                    <thead>
-                        <tr>
-                            <th width="80%">Media Releases</th>
-                            <th width="20%">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let mediaRelease of AllMediaReleases | async">
-                            <td width="80%">{{mediaRelease.Message}}</td>
-                            <td width="20%">{{mediaRelease.PublishedOn}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>-->
+  </div>
+</div>

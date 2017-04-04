@@ -1,0 +1,47 @@
+<div [hidden] = "IsVisible">
+    <div class="modalcross">
+        <i class="fa fa-times" aria-hidden="true" (click)="cancel()"></i>
+    </div>
+    <div class="modal-header">
+        <h4>View Invalid Passengers</h4>
+    </div>
+    <div class="modal-body">
+        <form name="viewPaxForm">
+            <div class="panel-body WidthHun" *ngIf="invalidPassengers.length > 0">
+                <table class="table footable default">
+                    <thead>
+                        <tr>
+                            <th>Passenge Name</th>
+                            <th>PNR</th>
+                            <th>Seat Number</th>
+                            <th>Baggage Count</th>
+                            <th>Destination</th>
+                            <th>Contact Number</th>
+                            <th>PAX Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let affected of invalidPassengers">
+                            <td>{{affected.PassengerName}}</td>
+                            <td>{{affected.Pnr}}</td>
+                            <td>{{affected.Seatno}}</td>
+                            <td>{{affected.BaggageCount}}</td>
+                            <td>{{affected.Destination}}</td>
+                            <td>{{affected.ContactNumber}}</td>
+                            <td>{{affected.PassengerType}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-body WidthHun" *ngIf="invalidPassengers.length<=0">
+                <table class="table footable default">
+                    <tr>
+                        <td>
+                            No Records Found
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>

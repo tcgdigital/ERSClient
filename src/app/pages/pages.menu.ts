@@ -287,6 +287,18 @@ export const PAGES_MENU: IMenuItem[] = <IMenuItem[]>[
                         expanded: false,
                     }
                 }
+            },
+
+            {
+                path: 'masterdataupload',
+                data: {
+                    menu: {
+                        title: 'Master Data Upload',
+                        icon: 'fa fa-home fa-lg',
+                        selected: false,
+                        expanded: false,
+                    }
+                }
             }
         ]
     }

@@ -154,7 +154,9 @@ export class BroadcastEntryComponent implements OnInit, OnDestroy {
     CreateOrUpdateBroadcast(): void {
         UtilityService.setModelFromFormGroup<BroadCastModel>(this.broadcast, this.form,
             x => x.BroadcastId, x => x.Message, x => x.Priority);
-
+        this.broadcast.IncidentId = +this.currentIncidentId;
+        this.broadcast.InitiateDepartmentId = +this.initiatedDepartmentId;
+        
         if (this.broadcast.BroadcastId == 0) {
             this.broadcastService.Create(this.broadcast)
                 .subscribe((response: BroadCastModel) => {

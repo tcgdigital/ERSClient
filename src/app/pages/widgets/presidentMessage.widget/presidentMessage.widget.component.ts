@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { PresidentMessageWidgetModel } from './presidentMessage.widget.model';
 import { PresidentMessageWidgetService } from './presidentMessage.widget.service'
 import { DataServiceFactory, DataExchangeService } from '../../../shared'
+import { ModalDirective } from 'ng2-bootstrap/modal';
+
 @Component({
     selector: 'presidentMessage-widget',
     templateUrl: './presidentMessage.widget.view.html',
@@ -11,6 +13,8 @@ import { DataServiceFactory, DataExchangeService } from '../../../shared'
 export class PresidentMessageWidgetComponent implements OnInit {
     @Input('initiatedDepartmentId') departmentId: number;
     @Input('currentIncidentId') incidentId: number;
+    @ViewChild('childModalPresidentMsg') public childModal:ModalDirective;
+
     isHidden: boolean = true;
 
     presidentMessages: Observable<PresidentMessageWidgetModel[]>; 
@@ -36,7 +40,7 @@ export class PresidentMessageWidgetComponent implements OnInit {
             ()=>this.presidentMessages = Observable.of(data));
     }
 
-    getAllPresidentsMessages(): void {
+    getAllPresidentsMessages(callback?: Function): void {
         let data: PresidentMessageWidgetModel[] = [];
         this.presidentMessagewidgetService
             .GetAllPresidentMessageByIncident(this.incidentId)
@@ -44,11 +48,20 @@ export class PresidentMessageWidgetComponent implements OnInit {
             .subscribe(x => {
                 data.push(x);
             },(error: any)=>{},
-            ()=>this.AllPresidentMessages = Observable.of(data));
+            ()=>{
+                    this.AllPresidentMessages = Observable.of(data);
+                    if(callback){
+                        callback();
+                    }
+                });
     }
+     openPresidentMessages(): void{
+        this.getAllPresidentsMessages(()=>{
+            this.childModal.show();
+        });       
+     }
 
-     openPresidentMessages(isHide: boolean, event: Event){
-         this.isHidden = isHide;
-         event.preventDefault();
+     hidePresidentMessages(): void{
+        this.childModal.hide();
      }
 }

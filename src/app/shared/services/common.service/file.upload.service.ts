@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UtilityService } from '../common.service';
+import { FileData } from '../../models';
 
 @Injectable()
 export class FileUploadService {
@@ -41,20 +42,28 @@ export class FileUploadService {
      * 
      * @memberOf FileUploadService
      */
-    public uploadFiles<T>(url: string, files: Array<File>, fieldName: string = ''): Observable<T> {
-        //return Observable.fromPromise(
-        if (files.length > 0) {
+    public uploadFiles<T>(url: string, files: Array<FileData> | Array<File>, fieldName: string = ''): Observable<T> {
 
+        if (files.length > 0) {
 
             let fileUploadPromise: Promise<T> = new Promise((resolve, reject) => {
                 let formData: FormData = new FormData(),
-                    xhr: XMLHttpRequest = new XMLHttpRequest();
+                    xhr: XMLHttpRequest = new XMLHttpRequest();                
 
-                for (var i = 0; i < files.length; i++) {
-                    formData.append("uploads[]", files[i], files[i].name);
+                if (files[0] instanceof FileData) {
+                    for (var i = 0; i < files.length; i++) {
+                        let fileData: FileData = <FileData>files[i];                                           
+                        formData.append(fileData.field, fileData.file, fileData.file.name);                    
+                        console.log(formData);
+                    }
+                } 
+                else {
+                    for (var i = 0; i < files.length; i++) {
+                        let file: File = <File>files[i];
+                        formData.append("uploads[]", file, file.name);
+                    }
                 }
-                
-
+              
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
@@ -63,13 +72,10 @@ export class FileUploadService {
                             reject(xhr.response);
                         }
                     }
-                };
-
-                //FileUploadService.setUploadUpdateInterval(500);
+                };                
 
                 xhr.upload.onprogress = (event: ProgressEvent) => {
-                    this.progress = Math.round(event.loaded / event.total * 100);
-                    //this.progressObserver.next(this.progress);
+                    this.progress = Math.round(event.loaded / event.total * 100);                    
                 };
 
                 xhr.upload.ontimeout = (event: ProgressEvent) => {

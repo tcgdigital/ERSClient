@@ -1,0 +1,22 @@
+.fade.in {
+  opacity: 1.0;
+}
+.modal.fade .modal-dialog{
+    transform: translate(0, 25%);
+}
+.modal-header{
+    padding: 5px 16px;
+    h4 {
+        font-size: 1rem;
+    }
+}
+
+.modal-backdrop.in {
+opacity: 0.5;
+filter: alpha(opacity=50);
+}
+
+.modal-open{
+    font-size: 13px 
+}
+

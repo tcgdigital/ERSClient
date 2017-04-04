@@ -1,0 +1,132 @@
+<form>
+    <div class="innerBodyContent1 col-sm-12">
+        <div class="AllSearchHolder WidthHun">
+            <table class="table footable default DataUploadInstruction">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Select File</th>
+                        <th>Download Templates</th>
+                        <th>View Records</th>
+                        <th>View Invalid Records</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PDA Manifest</td>
+                        <td>
+                            <input type="file" id="file" name="file" (change)="getFileDetails($event,'Passenger')" />
+                        </td>
+                        <td>
+                            <a target="_self" href="passengerTemplatePath" download="Passengers.xlsx">PDA Template</a>
+                        </td>
+                        <td>
+                            <a href="javascript: void(0)" (click)="openPassenger()">Passenger Records</a>
+                            
+                        </td>
+                        <td>
+                            <a href="javascript: void(0)" (click)="openInvalidPax()">Display Records</a>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Crew Manifest</td>
+                        <td>
+                            <input type="file" id="file" name="file" (change)="getFileDetails($event,'Crew')" />
+                            <!--<input type="file" id="file" name="file" ng-disabled="!ShowUploadExcelForCrew()" onchange="angular.element(this).scope().getFileDetailsCrew(this)" />-->
+                        </td>
+                        <td>
+                            <a target="_self" href="crewTemplatePath" download="Crews.xlsx">Crew Template</a>
+                        </td>
+                        <td>
+                            <a href="javascript: void(0)" (click)="openCrew()">Crew Records</a>
+                           
+                        </td>
+                        <td>
+                            <a href="javascript: void(0)" (click)="openInvalidCrew()">Display Records</a>                            
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>Cargo Manifest</td>
+                        <td>
+                            <input type="file" id="file" name="file" (change)="getFileDetails($event,'Cargo')" />
+                            <!--ng-disabled="!ShowUploadExcelForPerson()"-->
+                        </td>
+                        <td>
+                            <a target="_self" href="cargoTemplatePath" download="Cargo.xlsx">Cargo Template</a>
+                        </td>
+                        <td>
+                            <a href="javascript: void(0)" (click)="openCargo()">Cargo Records</a>                            
+                        </td>
+                        <td>
+                            <a href="javascript: void(0)" (click)="openInvalidCargo()">Display Records</a>                           
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" (click)="uploadFiles()">Upload</button>
+            <button class="btn btn-warning" type="button" >Back To DashBoard</button> 
+            <!--(click)="cancel()"-->
+        </div>
+    </div>
+
+    <div class="innerBodyContent col-sm-12">
+        <div class="AllSearchHolder WidthHun">
+            <table>
+                <tr>
+                    <td>
+                        <span class="red"><b>Important instructions for filling out the excel templates:</b></span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="red">
+                            <strong>Donts:</strong><br>
+
+                            1) Do not add or remove any column in the excel files.<br>
+                            2) Do not keep any empty columns.<br>
+                            3) Do not rearrange any column in the excel files.<br>
+                            4) Do not save the files on any empty cells.<br>
+                            5) Do not enter invalid data in any of the columns (invalid data e.g-date fields can not have words written in them)<br>
+                            6) Do not upload wrong excels for wrong manifest (e.g- PDA excel should be uploaded only for PDA Manifest)<br>
+
+
+                        </span>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <span class="red">
+                            <strong> Dos:</strong><br>
+
+                            1) Click on "Download Templates" to dowonload templates of respective operational data.<br>
+                            2) Fill out all the columns in the excel file(s) being uploaded.<br>
+                            3) Enter the same flight number in the excels for which the emergency has been initiated.<br>
+                            4) Format of the "Flight Number" column should be "Text"<br>
+
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br />
+    <validPassengers-list [IsVisible] = "isHiddenValidPax" [IncidentId] = "113"></validPassengers-list>
+    <br />
+    <validCargo-list [IsVisible] = "isHiddenValidCargo" [IncidentId] = "113"></validCargo-list>
+    <br />
+    <validCrew-list [IsVisible] = "isHiddenValidCrew" [IncidentId] = "113"></validCrew-list> 
+    <br />   
+    <invalidCrew-list [IsVisible] = "isHiddenInvalidCrew" [IncidentId] = "113"></invalidCrew-list> 
+    <br />  
+    <invalidPassengers-list [IsVisible] = "isHiddenInvalidPax" [IncidentId] = "113"></invalidPassengers-list> 
+    <br />  
+    <invalidCargo-list [IsVisible] = "isHiddenInvalidCargo" [IncidentId] = "113"></invalidCargo-list> 
+    <br />   
+
+</form>

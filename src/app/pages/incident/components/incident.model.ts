@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BaseModel, KeyValue } from '../../../shared';
 import { EmergencyTypeModel } from '../../masterdata/emergencytype';
 import { DepartmentModel } from '../../masterdata/department';
+import { InvolvePartyModel } from '../../shared.components';
 
 export class IncidentModel extends BaseModel {
     public IncidentId: number;
@@ -32,6 +33,8 @@ export class IncidentModel extends BaseModel {
 
     public EmergencyType: EmergencyTypeModel;
     public Department: DepartmentModel;
+
+    public InvolvedParties?: InvolvePartyModel[];
 
 
     constructor() {

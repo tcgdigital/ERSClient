@@ -3,42 +3,25 @@
         <div class="message-icon">
             <i class="fa fa-bullhorn fa-3x" aria-hidden="true"></i>
             <span>broadcast message</span>
-            <a href="#">view all</a>
+            <a href="javascript:void(0);" (click)="openBroadcastMessages()">view all</a>
         </div>
     </div>
     <div class="col-9 col-md-12 col-lg-9">
         <text-accordion [accordionItems]="LatestBroadcasts"></text-accordion>
     </div>
 </div>
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Broadcast Messages</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideAllBroadcastMessages()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <table class="table footable default ">
 
-
-
-
-<!--<h2>Broadcast Messages</h2>
-
-<ul>
-    <li *ngFor="let broadcast of LatestBroadcasts | async">
-        <span>{{broadcast.Message}}
-            <i>{{broadcast.SubmittedOn}}</i>
-        </span>
-    </li>
-
-</ul>-->
-
-<!--"View All Broadcasts" modal pop up Panel-->
-<!--<br />
-<a (click)="openBroadcastMessages(false,$event)" href="">View All Broadcast Messages</a>
-
-<div [hidden]="isHidden">
-    <div class="modalcross">
-        <br />
-        <a (click)="openBroadcastMessages(true,$event)" href=""><i class="fa fa-times" aria-hidden="true" ></i> </a>
-    </div>
-    <br />
-    <h4>All Published Broadcasts</h4>
-
-    <div class="WidthHun">
-        <table class="table footable default ">
             <thead>
                 <tr>
                     <th width="40%">Broadcast Messages</th>
@@ -56,6 +39,8 @@
                 </tr>
             </tbody>
         </table>
+      </div>
     </div>
-</div>-->
+  </div>
+</div>
 

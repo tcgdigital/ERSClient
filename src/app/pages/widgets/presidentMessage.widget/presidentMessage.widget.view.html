@@ -3,7 +3,7 @@
         <div class="message-icon">
             <i class="fa fa-envelope-o fa-3x" aria-hidden="true"></i>
             <span>president message</span>
-            <a href="#">view all</a>
+            <a href="javascript: void(0)" (click) = "openPresidentMessages()">view all</a>
         </div>
     </div>
     <div class="col-9 col-md-12 col-lg-9">
@@ -11,42 +11,32 @@
     </div>
 </div>
 
-<!--<h2>President Messages</h2>
-<ul>
-    <li *ngFor="let presidentMessage of presidentMessages | async">
-        <span>{{presidentMessage.Message}}
-            <i>{{presidentMessage.PublishedOn}}</i>
-        </span>
-    </li>
-</ul>-->
-
-<!-- "View All Presidents Messages" Modal Panel -->
-<!--<a (click) = "openPresidentMessages(false,$event)" href="">View All President Messages</a>
-
-<div class="modal-body" [hidden]="isHidden">
-    <div class="modalcross">
-        <a (click) = "openPresidentMessages(true,$event)" href=""><i class="fa fa-times" aria-hidden="true" ></i> </a>
+<div bsModal #childModalPresidentMsg="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">All President's' Messages</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hidePresidentMessages()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <table class="table footable default ">
+            <thead>
+                <tr>
+                    <th width="80%">President's Messages</th>
+                    <th width="20%">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let presidentMessage of AllPresidentMessages | async">
+                    <td width="80%">{{presidentMessage.Message}}</td>
+                    <td width="20%">{{presidentMessage.PublishedOn}}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
     </div>
-    <br />
-    <h4>All Presidents Messages</h4>
-    <div class="col-sm-12 innerBodyContent">
-        <div class="MainSearch">
-            <div class="WidthHun">
-                <table class="table footable default ">
-                    <thead>
-                        <tr>
-                            <th width="80%">President's Messages</th>
-                            <th width="20%">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let presidentMessage of AllPresidentMessages | async">
-                            <td width="80%">{{presidentMessage.Message}}</td>
-                            <td width="20%">{{presidentMessage.PublishedOn}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>-->
+  </div>
+</div>
+

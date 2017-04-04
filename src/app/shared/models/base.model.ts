@@ -46,3 +46,8 @@ export class InvolvedPartyType {
     static Flight: number = 1;
     static NonFlight: number = 2
 }
+
+export class FileData {
+    file: File;
+    field: string;
+}

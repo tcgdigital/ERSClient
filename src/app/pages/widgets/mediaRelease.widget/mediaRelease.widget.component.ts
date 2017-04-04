@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { DataServiceFactory, DataExchangeService } from '../../../shared'
 import { MediaReleaseWidgetModel } from './mediaRelease.widget.model'
 import { MediaReleaseWidgetService } from './mediaRelease.widget.service'
+import { ModalDirective } from 'ng2-bootstrap/modal';
 
 @Component({
     selector: 'mediaRelease-widget',
@@ -13,6 +14,7 @@ export class MediaReleaseWidgetComponent implements OnInit {
     @Input('initiatedDepartmentId') departmentId: number;
     @Input('currentIncidentId') incidentId: number;
     isHidden: boolean = true;
+    @ViewChild('childModalMediaRelease') public childModal:ModalDirective;
 
     mediaReleases: Observable<MediaReleaseWidgetModel[]>;
     AllMediaReleases: Observable<MediaReleaseWidgetModel[]>;
@@ -46,7 +48,7 @@ export class MediaReleaseWidgetComponent implements OnInit {
             () => this.mediaReleases = Observable.of(data));
     }
 
-    public getAllMediaReleases(): void {
+    public getAllMediaReleases(callback?: Function): void {
         let data: MediaReleaseWidgetModel[] = [];
         this.mediaReleaseWidgetService
             .GetAllMediaReleaseByIncident(this.incidentId)
@@ -56,11 +58,21 @@ export class MediaReleaseWidgetComponent implements OnInit {
             }, (error: any) => {
                 console.log(`Error: ${error}`);
             },
-            () => this.AllMediaReleases = Observable.of(data));
+            () => {
+                    this.AllMediaReleases = Observable.of(data);
+                    if(callback){
+                        callback();
+                    }
+                });
     }
 
-    public openMediaReleases(isHide: boolean, event: Event) {
-        this.isHidden = isHide;
-        event.preventDefault();
+    public openMediaReleases(): void {
+        this.getAllMediaReleases(()=>{
+            this.childModal.show();
+        });        
+    }
+
+    public hideMediaReleases(): void {
+        this.childModal.hide();
     }
 }

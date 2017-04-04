@@ -4,7 +4,10 @@ import {
     InvolvePartyModel,
     CrewModel,
     PassengerModel,
-    CargoModel
+    CargoModel,
+    InvalidPassengerModel,
+    InvalidCargoModel,
+    InvalidCrewModel
 } from '../../../shared.components';
 
 export class FlightModel extends BaseModel {
@@ -23,7 +26,10 @@ export class FlightModel extends BaseModel {
     public Crewes?: CrewModel[];
     public Passengers?: PassengerModel[];
     public Cargoes?: CargoModel[];
-
+    public InvalidPassengerRecords?: InvalidPassengerModel[];
+    public InvalidCargoes?: InvalidCargoModel[];
+    public InvalidCrewRecords?: InvalidCrewModel[];
+    
     constructor() {
         super();
         this.FlightId = 0;

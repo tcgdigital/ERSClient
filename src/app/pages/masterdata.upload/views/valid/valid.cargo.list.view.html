@@ -1,0 +1,45 @@
+<div [hidden] = "IsVisible">
+    <div class="modalcross">
+        <i class="fa fa-times" aria-hidden="true" (click)="cancel()"></i>
+    </div>
+    <div class="modal-header">
+        <h4>View Cargo</h4>
+    </div>
+    <div class="modal-body">
+        <form name="viewPaxForm">
+            <div class="panel-body WidthHun" *ngIf="cargoes.length > 0">
+                <table class="table footable default">
+                    <thead>
+                        <tr>
+                            <th>Flight Details</th>
+                            <th>POL</th>
+                            <th>POU</th>
+                            <th>AWB</th>
+                            <th>Manifest Pieces</th>
+                            <th>Manifest Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let affected of cargoes">
+                            <td>{{affected.FlightDetails}}</td>
+                            <td>{{affected.POL}}</td>
+                            <td>{{affected.POU}}</td>
+                            <td>{{affected.AWB}}</td>
+                            <td>{{affected.mftpcs}}</td>
+                            <td>{{affected.mftwgt}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-body WidthHun" *ngIf="cargoes.length<=0">
+                <table class="table footable default">
+                    <tr>
+                        <td>
+                            No Records Found
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
