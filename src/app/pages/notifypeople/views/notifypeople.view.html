@@ -1,1 +1,35 @@
-<div id="tree"></div>
+<div class="card">
+    <div class="card-header">
+        <strong>Department Wise Notify</strong>
+    </div>
+    <div class="card-block">
+        <div id="tree">
+        </div>
+        <div class="card-header pull-right">
+            <button type="button" class="pull-right btn btn-primary" aria-label="Notify" (click)="notify()">Notify</button>
+        </div>
+        <div bsModal #childModalNoificationMessage="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form [formGroup]="form" (ngSubmit)="saveNotificationMessage(form.value)">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left"><strong>Notification Message Preview</strong></h4>
+                            <i class="fa fa-times pull-right" aria-hidden="true" (click)="hideNoificationMessage()"></i>
+                        </div>
+                        <div class="modal-body">
+                            <label for="AdditionalData">Email message content</label><br/>
+                            <textarea rows="5" cols="135" disabled>{{appendedTemplate.Description}}</textarea><br/>
+                            <label for="AdditionalData">Enter additional text for email notification</label><br/>
+                            <input id="AdditionalData" class="form-control" type="text" name="AdditionalData" formControlName="AdditionalData" placeholder="Additional Data"
+                            /><br/>
+                            <div class="pull-right">
+                                <button type="submit" class="pull-right btn btn-primary" aria-label="Close">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

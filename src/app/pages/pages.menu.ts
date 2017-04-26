@@ -49,6 +49,18 @@ export const PAGES_MENU: IMenuItem[] = <IMenuItem[]>[
                         expanded: false,
                     }
                 }
+
+            },
+            {
+                path: 'departmentclosure',
+                data: {
+                    menu: {
+                        title: 'Department Wise Closure',
+                        icon: 'fa fa-id-badge fa-lg',
+                        selected: false,
+                        expanded: false,
+                    }
+                }
             },
             {
                 path: 'archivedashboard',

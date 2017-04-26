@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { ActionableRouting } from './actionable.routing';
 import { ActionableComponent } from './actionable.component';
-
 import {
     ActionableActiveComponent,
     ActionableClosedComponent, ActionableService

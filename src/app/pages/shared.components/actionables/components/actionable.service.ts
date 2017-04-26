@@ -186,4 +186,12 @@ export class ActionableService extends ServiceBase<ActionableModel> implements I
             .Filter(`IncidentId eq ${incidentId} and DepartmentId eq ${departmentId} and CompletionStatus eq 'Close'`)
             .Execute();
     }
+
+    public GetPendingOpenActionableForIncidentAndDepartment(incidentId:number,departmentId:number):Observable<ResponseModel<ActionableModel>>{
+        return this._dataService.Query()
+        .Filter(`IncidentId eq ${incidentId} and DepartmentId eq ${departmentId} and ClosedOn eq null and ReopenedOn eq null or ReopenedOn ne null`)
+        .Execute();
+    }
+
+    
 }

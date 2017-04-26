@@ -22,7 +22,7 @@ export class UserPermissionService
     private departmentsToViewConstant: DepartmentsToView[] = [];
     public parentDepartmentUserPermission: ResponseModel<UserPermissionModel>;
     public childrenDepartmentUserPermission: ResponseModel<UserPermissionModel>;
-    
+
     /**
      * Creates an instance of UserPermissionService.
      * @param {DataServiceFactory} dataServiceFactory 
@@ -36,7 +36,7 @@ export class UserPermissionService
         this._bulkDataService = this.dataServiceFactory
             .CreateServiceWithOptionsAndActionSuffix<UserPermissionModel>
             ('UserPermissionBatch', 'BatchPostAsync', option);
-        
+
 
     }
 
@@ -73,7 +73,7 @@ export class UserPermissionService
     }
 
     public GetAllDepartmentUsers(departmentId: number): Observable<ResponseModel<UserPermissionModel>> {
-        
+
         let allChildDepartmentIdsProjection: string = '';
         let count: number = 1;
         return this._dataService.Query()
@@ -81,51 +81,31 @@ export class UserPermissionService
             .Filter(`DepartmentId eq ${departmentId}`)
             .OrderBy('CreatedOn desc')
             .Execute();
-            //.flatMap((data: Observable<NotifyPeopleModel[]>)=>this.GetSubDepartments(departmentId))
-            
-            // .flatMap((data: NotifyPeopleModel[])=> this.GetSubDepartments(departmentId))
-            // .map((childDepartments: ResponseModel<DepartmentModel>) => {
-            //     console.log(childDepartments);
-            //     childDepartments.Records.forEach((item: DepartmentModel, index: number) => {
-            //         if (index == 0) {
-            //             allChildDepartmentIdsProjection = `DepartmentId eq ${item.DepartmentId}`;
-            //         }
-            //         else {
-            //             allChildDepartmentIdsProjection = allChildDepartmentIdsProjection + `or DepartmentId eq ${item.DepartmentId}`;
-            //         }
-            //     });
-            //     return this.allDepartmentUserPermission;
-            // })
-            // .flatMap((data: ResponseModel<NotifyPeopleModel>) => this.GetUserPermissionFromDepartments(allChildDepartmentIdsProjection))
-            // .map((userPermissions: ResponseModel<UserPermissionModel>) => {
-            //     console.log(userPermissions);
-            //     let notifyModel: NotifyPeopleModel = new NotifyPeopleModel();
-            //     count = count + 1;
-            //     notifyModel.id = count;
-            //     notifyModel.text = userPermissions.Records[0].Department.DepartmentName;
-            //     notifyModel.population = '';
-            //     notifyModel.checked = false;
-            //     userPermissions.Records.forEach((item: UserPermissionModel, index: number) => {
-            //         let notifyModelInner: NotifyPeopleModel = new NotifyPeopleModel();
-            //         count = count + 1;
-            //         notifyModelInner.id = count;
-            //         notifyModelInner.text = item.User.Email;
-            //         notifyModelInner.population = '';
-            //         notifyModelInner.checked = false;
-            //         notifyModel.children.push(notifyModelInner);
-            //     });
-            //     this.allDepartmentUserPermission.push(notifyModel);
-            //     return this.allDepartmentUserPermission;
-            // })
+
     }
 
-    public GetAllSubDepartments(departmentId: number): Observable<ResponseModel<DepartmentModel>>{
+    public GetAllDepartmentUsersFromDepartmentIdProjection(departmentIdProjection: string): Observable<ResponseModel<UserPermissionModel>> {
+
+        return this._dataService.Query()
+            .Expand('Department($select=DepartmentId,DepartmentName),User($select=Email,Name,MainContact,AlternateContact,UserProfileId,UserId)')
+            .Filter(`${departmentIdProjection}`)
+            .OrderBy('CreatedOn desc')
+            .Execute();
+
+    }
+    public GetAllDepartmentsFromDepartmentIdProjection(departmentIdProjection: string): Observable<ResponseModel<DepartmentModel>> {
+        return this.departmentService.GetAllDepartmentsFromDepartmentIdProjection(departmentIdProjection);
+    }
+
+    public GetAllSubDepartments(departmentId: number): Observable<ResponseModel<DepartmentModel>> {
         return this.departmentService.GetAllActiveSubDepartments(departmentId);
     }
 
+    public GetAllDepartmentMatrix(): Observable<ResponseModel<DepartmentModel>> {
+        return this.departmentService.GetAllActiveDepartmentParentDepartmentMatrix();
+    }
 
 
-    
 
     public GetUserPermissionFromDepartments(allChildDepartmentIdsProjection: string): Observable<ResponseModel<UserPermissionModel>> {
         return this._dataService.Query()

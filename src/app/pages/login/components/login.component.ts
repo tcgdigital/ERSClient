@@ -34,9 +34,12 @@ export class LoginComponent {
     }
 
     Login(userid: string, password: string): void {
+        
         this.authService.Login(userid, password)
             .subscribe((data: AuthResponseModel) => {
                 console.log(jwtDecode(data.access_token));
+                var loginCredentialBasic = jwtDecode(data.access_token);
+                 UtilityService.SetToSession({ 'CurrentUserId': loginCredentialBasic.UserId });
                 this.router.navigate(['pages/dashboard']);
             }, (error: any) => {
                 console.log(`Error: ${error}`);

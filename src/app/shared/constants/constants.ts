@@ -62,6 +62,49 @@ export class GlobalConstants {
             text: "Priority Low"
         }
     ];
+    public static EmergencySituationEnum: any[] = [
+        {
+            EmergencySituationId: "1",
+            enumtype: 'EmergencyInitiationtoHoD',
+            EmergencySituationName: 'Emergency Initiation to HoD'
+        },
+        {
+            EmergencySituationId: "2",
+            enumtype: 'EmergencyInitiationtoTeamMember',
+            EmergencySituationName: 'Emergency Initiation to Team Member'
+        },
+        {
+            EmergencySituationId: "3",
+            enumtype: 'RequestAssignedtoDepartmentSPOC',
+            EmergencySituationName: 'Request Assigned to Department SPOC'
+        },
+        {
+            EmergencySituationId: "7",
+            enumtype: 'RequestCompletedToRequesterDepartmentSPOC',
+            EmergencySituationName: 'Request Completed To Requester Department SPOC'
+        },
+        {
+            EmergencySituationId: "4",
+            enumtype: 'ChecklistCompletedToDepartmentSPOC',
+            EmergencySituationName: 'Checklist Completed To Department SPOC'
+        },
+        {
+            EmergencySituationId: "5",
+            enumtype: 'ChecklistReopenedToDepartmentSPOC',
+            EmergencySituationName: 'Checklist Reopened To DepartmentSPOC'
+        },
+        {
+            EmergencySituationId: "6",
+            enumtype: 'EmergencyClosureToTeamMember',
+            EmergencySituationName: 'Emergency Closure to Team Member'
+        }
+        ,
+        {
+            EmergencySituationId: "8",
+            enumtype: 'RequestApprovalToApproverDepartmentSPOC',
+            EmergencySituationName: 'Request Approval To Approver Department SPOC'
+        }
+    ];
     public static InvolvedPartyType: Object = [
         { value: "Flight", key: 1 },
         { value: "NonFlight", key: 2 }
@@ -101,28 +144,28 @@ export class GlobalConstants {
             caption: 'Deceased'
         }
     ];
-     public static RequesterType: any[] = [
-           {
-               value: "1",
-               enumtype: 'PDA',
-               caption: 'PDA'
-           },
-           {
-               value: "2",
-               enumtype: 'NOK',
-               caption: 'NOK'
-           },
-           {
-               value: "3",
-               enumtype: 'Staff',
-               caption: 'Staff'
-           },
-           {
-               value: "4",
-               enumtype: 'Others',
-               caption: 'Others'
-           }
-        ];
+    public static RequesterType: any[] = [
+        {
+            value: "1",
+            enumtype: 'PDA',
+            caption: 'PDA'
+        },
+        {
+            value: "2",
+            enumtype: 'NOK',
+            caption: 'NOK'
+        },
+        {
+            value: "3",
+            enumtype: 'Staff',
+            caption: 'Staff'
+        },
+        {
+            value: "4",
+            enumtype: 'Others',
+            caption: 'Others'
+        }
+    ];
 
 
 

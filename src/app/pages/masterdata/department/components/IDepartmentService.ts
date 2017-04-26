@@ -8,4 +8,6 @@ export interface IDepartmentService extends IServiceInretface<DepartmentModel> {
     BatchOperation(): Observable<ResponseModel<BaseModel>>;
 
     GetParentDepartments(): Observable<ResponseModel<DepartmentModel>>;
+
+    GetAllDepartmentsFromDepartmentIdProjection(departmentIdProjection: string): Observable<ResponseModel<DepartmentModel>>;
 }

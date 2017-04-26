@@ -1,0 +1,39 @@
+<div class="card">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+        <div class="card-header">
+            <strong>Department Wise Closure</strong>
+        </div>
+        <div class="card-block">
+
+            <div class="row">
+                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                    <label for="EmergencyName">Emergency Name:</label>
+                    <input id="EmergencyName" class="form-control" type="text" name="EmergencyName" formControlName="EmergencyName" placeholder="Enter Emergency Name"
+                        disabled />
+                </div>
+                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                    <label for="EmergencyInitiationNotes">Emergency Initiation Notes:</label>
+                    <input id="EmergencyInitiationNotes" class="form-control" type="text" name="EmergencyInitiationNotes" formControlName="EmergencyInitiationNotes"
+                        placeholder="Enter Emergency Initiation Notes" disabled />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                    <label for="ClosureReport">Closure Reports:</label>
+                    <textarea rows="7" cols="130" id="ClosureReport" class="form-control" type="text" name="ClosureReport" formControlName="ClosureReport" placeholder="Enter Closure Report"
+                         ></textarea>
+                </div>
+                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                    <label for="ClosureRemarks">Closure Remarks: (Optional)</label>
+                    <textarea rows="7" cols="130" id="ClosureRemarks" class="form-control" type="text" name="ClosureRemarks" formControlName="ClosureRemarks" placeholder="Enter Closure Remarks"
+                         ></textarea>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-header pull-right">
+            <button type="submit" class="pull-right btn btn-primary" [disabled]="!isSubmited" aria-label="Submit">Submit</button>
+            <button type="button" [disabled]="!isSubmited" class="pull-right btn btn-primary margin-right-15px" aria-label="Save" (click)="onSave()">Save</button>
+        </div>
+    </form>
+</div>
