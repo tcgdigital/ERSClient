@@ -364,6 +364,7 @@ export class AffectedPeopleListComponent implements OnInit {
             this.searchAffectedPeople(query, this.currentIncident);
         }
         else{
+            this.selectCurrentIncident();
             this.getAffectedPeople(this.currentIncident);
         }
 

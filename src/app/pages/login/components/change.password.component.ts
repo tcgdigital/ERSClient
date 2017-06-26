@@ -72,7 +72,7 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
                     if (response) {
                         if (response.Code === 3001) {
                             this.changePasswordForm.reset();
-                            this.toastrService.success('Psaaword has been changed successfully. Redirecting to login for sign in again',
+                            this.toastrService.success('Password has been changed successfully. Redirecting to login for sign in again',
                                 'Sign In', this.toastrConfig);
                             this.router.navigate(['login']);
                         } else {

@@ -26,7 +26,7 @@ export class BrandHeaderComponent implements OnInit {
 
     public HelpFileFath: string;
     public FileName: string;
-    public logoImage: string = 'assets/images/logo.png';
+    public logoImage: string = 'assets/images/pal_logo.png';
     public logoUrl: string = '#';
     public enabledPassword: boolean = !GlobalConstants.AD_AUTH_ENABLED;
 
