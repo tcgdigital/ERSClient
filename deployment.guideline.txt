@@ -28,3 +28,5 @@
 3. Setting up base tag in index.html. It should be immediately after <head> tag
 
 <base href="/"/>
+
+4. Completed
