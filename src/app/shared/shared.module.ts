@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Ng2BootstrapModule } from 'ng2-bootstrap';
+import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { NgSelectizeModule } from 'ng-selectize';
 import {
     HTTP_INTERCEPTOR_PROVIDER,
     HTTP_INTERCEPTOR_NO_OVERRIDE_PROVIDER
 } from './interceptor';
 import { PaddingFormatterPipe } from './pipes';
+
 
 import {
     BrandHeaderComponent,
@@ -24,6 +25,7 @@ import {
     GenericSearchComponent,
     TextAccordionComponent,
     TabControlComponent,
+    SubTabControlComponent,
     ResponsiveTableComponent,
     CustomDropdownComponent,
     MapWidgetComponent,
@@ -78,6 +80,7 @@ const SHARED_COMPONENTS: any[] = [
     GenericSearchComponent,
     TextAccordionComponent,
     TabControlComponent,
+    SubTabControlComponent,
     ResponsiveTableComponent,
     CustomDropdownComponent,
     MapWidgetComponent,

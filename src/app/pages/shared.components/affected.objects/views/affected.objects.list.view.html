@@ -9,7 +9,7 @@
                 <th>Cargo Type</th>
                 <th>Manifest Pieces</th>
                 <th>Manifest weight(kg)</th>
-                 <th>POL</th>
+                <th>POL</th>
                 <th>POU</th>
                 <th>Cargo Status</th>
                 <th>Verification Status</th>
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr [hidden]="affectedObjects.length != 0">
-                <td colspan="8">No Cargo is available.</td>
+                <td colspan="11">No Cargo is available.</td>
             </tr>
             <tr *ngFor="let affectedObject of affectedObjects">
                 <td data-title="Reference Number">{{affectedObject.TicketNumber}}&nbsp;</td>
@@ -34,18 +34,9 @@
                     <i class="fa fa-check fa-lg fontGreen" aria-hidden="true" [hidden]="affectedObject.IsVerified == false"></i>
                     <i class="fa fa-question fa-lg fontAmber" aria-hidden="true" [hidden]="affectedObject.IsVerified == true"></i>
                 </td>
-                <!--<td data-title="Verification Status"> <i class="fa fa-check fa-2x fontGreen" aria-hidden="true" [hidden]="affectedObject.IsVerified == false"></i>
-                    <i class="fa fa-question fa-2x fontAmber" aria-hidden="true" [hidden]="affectedObject.IsVerified == true"></i>&nbsp;</td>-->
-                <td data-title="Interaction Details"><i class="fa fa-comments" [ngClass]="{'trailActiveButtonStyle': affectedObject.commlength, 'trailNormalButtonStyle': !affectedObject.commlength}" (click)="openChatTrails(affectedObject.AffectedObjectId)"></i>
+                <td data-title="Interaction Details"><i class="fa fa-comments" [ngClass]="{'trailActiveButtonStyle': affectedObject.commlength, 'trailNormalButtonStyle': !affectedObject.commlength}"
+                        (click)="openChatTrails(affectedObject.AffectedObjectId)"></i>
                 </td>
-                <!--<td data-title="Update Status">{{affectedObject.LostFoundStatus!=null ? affectedObject.LostFoundStatus : "NA"}}&nbsp;&nbsp;<i class="fa fa-edit fa-md"
-                        data-dropdown="#drop1" (click)="updateobjId(affectedObject.AffectedObjectId)"></i>
-                    <div class="dropdown-menu dropdown-anchor-top-right dropdown-has-anchor" id="drop1">
-                        <ul class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
-                            <li *ngFor="let status of allcargostatus"><a href="javascript:void(0);" (click)="updateStatus(status.key)">{{status.caption}}</a></li>
-                        </ul>
-                    </div>
-                </td>-->
                 <td data-title="Interaction Details">
                     <i class="fa fa-edit fa-2x" (click)="openAffectedObjectDetail(affectedObject)"></i>
                 </td>
@@ -63,44 +54,40 @@
                 <h4 class="modal-title pull-left">Communication Trail</h4>
                 <button type="button" class="close pull-right" aria-label="Close" (click)="cancelTrailModal()">
                   <span aria-hidden="true">&times;</span>
-                   </button>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="row modalBodyHeaderStyle">
                     <div class="col-sm-6 form-group">
                         <label class="lebelHeaderStyle"><strong>AWB Number</strong></label>
-                        <br>
                         <label class="form-control">{{AWBNumber}}</label>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label class="lebelHeaderStyle"><strong>Reference Number</strong></label>
-                        <br>
                         <label class="form-control">ticketNumber</label>
                     </div>
                 </div>
-                <br>
-                <!--<div class="col-sm-12">
-                    <div class="col-sm-6 form-group">
-                        <label>AWB Number</label>
-                        <label>{{AWBNumber}}</label>
+                <div class="row">
+                    <div class="col-12">
+                        <responsive-table>
+                            <table responsive-table-body>
+                                <tbody>
+                                    <tr *ngFor="let comm of communications">
+                                        <td data-title="comm">
+                                            <strong>{{comm.RequesterType}}</strong> logged by
+                                            <span [hidden]="comm.RequesterDepartment.length==0">
+                                                <strong>{{comm.RequesterName}} (Dept: {{comm.RequesterDepartment}})</strong>
+                                            </span>
+                                            <span> on 
+                                                <strong>{{comm.CreatedOn | date: 'dd-MMM-yyyy hh:mm a'}}&nbsp;:</strong>
+                                            </span> {{comm.Answers}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </responsive-table>
                     </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Reference Number</label>
-                        <label>{{ticketNumber}}</label>
-                    </div>
-                </div>-->
-                <responsive-table>
-                    <table responsive-table-body>
-                        <tbody>
-                            <tr *ngFor="let comm of communications">
-                                <td data-title="comm"><strong>{{comm.RequesterType}}</strong> logged by
-                                    <span [hidden]="comm.RequesterDepartment.length==0"><strong>{{comm.RequesterName}} (Dept: {{comm.RequesterDepartment}})</strong></span>
-                                    <span> on <strong>{{comm.CreatedOn | date: 'dd-MMM-yyyy hh:mm a'}}&nbsp;:</strong></span>                                    {{comm.Answers}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </responsive-table>
+                </div>
             </div>
         </div>
     </div>
@@ -115,191 +102,108 @@
                 <h4 class="modal-title pull-left">Additional Information</h4>
                 <button type="button" class="close pull-right" aria-label="Close" (click)="cancelModal()">
                   <span aria-hidden="true">&times;</span>
-                   </button>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="holderStyle">
                     <div class="row modalBodyHeaderStyle">
                         <div class="col-sm-6 form-group">
                             <label class="lebelHeaderStyle"><strong>AWB</strong></label>
-                            <br>
+                            <!--<br>-->
                             <label class="form-control">{{affectedObjectDetails.AWB}}</label>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label class="lebelHeaderStyle"><strong>Reference Number</strong></label>
-                            <br>
+                            <!--<br>-->
                             <label class="form-control">{{affectedObjectDetails.TicketNumber}}</label>
                         </div>
                     </div>
-
-                    <div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                                        <label for="DiscussionNote">Shipper's Name:</label>
-                                        <input value="{{affectedObjectDetails.ShipperName}}" readonly type="text" class="form-control" />
-                                    </div>
-
-                                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                                        <label for="DiscussionNote">Shipper's Address::</label>
-                                        <input value="{{affectedObjectDetails.ShipperAddress}}" readonly type="text" class="form-control" />
-                                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                                    <label for="DiscussionNote">Shipper's Name:</label>
+                                    <input value="{{affectedObjectDetails.ShipperName}}" readonly type="text" class="form-control" />
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                                        <label for="DiscussionNote">Consignee’s  Name:</label>
-                                        <input value="{{affectedObjectDetails.ConsigneeName}}" readonly type="text" class="form-control" />
-                                    </div>
 
-                                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                                        <label for="DiscussionNote">Consignee’s Address::</label>
-                                        <input value="{{affectedObjectDetails.ConsigneeAddress}}" readonly type="text" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                                        <md-checkbox id="VerificationStatus" [disabled]="true" [(ngModel)]="affectedObjectDetails.IsVerified" aria-label="Add" ng-disabled="true">
-                                            Verification Status:
-                                        </md-checkbox>
-                                    </div>
-
-                                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                                        <label for="DiscussionNote">Status:</label>
-                                        <select id="selectStatus" [(ngModel)]="affectedObjectDetails.LostFoundStatus" class="form-control">
-                                           <option *ngFor="let status of allcargostatus" [value]="status.caption" >{{status.caption}} </option>                      
-                                         </select>
-                                    </div>
+                                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                                    <label for="DiscussionNote">Shipper's Address::</label>
+                                    <input value="{{affectedObjectDetails.ShipperAddress}}" readonly type="text" class="form-control" />
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <responsive-table [scrollableclass]="true">
-                                    <table responsive-table-body>
-                                        <thead>
-                                            <tr>
-                                                <th>Caller Name</th>
-                                                <th>Contact Number</th>
-                                                <th>Select as NOK</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr [hidden]="callers.length != 0">
-                                                <td colspan="9">No Call has been made yet.</td>
-                                            </tr>
-                                            <tr *ngFor="let caller of callers">
-                                                <td data-title="comm"><strong>{{caller.FirstName + "  "+ caller.LastName}}</strong>
-                                                    <td data-title="comm"><strong>{{caller.ContactNumber}}</strong>
-                                                    </td>
-                                                    <td data-title="Select NOK">
-                                                        <md-checkbox [(ngModel)]="caller.IsNok" (change)="saveNok(affectedObjectDetails.AffectedObjectId,caller,$event)" aria-label="Add"></md-checkbox>
-                                                    </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </responsive-table>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                                    <label for="DiscussionNote">Consignee’s  Name:</label>
+                                    <input value="{{affectedObjectDetails.ConsigneeName}}" readonly type="text" class="form-control" />
+                                </div>
+
+                                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                                    <label for="DiscussionNote">Consignee’s Address::</label>
+                                    <input value="{{affectedObjectDetails.ConsigneeAddress}}" readonly type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                                    <md-checkbox id="VerificationStatus" [disabled]="true" [(ngModel)]="affectedObjectDetails.IsVerified" aria-label="Add" ng-disabled="true">
+                                        Verification Status:
+                                    </md-checkbox>
+                                </div>
+
+                                <div class="form-group col-lg-6 col-sm-12 col-md-6">
+                                    <label for="DiscussionNote">Status:</label>
+                                    <select id="selectStatus" [(ngModel)]="affectedObjectDetails.LostFoundStatus" class="form-control">
+                                           <option *ngFor="let status of allcargostatus" [value]="status.caption" >{{status.caption}} </option>           
+                                        </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                                <label for="DiscussionNote">Identification Details:</label>
-                                <input value="{{affectedObjectDetails.IdentificationDesc}}" [(ngModel)]="affectedObjectDetails.IdentificationDesc" type="text"
-                                    class="form-control" />
-                            </div>
-                            <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                                <label for="DiscussionNote">Remarks:</label>
-                                <input value="{{affectedObjectDetails.Remarks}}" [(ngModel)]="affectedObjectDetails.Remarks" type="text" class="form-control"
-                                />
-                            </div>
-                            <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                                <div class="buttonholder">
-                                    <button class="btn btn-primary" type="button" (click)="saveUpdateAffectedObject(affectedObjectDetails)">Submit</button>
-                                </div>
-                            </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <responsive-table [scrollableclass]="true">
+                                <table responsive-table-body>
+                                    <thead>
+                                        <tr>
+                                            <th>Caller Name</th>
+                                            <th>Contact Number</th>
+                                            <th>Select as NOK</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr [hidden]="callers.length != 0">
+                                            <td colspan="3">No Call has been made yet.</td>
+                                        </tr>
+                                        <tr *ngFor="let caller of callers">
+                                            <td data-title="comm">
+                                                <strong>{{caller.FirstName + "  "+ caller.LastName}}</strong>
+                                            </td>
+                                            <td data-title="comm">
+                                                <strong>{{caller.ContactNumber}}</strong>
+                                            </td>
+                                            <td data-title="Select NOK">
+                                                <md-checkbox [(ngModel)]="caller.IsNok" (change)="saveNok(affectedObjectDetails.AffectedObjectId,caller,$event)" aria-label="Add"></md-checkbox>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </responsive-table>
                         </div>
                     </div>
-
-
-
-                    <!--<div class="row">
+                    <div class="row">
                         <div class="form-group col-lg-4 col-sm-12 col-md-6">
                             <label for="DiscussionNote">Identification Details:</label>
-                            <input value="{{affectedObjectDetails.IdentificationDesc}}" type="text" class="form-control" />
-                        </div>
-
-                        <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                            <label for="DiscussionNote">Status:</label>
-                            <select id="selectStatus" [(ngModel)]="affectedObjectDetails.LostFoundStatus" class="form-control">
-                                  <option *ngFor="let status of allcargostatus" [value]="status.caption" >{{status.caption}} </option>                      
-                               </select>
+                            <input value="{{affectedObjectDetails.IdentificationDesc}}" [(ngModel)]="affectedObjectDetails.IdentificationDesc" type="text"
+                                class="form-control" />
                         </div>
                         <div class="form-group col-lg-4 col-sm-12 col-md-6">
                             <label for="DiscussionNote">Remarks:</label>
-                            <input value="{{affectedObjectDetails.Remarks}}" type="text" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                            Callers:
-                            <i class="fa fa-edit fa-2x" data-dropdown="#drop1" (click)="openCallerList(affectedPersonModelForStatus)"></i>
-                            <div class="dropdown-menu dropdown-anchor-top-left dropdown-has-anchor" id="drop1">
-                              
-                                <div class="CallerClass">
-                                    <responsive-table>
-                                        <table responsive-table-body>
-                                            <thead>
-                                                <tr>
-                                                    <th>Caller Name</th>
-                                                    <th>Contact Number</th>
-                                                    <th>Select as nok</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr [hidden]="callers.length != 0">
-                                                    <td colspan="9">No Call has been made yet.</td>
-                                                </tr>
-                                                <tr *ngFor="let caller of callers">
-                                                    <td data-title="comm"><strong>{{caller.FirstName + "  "+ caller.LastName}}</strong>
-                                                        <td data-title="comm"><strong>{{caller.ContactNumber}}</strong>
-                                                        </td>
-                                                        <td data-title="Select NOK">
-                                                            <md-checkbox [(ngModel)]="caller.IsNok" (change)="saveNok(affectedPersonModel.AffectedPersonId,caller,$event)" aria-label="Add"></md-checkbox>
-                                                        </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </responsive-table>
-                                </div>
-                            </div>
+                            <input value="{{affectedObjectDetails.Remarks}}" [(ngModel)]="affectedObjectDetails.Remarks" type="text" class="form-control"
+                            />
                         </div>
                         <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                            <label for="DiscussionNote">Shipper's Name:</label>
-                            <input value="{{affectedObjectDetails.ShipperName}}" readonly type="text" class="form-control" />
-                        </div>
-
-                        <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                            <label for="DiscussionNote">Shipper's Address::</label>
-                            <input value="{{affectedObjectDetails.ShipperAddress}}" readonly type="text" class="form-control" />
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                            <label for="DiscussionNote">Consignee’s  Name:</label>
-                            <input value="{{affectedObjectDetails.ConsigneeName}}" readonly type="text" class="form-control" />
-                        </div>
-
-                        <div class="form-group col-lg-4 col-sm-12 col-md-6">
-                            <label for="DiscussionNote">Consignee’s Address::</label>
-                            <input value="{{affectedObjectDetails.ConsigneeAddress}}" readonly type="text" class="form-control" />
-                        </div>
-                    </div>-->
-                    <!--<div class="row">
-                        <div class="col-lg-6 col-sm-12 col-md-6" *ngIf="!isArchive">
                             <div class="buttonholder">
                                 <button class="btn btn-primary" type="button" (click)="saveUpdateAffectedObject(affectedObjectDetails)">Submit</button>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>

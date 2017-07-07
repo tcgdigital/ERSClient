@@ -16,9 +16,7 @@ import {
     ResponseModel, DataExchangeService, KeyValue,
     UtilityService, GlobalConstants, GlobalStateService, AuthModel
 } from '../../../../shared';
-import { ModalDirective } from 'ng2-bootstrap/modal';
-
-
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'actionable-close',
@@ -30,8 +28,6 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
 
     closeActionables: ActionableModel[] = [];
     public form: FormGroup;
-    private currentDepartmentId: number = null;
-    private currentIncident: number = null;
     actionableModelToUpdate: ActionableModel;
     credential: AuthModel;
     protected _onRouteChange: Subscription;
@@ -40,6 +36,9 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
     actionableWithParents: ActionableModel[] = [];
     public globalStateProxy: GlobalStateService;
     public completionStatusTypes: any[] = GlobalConstants.CompletionStatusType;
+    private currentDepartmentId: number = null;
+    private currentIncident: number = null;
+
     constructor(formBuilder: FormBuilder, private actionableService: ActionableService,
         private dataExchange: DataExchangeService<boolean>, private globalState: GlobalStateService,
         private toastrService: ToastrService, private departmentService: DepartmentService,
@@ -49,16 +48,16 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): any {
-        this.currentDepartmentId = +UtilityService.GetFromSession("CurrentDepartmentId");
+        this.currentDepartmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
 
-        if (this._router.url.indexOf("archivedashboard") > -1) {
+        if (this._router.url.indexOf('archivedashboard') > -1) {
             this.isArchive = true;
-            this.currentIncident = +UtilityService.GetFromSession("ArchieveIncidentId");
+            this.currentIncident = +UtilityService.GetFromSession('ArchieveIncidentId');
 
         }
         else {
             this.isArchive = false;
-            this.currentIncident = +UtilityService.GetFromSession("CurrentIncidentId");
+            this.currentIncident = +UtilityService.GetFromSession('CurrentIncidentId');
         }
         this.getAllCloseActionable(this.currentIncident, this.currentDepartmentId);
         this.credential = UtilityService.getCredentialDetails();
@@ -66,36 +65,10 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
 
         this.form = this.resetActionableForm();
         this.actionableModelToUpdate = new ActionableModel();
-        this.dataExchange.Subscribe("CloseActionablePageInitiate", model => this.onCloseActionablePageInitiate(model));
+        this.dataExchange.Subscribe('CloseActionablePageInitiate', (model) =>       this.onCloseActionablePageInitiate(model));
 
         this.globalState.Subscribe('incidentChange', (model: KeyValue) => this.incidentChangeHandler(model));
         this.globalState.Subscribe('departmentChangeFromDashboard', (model: KeyValue) => this.departmentChangeHandler(model));
-    }
-
-
-    private incidentChangeHandler(incident: KeyValue): void {
-        this.currentIncident = incident.Value;
-        this.getAllCloseActionable(this.currentIncident, this.currentDepartmentId);
-    }
-
-    private departmentChangeHandler(department: KeyValue): void {
-        this.currentDepartmentId = department.Value;
-        this.getAllCloseActionable(this.currentIncident, this.currentDepartmentId);
-    }
-
-    private hasChildChecklist(checkListId): boolean {
-        if (this.parentChecklistIds.length != 0)
-            return this.parentChecklistIds.some(x => x == checkListId);
-        else
-            return false;
-
-    }
-
-    private resetActionableForm(actionable?: ActionableModel): FormGroup {
-        return new FormGroup({
-            Comments: new FormControl(''),
-            URL: new FormControl('')
-        });
     }
 
     onCloseActionablePageInitiate(isClosed: boolean): void {
@@ -103,14 +76,14 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.dataExchange.Unsubscribe("CloseActionablePageInitiate");
-        this.dataExchange.Unsubscribe("departmentChangeFromDashboard");
+        this.dataExchange.Unsubscribe('CloseActionablePageInitiate');
+        this.dataExchange.Unsubscribe('departmentChangeFromDashboard');
 
     }
 
     IsReopen(event: any, editedActionable: ActionableModel): void {
-        let tempActionable = this.closeActionables
-            .find((item: ActionableModel) => item.ActionId == editedActionable.ActionId);
+        const tempActionable = this.closeActionables
+            .find((item: ActionableModel) => item.ActionId === editedActionable.ActionId);
         tempActionable.Done = true;
         this.actionableService.SetParentActionableStatusByIncidentIdandDepartmentIdandActionable(this.currentIncident,
             this.currentDepartmentId, editedActionable, this.closeActionables);
@@ -121,10 +94,10 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
         this.actionableService.GetAllCloseByIncidentIdandDepartmentId(incidentId, departmentId)
             .subscribe((response: ResponseModel<ActionableModel>) => {
                 this.closeActionables = response.Records;
-                this.closeActionables.forEach(x => {
-                    x["expanded"] = false;
-                    x["Done"] = false;
-                    x["actionableChilds"] = [];
+                this.closeActionables.forEach((x) => {
+                    x['expanded'] = false;
+                    x['Done'] = false;
+                    x['actionableChilds'] = [];
                 });
                 this.getAllCloseActionableByIncident(this.currentIncident);
             }, (error: any) => {
@@ -136,11 +109,9 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
         this.actionableService.GetAllCloseByIncidentId(incidentId)
             .subscribe((response: ResponseModel<ActionableModel>) => {
                 this.actionableWithParents = response.Records;
-                this.parentChecklistIds = this.actionableWithParents.map(function (actionable) {
-                    // let Id = actionable.ParentCheckListId;
-                    //return Id;
+                this.parentChecklistIds = this.actionableWithParents.map((actionable) => {
                     return 1;
-                })
+                });
             }, (error: any) => {
                 console.log(`Error: ${error}`);
             });
@@ -156,17 +127,18 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
     }
 
     openChildActionable(actionable: ActionableModel): void {
-        actionable["expanded"] = !actionable["expanded"];
+        actionable['expanded'] = !actionable['expanded'];
         this.actionableService.GetChildActionables(actionable.ChklistId, this.currentIncident)
             .subscribe((responseActionable: ResponseModel<ActionableModel>) => {
                 this.departmentService.GetDepartmentNameIds()
                     .subscribe((response: ResponseModel<DepartmentModel>) => {
                         let childActionables: ActionableModel[] = [];
                         childActionables = responseActionable.Records;
-                        childActionables.forEach(x => {
-                            x["DepartmentName"] = response.Records.find(y => { return y.DepartmentId == x.DepartmentId; }).DepartmentName;
+                        childActionables.forEach((x) => {
+                            x['DepartmentName'] = response.Records
+                                .find((y) => y.DepartmentId === x.DepartmentId).DepartmentName;
                         });
-                        actionable["actionableChilds"] = childActionables;
+                        actionable['actionableChilds'] = childActionables;
 
                     }, (error: any) => {
                         console.log(`Error: ${error}`);
@@ -177,19 +149,19 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
     }
 
     closedActionableClick(closedActionablesUpdate: ActionableModel[]): void {
-        let filterActionableUpdate = closedActionablesUpdate.filter((item: ActionableModel) => {
-            return (item.Done == true);
+        const filterActionableUpdate = closedActionablesUpdate.filter((item: ActionableModel) => {
+            return (item.Done === true);
         });
         if (filterActionableUpdate.length > 0) {
-            filterActionableUpdate.forEach(x => {
-                delete x["expanded"];
-                delete x["actionableChilds"];
+            filterActionableUpdate.forEach((x) => {
+                delete x['expanded'];
+                delete x['actionableChilds'];
 
             });
-            this.batchUpdate(filterActionableUpdate.map(x => {
+            this.batchUpdate(filterActionableUpdate.map((x) => {
                 return {
                     ActionId: x.ActionId,
-                    ActualClose: (x.CompletionStatus == 'Closed') ? new Date() : null,
+                    ActualClose: (x.CompletionStatus === 'Closed') ? new Date() : null,
                     CompletionStatus: x.CompletionStatus,
                     CompletionStatusChangedBy: this.credential.UserId,
                     CompletionStatusChangedOn: new Date()
@@ -197,13 +169,13 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
             }));
         }
         else {
-            this.toastrService.error("Please select at least one checklist", 'Error', this.toastrConfig);
+            this.toastrService.error('Please select at least one checklist', 'Error', this.toastrConfig);
         }
     }
 
     batchUpdate(data: any[]) {
         this.actionableService.BatchOperation(data)
-            .subscribe(x => {
+            .subscribe((x) => {
                 this.toastrService.success('Actionables updated successfully.', 'Success', this.toastrConfig);
                 this.getAllCloseActionable(this.currentIncident, this.currentDepartmentId);
                 this.globalStateProxy.NotifyDataChanged('checkListStatusChange', null);
@@ -214,5 +186,29 @@ export class ActionableClosedComponent implements OnInit, OnDestroy {
 
     cancelUpdateCommentAndURL(): void {
         this.childModal.hide();
+    }
+
+    private incidentChangeHandler(incident: KeyValue): void {
+        this.currentIncident = incident.Value;
+        this.getAllCloseActionable(this.currentIncident, this.currentDepartmentId);
+    }
+
+    private departmentChangeHandler(department: KeyValue): void {
+        this.currentDepartmentId = department.Value;
+        this.getAllCloseActionable(this.currentIncident, this.currentDepartmentId);
+    }
+
+    private hasChildChecklist(checkListId): boolean {
+        if (this.parentChecklistIds.length !== 0)
+            return this.parentChecklistIds.some((x) => x === checkListId);
+        else
+            return false;
+    }
+
+    private resetActionableForm(actionable?: ActionableModel): FormGroup {
+        return new FormGroup({
+            Comments: new FormControl(''),
+            URL: new FormControl('')
+        });
     }
 }

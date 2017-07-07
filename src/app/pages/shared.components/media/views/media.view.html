@@ -1,18 +1,4 @@
-<div class="card">
-    <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-            <!--<li class="nav-item">
-                <a class="nav-link active" [routerLink]="['./query']" routerLinkActive="active">Media Query</a>
-            </li>-->
-            <li class="nav-item">
-                <a class="nav-link active" [routerLink]="['./release']" routerLinkActive="active">Media Release</a>
-            </li>
-             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['./approvalpending']" routerLinkActive="active">Pending Approvals</a>
-            </li>
-        </ul>
-    </div>
-    <div class="card-block">
-        <router-outlet></router-outlet>
-    </div>
+
+<div class="card card-without-top-border" subtab-control [tabLinks]="subTabs">
+    <router-outlet outlet-body></router-outlet>
 </div>

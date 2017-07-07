@@ -2,7 +2,7 @@
     <i class="fa fa-bars" aria-hidden="true" (click)="onHambargerClicked($event)"></i>
 </div>
 <div class="col-8 col-md-2 col-lg-1 logo-align no-gutters">
-    <a [href]="logoUrl">
+    <a>
         <img [src]="logoImage" alt="PAL Logo" />
     </a>
 </div>
@@ -12,7 +12,7 @@
             <i class="fa fa-user" data-dropdown="#dropdown-standard"></i>
             <div class="dropdown-menu dropdown-anchor-top-right dropdown-has-anchor" id="dropdown-standard">
                 <ul>
-                    <li class="disable-hover"><a href="#"><i class="fa fa-user-circle-o fa-lg"></i>&nbsp; Hi! {{userName}}</a></li>
+                    <li class="disable-hover"><a><i class="fa fa-user-circle-o fa-lg"></i>&nbsp; Hi! {{userName}}</a></li>
                     <!--<li class="disable-hover"><a href="#">Last Login: {{lastLogin| date: 'dd-MMM-yyyy hh:mm a'}}</a></li>-->
                     <li class="divider"></li>
                     <li *ngIf="enabledPassword"><a href="javascript:void(0);" (click)="onChangePasswordClicked($event)"><i class="fa fa-pencil-square-o fa-lg"></i>&nbsp; Change Password</a></li>
@@ -23,6 +23,7 @@
         <div class="col-4">
             <i class="fa fa-phone" (click)="onContactClicked($event)"></i>
         </div>
+
         <!--<div class="col-4">
             <a target="_self" href="{{HelpFileFath}}" download="{{FileName}}">
                 <i class="fa fa-question-circle fa-2x"></i>

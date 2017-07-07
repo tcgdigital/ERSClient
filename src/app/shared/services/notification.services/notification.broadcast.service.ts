@@ -16,15 +16,15 @@ export class NotificationBroadcastService {
      */
     constructor(private configuration: ConnectionConfig,
         private zone: NgZone,
-        private hubConnectionFn: Function) { }
+        private hubConnectionFn: (url: string) => any) { }
 
     public connect(config?: IConnectionConfig): Promise<INotificationConnection> {
-        let $promise: Promise<INotificationConnection>
+        const $promise: Promise<INotificationConnection>
             = new Promise<INotificationConnection>((resolve, reject) => {
-                let configuration: IConnectionConfig = this.merge(config ? config : {});
+                const configuration: IConnectionConfig = this.merge(config ? config : {});
 
                 try {
-                    let serialized: string = JSON.stringify(configuration.qs);
+                    const serialized: string = JSON.stringify(configuration.qs);
                     if (configuration.logging) {
                         console.log(`Connecting with...`);
                         console.log(`configuration:[url: '${configuration.url}'] ...`);
@@ -36,16 +36,16 @@ export class NotificationBroadcastService {
                 }
 
                 // create connection object
-                let connection = this.hubConnectionFn(configuration.url);
+                const connection = this.hubConnectionFn(configuration.url);
                 connection.logging = configuration.logging;
                 connection.qs = configuration.qs;
 
                 // create a proxy
-                let hubProxy = connection.createHubProxy(configuration.hubName);
+                const hubProxy = connection.createHubProxy(configuration.hubName);
                 // !!! important. We need to register at least one on function otherwise server callbacks will not work.
                 // hubProxy.on('noOp', function () { });
 
-                let hubConnection = new NotificationConnection(connection, hubProxy, this.zone);
+                const hubConnection = new NotificationConnection(connection, hubProxy, this.zone);
                 // start the connection
                 console.log('Starting SignalR connection ...');
 
@@ -65,7 +65,7 @@ export class NotificationBroadcastService {
     }
 
     private merge(config: IConnectionConfig): ConnectionConfig {
-        let merged: ConnectionConfig = new ConnectionConfig();
+        const merged: ConnectionConfig = new ConnectionConfig();
         merged.hubName = config.hubName || this.configuration.hubName;
         merged.url = config.url || this.configuration.url;
         merged.qs = config.qs || this.configuration.qs;

@@ -1,4 +1,4 @@
-<div class="card">
+<!--<div class="card">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -12,4 +12,8 @@
     <div class="card-block">
         <router-outlet></router-outlet>
     </div>
+</div>-->
+
+<div class="card card-without-top-border" subtab-control [tabLinks]="subTabs">
+    <router-outlet outlet-body></router-outlet>
 </div>

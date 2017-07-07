@@ -7,12 +7,12 @@ import { EnquiryService } from '../shared.components/call.centre';
 import { ActionableService } from '../shared.components/actionables';
 import { DemandService } from '../shared.components/demand';
 import { DepartmentAccessOwnerService } from '../shared.components/departmentaccessowner';
-import { ModalModule, ModalDirective } from 'ng2-bootstrap';
-import { SharedModule,FileUploadService } from '../../shared';
+import { ModalModule, ModalDirective } from 'ngx-bootstrap';
+import { SharedModule, FileUploadService } from '../../shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UtilityService } from '../../shared';
 import {
-    BroadcastWidgetComponent, 
+    BroadcastWidgetComponent,
     CasualtySummaryWidgetComponent,
     ChecklistSummaryWidgetComponent,
     ClockWidgetComponent,
@@ -25,8 +25,6 @@ import {
     ReadOnlyIncidentWidgetComponent,
     ArchiveReportWidgetComponent,
     ArchiveUploadWidgetComponent
-    
-    
 } from './index';
 
 import {
@@ -42,11 +40,10 @@ import {
     ArchiveReportWidgetService,
     ArchiveDocumentTypeService,
     DepartmentClosureService
-    
 } from './index';
 
 const WIDGET_COMPONENTS: any[] = [
-    BroadcastWidgetComponent,  
+    BroadcastWidgetComponent,
     CasualtySummaryWidgetComponent,
     ChecklistSummaryWidgetComponent,
     ClockWidgetComponent,
@@ -59,7 +56,7 @@ const WIDGET_COMPONENTS: any[] = [
     ReadOnlyIncidentWidgetComponent,
     ArchiveReportWidgetComponent,
     ArchiveUploadWidgetComponent
-    
+
 ];
 
 const WIDGET_SERVICE: any[] = [
@@ -88,7 +85,7 @@ const WIDGET_SERVICE: any[] = [
     imports: [
         CommonModule,
         HttpModule,
-        ModalModule.forRoot(),        
+        ModalModule.forRoot(),
         SharedModule,
         RouterModule,
         FormsModule,

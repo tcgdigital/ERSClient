@@ -4,15 +4,15 @@ import { ToastrService } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
-import { ModalModule, ModalDirective } from 'ng2-bootstrap';
+import { ModalModule, ModalDirective } from 'ngx-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 
 import { MemberTrackRouting } from './member.track.routing';
-import { MemberTrackComponent } from "./member.track.component";
-import { MemberTrackService } from "./components/member.track.service";
-import { SharedModule } from "../../shared";
+import { MemberTrackComponent } from './member.track.component';
+import { MemberTrackService } from './components/member.track.service';
+import { SharedModule } from '../../shared';
 import { UserPermissionService } from '../masterdata/userpermission/components/userpermission.service';
-import { UserProfileService } from "../masterdata/userprofile/components";
+import { UserProfileService } from '../masterdata/userprofile/components';
 
 @NgModule({
     imports: [

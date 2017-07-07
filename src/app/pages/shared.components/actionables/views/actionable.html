@@ -1,17 +1,3 @@
-<div class="card">
-    <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['./open']" routerLinkActive="active">Open Checklist</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['./close']">Close Checklist</a>
-            </li>
-        </ul>
-    </div>
-    <div class="data-tabs">
-    <div class="card-block">
-        <router-outlet></router-outlet>
-    </div>
-    </div>
+<div class="card card-without-top-border" subtab-control [tabLinks]="subTabs">
+    <router-outlet outlet-body></router-outlet>
 </div>

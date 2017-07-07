@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpModule } from '@angular/http';
 
 import { GlobalStateService } from '../shared';
@@ -17,11 +17,9 @@ import {
 } from './shared.components/change.password';
 import { ContactInfoComponent } from './shared.components/contact.info';
 import { AuthenticationService } from './login/components/authentication.service';
-import { UserPermissionService } from "./masterdata/userpermission/components";
-import { QuickLinkQuickViewWidgetComponent } from "../pages/widgets/quicklink.quickview.widget";
+import { UserPermissionService } from './masterdata/userpermission/components';
+import { QuickLinkQuickViewWidgetComponent } from '../pages/widgets/quicklink.quickview.widget';
 import { QuickLinkService } from './masterdata/quicklink/components';
-
-
 
 @NgModule({
     imports: [
@@ -46,9 +44,7 @@ import { QuickLinkService } from './masterdata/quicklink/components';
         GlobalStateService,
         AuthenticationService,
         UserPermissionService,
-                QuickLinkService
-
-        // ChangePasswordService
+        QuickLinkService
     ]
 })
 export class PagesModule {

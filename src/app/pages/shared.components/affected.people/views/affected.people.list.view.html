@@ -42,7 +42,6 @@
                     <ul *ngIf="affectedperson.IsCrew">
                         <li *ngFor="let file of affectedperson.Crew.FileStores">
                             <a target="_blank" href="{{downloadFilePath + file.FileStoreID}}" download="file.UploadedFileName"><i class="fa fa-download fa-2x" aria-hidden="true"></i></a>
-                            <!--&nbsp;&nbsp;Crew 201 File-->
                         </li>
                     </ul>
                 </td>
@@ -60,26 +59,26 @@
                 <h4 class="modal-title pull-left">Additional Information</h4>
                 <button type="button" class="close pull-right" aria-label="Close" (click)="cancelModal(actionableModelToUpdate)">
                   <span aria-hidden="true">&times;</span>
-                   </button>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="holderStyle">
                     <div class="row modalBodyHeaderStyle">
                         <div class="col-sm-6 form-group">
                             <label class="lebelHeaderStyle"><strong>PDA Name</strong></label>
-                            <br>
+                            <!--<br>-->
                             <label class="form-control">{{affectedPersonModelForStatus.CrewName || affectedPersonModelForStatus.PassengerName}}</label>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label class="lebelHeaderStyle"><strong>Reference Number</strong></label>
-                            <br>
+                            <!--<br>-->
                             <label class="form-control">{{affectedPersonModelForStatus.TicketNumber}}</label>
                         </div>
                     </div>
-
                 </div>
 
-                <div [hidden]="!affectedPersonModelForStatus.IsCrew">
+                <ng-container *ngIf="affectedPersonModelForStatus.IsCrew">
+                    <!--<div [hidden]="!affectedPersonModelForStatus.IsCrew">-->
                     <div class="row rowpadding">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="row">
@@ -170,8 +169,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div [hidden]="affectedPersonModelForStatus.IsCrew">
+                    <!--</div>-->
+                </ng-container>
+                <ng-container *ngIf="!affectedPersonModelForStatus.IsCrew">
+                    <!--<div [hidden]="affectedPersonModelForStatus.IsCrew">-->
                     <div class="row rowpadding">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="row">
@@ -274,8 +275,8 @@
                             <button class="btn btn-primary" type="button" (click)="saveUpdateAffectedPerson(affectedPersonModelForStatus)">Submit</button>
                         </div>
                     </div>
-                </div>
-
+                    <!--</div>-->
+                </ng-container>
             </div>
         </div>
     </div>
@@ -296,28 +297,36 @@
                 <div class="row modalBodyHeaderStyle">
                     <div class="col-sm-6 form-group">
                         <label class="lebelHeaderStyle"><strong>PDA Name</strong></label>
-                        <br>
+                        <!--<br>-->
                         <label class="form-control">{{pdaNameForTrail}}</label>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label class="lebelHeaderStyle"><strong>Reference Number</strong></label>
-                        <br>
+                        <!--<br>-->
                         <label class="form-control">{{ticketNumber}}</label>
                     </div>
                 </div>
-                <br>
-                <responsive-table>
-                    <table responsive-table-body>
-                        <tbody>
-                            <tr *ngFor="let comm of communications">
-                                <td data-title="comm"><strong>{{comm.RequesterType}}</strong> logged by
-                                    <span [hidden]="comm.RequesterDepartment.length==0"><strong>{{comm.RequesterName}} (Dept: {{comm.RequesterDepartment}})</strong></span>
-                                    <span> on <strong>{{comm.CreatedOn | date: 'dd-MMM-yyyy hh:mm a'}}&nbsp;:</strong></span>                                    {{comm.Answers}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </responsive-table>
+                <div class="row">
+                    <div class="col-12">
+                        <responsive-table>
+                            <table responsive-table-body>
+                                <tbody>
+                                    <tr *ngFor="let comm of communications">
+                                        <td data-title="comm">
+                                            <strong>{{comm.RequesterType}}</strong> logged by
+                                            <span [hidden]="comm.RequesterDepartment.length==0">
+                                                <strong>{{comm.RequesterName}} (Dept: {{comm.RequesterDepartment}})</strong>
+                                            </span>
+                                            <span> on 
+                                                <strong>{{comm.CreatedOn | date: 'dd-MMM-yyyy hh:mm a'}}&nbsp;:</strong>
+                                            </span> {{comm.Answers}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </responsive-table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

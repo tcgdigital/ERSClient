@@ -13,7 +13,6 @@ import { ITabLinkInterface } from './tab.control.interface';
     styleUrls: ['./tab.control.style.scss'],
     encapsulation: ViewEncapsulation.None
 })
-
 export class TabControlComponent implements OnInit, AfterViewInit {
     @Input() tabLinks: ITabLinkInterface[];
 

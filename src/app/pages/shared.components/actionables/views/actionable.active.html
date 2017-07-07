@@ -94,8 +94,11 @@
                             </div>
                             <div class="form-group col-lg-6 col-sm-12 col-md-6">
                                 <label><i>URL:</i></label>
-                                <input disabled type="text" [ngModel]="actionableModelToUpdate.URL" class="form-control" formControlName="URL" value="{{actionableModelToUpdate.URL}}"
-                                    placeholder="URL" />
+                                <!--<input disabled type="text" [ngModel]="actionableModelToUpdate.URL" class="form-control" formControlName="URL" value="{{actionableModelToUpdate.URL}}"
+                                    placeholder="URL" />-->
+                                <label class="form-control"  readonly>
+                                    <a href="{{actionableModelToUpdate.URL}}"  target="_blank">{{actionableModelToUpdate.URL}}</a>
+                                        </label>
                             </div>
                         </div>
                         <div class="row" *ngIf="!isArchive">

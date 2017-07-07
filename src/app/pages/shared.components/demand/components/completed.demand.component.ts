@@ -20,7 +20,7 @@ import {
     GlobalConstants, GlobalStateService, UtilityService, AuthModel
 } from '../../../../shared';
 import { DepartmentModel } from '../../../masterdata/department';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 
 

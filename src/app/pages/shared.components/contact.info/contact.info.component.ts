@@ -5,7 +5,7 @@ import {
     GlobalStateService, ResponseModel, SearchConfigModel,
     SearchTextBox
 } from '../../../shared';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserProfileService } from '../../masterdata/userprofile/components/userprofile.service';
 import { UserProfileModel } from '../../masterdata/userprofile/components';
 
@@ -22,14 +22,13 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     userprofiles: UserProfileModel[] = [];
     searchConfigs: SearchConfigModel<any>[] = [];
 
-
     constructor(private globalState: GlobalStateService, private userprofileService: UserProfileService) {
 
     }
 
     ngOnInit(): any {
-         this.initiateSearchConfigurations();
-        this.globalState.Subscribe('contactClicked', model => this.contactClicked());
+        this.initiateSearchConfigurations();
+        this.globalState.Subscribe('contactClicked', (model) => this.contactClicked());
     }
 
     ngOnDestroy() {
@@ -37,18 +36,33 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     }
 
     contactClicked(): void {
-
         this.userprofileService.GetForDirectory()
             .subscribe((response: ResponseModel<UserProfileModel>) => {
                 this.userprofiles = response.Records;
                 this.childModal.show();
             });
-       
-
     }
 
     cancelModal(): void {
         this.childModal.hide();
+    }
+
+    invokeSearch(query: string): void {
+        if (query !== '') {
+            this.userprofileService.GetQuery(query)
+                .subscribe((response: ResponseModel<UserProfileModel>) => {
+                    this.userprofiles = response.Records;
+                }, ((error: any) => {
+                    console.log(`Error: ${error}`);
+                }));
+        }
+    }
+
+    invokeReset(): void {
+        this.userprofileService.GetForDirectory()
+            .subscribe((response: ResponseModel<UserProfileModel>) => {
+                this.userprofiles = response.Records;
+            });
     }
 
     private initiateSearchConfigurations(): void {
@@ -69,24 +83,6 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
                 Description: 'Alternate Contact',
                 Value: ''
             })
-        ]
-    }
-
-    invokeSearch(query: string): void {
-        if (query !== '') {
-            this.userprofileService.GetQuery(query)
-                .subscribe((response: ResponseModel<UserProfileModel>) => {
-                    this.userprofiles = response.Records;
-                }, ((error: any) => {
-                    console.log(`Error: ${error}`);
-                }));
-        }
-    }
-
-    invokeReset(): void {
-        this.userprofileService.GetForDirectory()
-            .subscribe((response: ResponseModel<UserProfileModel>) => {
-                this.userprofiles = response.Records;
-            });
+        ];
     }
 }

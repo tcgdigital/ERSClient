@@ -21,7 +21,7 @@ import {
     FormGroup, FormControl, FormBuilder, Validators,
     ReactiveFormsModule
 } from '@angular/forms';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 import {
     ITabLinkInterface, GlobalStateService, UtilityService, KeyValue, ResponseModel, Severity,
@@ -93,13 +93,10 @@ export class ArchiveDashboardListComponent implements OnInit, OnDestroy {
         this.getAllActiveAircraftTypes();
         this.isFlightRelated = false;
         this.disableIsDrillPopup = true;
-        //this.globalState.Subscribe('incidentChange', (model: KeyValue) => this.incidentChangeHandler(model));
         this.isOffSetPopup = false;
         this.resetIncidentViewForm();
         this.GetAllClosedIncidents();
         this.currentIncidentId = +UtilityService.GetFromSession('CurrentIncidentId');
-
-
     }
 
     public IsReopenCheckedChange(event: any, closedCrisis: IncidentModel): void {
@@ -118,8 +115,8 @@ export class ArchiveDashboardListComponent implements OnInit, OnDestroy {
                         itemIncident.isReopen = false;
                     }
 
-                    let editIncident: KeyValue = { Key: itemIncident.EmergencyName, Value: itemIncident.IncidentId };
-                    itemIncident["IncidentView"] = editIncident;
+                    const editIncident: KeyValue = { Key: itemIncident.EmergencyName, Value: itemIncident.IncidentId };
+                    itemIncident['IncidentView'] = editIncident;
                     this.closedCrisises.push(itemIncident);
                 });
             });
@@ -130,11 +127,11 @@ export class ArchiveDashboardListComponent implements OnInit, OnDestroy {
     }
 
     public loadDataIncidentViewPopup(): void {
-        let offsetVal: string = '';
+        const offsetVal: string = '';
         this.disableIsDrillPopup = true;
 
-        this.EmergencyDateLocal = new Date(new Date(this.incidentDataExchangeModel.IncidentModel.EmergencyDate).toLocaleString() + " UTC");
-        this.ReportedDateLocal = new Date(new Date(this.incidentDataExchangeModel.IncidentModel.ReportedDate).toLocaleString() + " UTC");
+        this.EmergencyDateLocal = new Date(new Date(this.incidentDataExchangeModel.IncidentModel.EmergencyDate).toLocaleString() + ' UTC');
+        this.ReportedDateLocal = new Date(new Date(this.incidentDataExchangeModel.IncidentModel.ReportedDate).toLocaleString() + ' UTC');
 
 
         this.formPopup = new FormGroup({
@@ -162,10 +159,10 @@ export class ArchiveDashboardListComponent implements OnInit, OnDestroy {
         this.IsDrillPopup = this.incidentDataExchangeModel.IncidentModel.IsDrill;
 
         this.isFlightRelatedPopup = false;
-        if (this.incidentDataExchangeModel.FLightModel != undefined) {
+        if (this.incidentDataExchangeModel.FLightModel !== undefined) {
 
-            this.ScheduleDepartureLocal = new Date(new Date(this.incidentDataExchangeModel.FLightModel.DepartureDate).toLocaleString() + " UTC");
-            this.ScheduleArrivalLocal = new Date(new Date(this.incidentDataExchangeModel.FLightModel.ArrivalDate).toLocaleString() + " UTC");
+            this.ScheduleDepartureLocal = new Date(new Date(this.incidentDataExchangeModel.FLightModel.DepartureDate).toLocaleString() + ' UTC');
+            this.ScheduleArrivalLocal = new Date(new Date(this.incidentDataExchangeModel.FLightModel.ArrivalDate).toLocaleString() + ' UTC');
 
 
             this.formPopup = new FormGroup({
@@ -303,11 +300,7 @@ export class ArchiveDashboardListComponent implements OnInit, OnDestroy {
             });
     }
 
-   
-
     public ngOnDestroy(): void { }
-
-    
 
     public onSubmitClosedCrisis(closedCrisisList: IncidentModel[]): void {
         // We collect all closed crisis
@@ -337,8 +330,4 @@ export class ArchiveDashboardListComponent implements OnInit, OnDestroy {
         UtilityService.SetToSession({ ArchieveIncidentId: incidentId });
         this.router.navigate(['pages/archivedashboard']);
     }
-
-    // private incidentChangeHandler(incident: KeyValue): void {
-    //     this.currentIncidentId = incident.Value;
-    // }
 }

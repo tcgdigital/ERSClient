@@ -3,15 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
-
 import { EmergencyDepartmentypeRouting } from './emergency.department.routing';
 import { EmergencyDepartmentComponent } from './emergency.department.component';
-
 import { EmergencyTypeDepartmentService } from './components';
 import { EmergencyTypeService } from '../emergencytype';
 import { DepartmentService } from '../department';
 import { DataExchangeService, SharedModule } from '../../../shared';
-import { ModalModule} from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     imports: [
@@ -31,7 +29,6 @@ import { ModalModule} from 'ng2-bootstrap/modal';
         DepartmentService,
         DataExchangeService,
         EmergencyTypeDepartmentService
-        
     ]
 })
 export class EmergencyDepartmentModule { }

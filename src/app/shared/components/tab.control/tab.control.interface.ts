@@ -7,4 +7,5 @@ export interface ITabLinkInterface {
     selected: boolean;
     hidden: boolean;
     order: number;
+    subtab: ITabLinkInterface[];
 }

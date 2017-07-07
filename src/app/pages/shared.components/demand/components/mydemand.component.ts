@@ -23,7 +23,7 @@ import {
     GlobalConstants, GlobalStateService, UtilityService, AuthModel, FileUploadService
 } from '../../../../shared';
 import { DepartmentService, DepartmentModel } from '../../../masterdata/department';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FileStoreModel } from '../../../../shared/models/file.store.model';
 import { FileStoreService } from '../../../../shared/services/common.service';
 

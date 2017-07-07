@@ -71,7 +71,7 @@
 .table {
     width: 100%;
     max-width: 100%;
-    // margin-bottom: 2rem;
+    margin-bottom: 0 !important;
     p{
         margin: 0;
     }
@@ -191,7 +191,7 @@
 @media screen and (max-width: $resMD-S) {
     .table-responsive-vertical {
         >.table {
-            margin-bottom: 0;
+            margin-bottom: 0 !important;
             background-color: transparent;
             > {
                 thead,

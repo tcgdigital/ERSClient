@@ -8,7 +8,7 @@ import {
     removeNgStyles, createNewHosts,
     createInputTransfer
 } from '@angularclass/hmr';
-import { Ng2BootstrapModule, ModalModule } from 'ng2-bootstrap';
+import { Ng2BootstrapModule, ModalModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { AgmCoreModule } from '@agm/core';
 
@@ -73,7 +73,7 @@ export class AppModule {
         this.appState._state = store.state;
         // set input values
         if ('restoreInputValues' in store) {
-            let restoreInputValues = store.restoreInputValues;
+            const restoreInputValues = store.restoreInputValues;
             setTimeout(restoreInputValues);
         }
 

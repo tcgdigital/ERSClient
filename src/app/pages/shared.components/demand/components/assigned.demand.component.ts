@@ -18,7 +18,7 @@ import {
     ResponseModel, DataExchangeService, KeyValue,
     GlobalConstants, GlobalStateService, UtilityService, AuthModel
 } from '../../../../shared';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'assigned-demand',

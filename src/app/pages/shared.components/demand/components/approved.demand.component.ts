@@ -20,7 +20,7 @@ import {
     UtilityService, KeyValue, AuthModel
 } from '../../../../shared';
 import { DepartmentService, DepartmentModel } from '../../../masterdata/department';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'approved-demand',
@@ -51,15 +51,15 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
     isArchive: boolean = false;
     demandFilePath: string;
     public globalStateProxyOpen: GlobalStateService;
-    demand : DemandModelToView = new DemandModelToView();
+    demand: DemandModelToView = new DemandModelToView();
 
     /**
      * Creates an instance of ApprovedDemandComponent.
-     * @param {DemandService} demandService 
-     * @param {DemandRemarkLogService} demandRemarkLogsService 
-     * @param {GlobalStateService} globalState 
-     * @param {DepartmentService} departmentService 
-     * 
+     * @param {DemandService} demandService
+     * @param {DemandRemarkLogService} demandRemarkLogsService
+     * @param {GlobalStateService} globalState
+     * @param {DepartmentService} departmentService
+     *
      * @memberOf ApprovedDemandComponent
      */
     constructor(private demandService: DemandService, private injector: Injector,
@@ -69,13 +69,12 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
         private toastrService: ToastrService,
         private dataExchange: DataExchangeService<number>,
         private toastrConfig: ToastrConfig, private _router: Router) {
-        //   this.createdByName = "Anwesha ray";
+        //   this.createdByName = 'Anwesha ray';
         this.demandRemarks = [];
         this.demandForRemarks = new DemandModelToView();
         this.demandFilePath = GlobalConstants.EXTERNAL_URL + 'api/FileDownload/GetFile/Demand/';
         this.globalStateProxyOpen = injector.get(GlobalStateService);
-
-    };
+    }
 
     getDemandsForApproval(deptId, incidentId): void {
         this.demandService.GetByApproverDepartment(deptId, incidentId)
@@ -84,50 +83,50 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
             }, (error: any) => {
                 console.log(`Error: ${error}`);
             });
-    };
+    }
 
-     cancelModal() : any {
-        this.demand= new DemandModelToView();
+    cancelModal(): any {
+        this.demand = new DemandModelToView();
         this.childModal.hide();
     }
 
     setRagStatus(): void {
-        Observable.interval(1000).subscribe(_ => {
-            this.demandsForApproval.forEach(x =>
-                function () {
-                    if (x.ClosedOn == undefined || x.ClosedOn == null) {
-                        let ScheduleTime: number = (Number(x.ScheduleTime) * 60000);
-                        let CreatedOn: number = new Date(x.CreatedOn).getTime();
-                        let CurrentTime: number = new Date().getTime();
-                        let TimeDiffofCurrentMinusCreated: number = (CurrentTime - CreatedOn);
-                        let percentage: number = (((TimeDiffofCurrentMinusCreated) * 100) / (ScheduleTime));
-                        if (percentage < 50) {
-                            x.RagStatus = 'statusGreen';
-                        } else if (percentage >= 100) {
-                            x.RagStatus = 'statusRed';
-                        }
-                        else {
-                            x.RagStatus = 'statusAmber';
-                        }
+        Observable.interval(1000).subscribe((_) => {
+            this.demandsForApproval.forEach((x) => {
+                if (x.ClosedOn === undefined || x.ClosedOn == null) {
+                    let ScheduleTime: number = (Number(x.ScheduleTime) * 60000);
+                    let CreatedOn: number = new Date(x.CreatedOn).getTime();
+                    let CurrentTime: number = new Date().getTime();
+                    let TimeDiffofCurrentMinusCreated: number = (CurrentTime - CreatedOn);
+                    let percentage: number = (((TimeDiffofCurrentMinusCreated) * 100) / (ScheduleTime));
+
+                    if (percentage < 50) {
+                        x.RagStatus = 'statusGreen';
+                    } else if (percentage >= 100) {
+                        x.RagStatus = 'statusRed';
                     }
                     else {
-                        let ScheduleTime: number = (Number(x.ScheduleTime) * 60000);
-                        let CreatedOn: number = new Date(x.CreatedOn).getTime();
-                        let CurrentTime: number = new Date().getTime();
-                        let TimeDiffofCurrentMinusCreated: number = (CurrentTime - CreatedOn);
-                        let percentage: number = (((TimeDiffofCurrentMinusCreated) * 100) / (ScheduleTime));
-                        if (percentage < 50) {
-                            x.RagStatus = 'statusGreen';
-                        } else if (percentage >= 100) {
-                            x.RagStatus = 'statusRed';
-                        }
-                        else {
-                            x.RagStatus = 'statusAmber';
-                        }
+                        x.RagStatus = 'statusAmber';
                     }
-                });
+                }
+                else {
+                    let ScheduleTime: number = (Number(x.ScheduleTime) * 60000);
+                    let CreatedOn: number = new Date(x.CreatedOn).getTime();
+                    let CurrentTime: number = new Date().getTime();
+                    let TimeDiffofCurrentMinusCreated: number = (CurrentTime - CreatedOn);
+                    let percentage: number = (((TimeDiffofCurrentMinusCreated) * 100) / (ScheduleTime));
+                    if (percentage < 50) {
+                        x.RagStatus = 'statusGreen';
+                    } else if (percentage >= 100) {
+                        x.RagStatus = 'statusRed';
+                    }
+                    else {
+                        x.RagStatus = 'statusAmber';
+                    }
+                }
+            });
         });
-    };
+    }
 
     getDemandRemarks(demandId): void {
         this.demandRemarkLogsService.GetDemandRemarksByDemandId(demandId)
@@ -137,12 +136,12 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
             }, (error: any) => {
                 console.log(`Error: ${error}`);
             });
-    };
+    }
 
     openDemandRemarks(demand: DemandModelToView): void {
         this.demandForRemarks = demand;
         this.getDemandRemarks(demand.DemandId);
-    };
+    }
 
     createDemandTrailModel(demand: DemandModelToView, flag, originalDemand?: DemandModel): DemandTrailModel[] {
         this.demandTrails = [];
@@ -169,40 +168,21 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
         this.demandTrail.RejectedByDepartmentName = flag ? null : this.currentDepartmentName;
         this.demandTrail.DemandStatusDescription = demand.DemandStatusDescription;
         this.demandTrail.Remarks = demand.Remarks;
-        this.demandTrail.ActiveFlag = "Active";
+        this.demandTrail.ActiveFlag = 'Active';
         this.demandTrail.CreatedBy = this.createdBy;
-        this.demandTrail.CreatedOn = demand.CreatedOn
+        this.demandTrail.CreatedOn = demand.CreatedOn;
 
         let date = new Date();
         let answer = `<div><p> ${demand.DemandStatusDescription}   <strong>Date :</strong>  ${date.toLocaleString()}  </p><div>`;
-        // if (originalDemand != undefined) {
-        //     this.demandTrail.DemandTypeId = originalDemand.DemandTypeId;
-        //     this.demandTrail.DemandCode = originalDemand.DemandCode;
-        //     this.demandTrail.IsRejected = false;
-        //     this.demandTrail.IsApproved = false;
-        //     this.demandTrail.ApprovedDt = null;
-        //     this.demandTrail.RejectedDate = null;
-        //     this.demandTrail.ContactNumber = originalDemand.ContactNumber;
-        //     this.demandTrail.DemandStatusDescription = originalDemand.DemandStatusDescription;
-        //     this.demandTrail.RequiredLocation = originalDemand.RequiredLocation;
-        //     this.demandTrail.RequesterType = originalDemand.RequesterType;
-        //     answer = `<div><p> Request Edited By ${this.demandTrail.RequesterDepartmentName} <strong>Date :</strong> ${date} </p><div>`;
-        //     if (originalDemand.ScheduleTime) {
-        //         var minutesInt = parseInt(originalDemand.ScheduleTime);
-        //         var d = new Date(originalDemand.CreatedOn);
-        //         d.setMinutes(d.getMinutes() + minutesInt);
-        //         var editedDate = new Date(d);
-        //         answer = answer + `<strong>Expected Resolution Time</strong> : ${editedDate}`;
-        //     }
-        // }
+
         this.demandTrail.Answers = answer;
         this.demandTrails.push(this.demandTrail);
         return this.demandTrails;
-    };
+    }
 
     cancelRemarkUpdate(): void {
         this.childModalRemarks.hide();
-    };
+    }
 
     saveRemark(remarks): void {
         let demand: DemandModelToView = this.demandForRemarks;
@@ -216,16 +196,16 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
         this.demandRemarkLogsService.Create(this.RemarkToCreate)
             .subscribe((response: DemandRemarkLogModel) => {
                 this.getDemandRemarks(demand.DemandId);
-                this.Remarks = "";
+                this.Remarks = '';
             }, (error: any) => {
                 console.log(`Error: ${error}`);
-                alert("Error occured during saving the remark");
+                alert('Error occured during saving the remark');
             });
-    };
+    }
 
     isApprovedOrRejected(item: DemandModelToView): any {
-        return (item.IsApproved == true || item.IsRejected == true);
-    };
+        return (item.IsApproved === true || item.IsRejected === true);
+    }
 
     SetCommunicationLog(demand: DemandModelToView): CommunicationLogModel[] {
         this.communicationLogs = new Array<CommunicationLogModel>();
@@ -253,17 +233,17 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
         }
         this.communicationLogs.push(this.communicationLog);
         return this.communicationLogs;
-    };
+    }
 
     submit(): void {
         if (this.demandsForApproval.length > 0) {
-            let demandCompletion: DemandModel[] = this.demandsForApproval.filter(this.isApprovedOrRejected).map(x => {
+            let demandCompletion: DemandModel[] = this.demandsForApproval.filter(this.isApprovedOrRejected).map((x) => {
                 let item: DemandModel = new DemandModel();
                 item.DemandId = x.DemandId;
                 item.Remarks = x.Remarks;
                 item.IsApproved = x.IsApproved;
                 item.IsRejected = x.IsRejected;
-                x.IsApproved ? item.ApprovedDt = new Date() : item.RejectedDate = new Date;
+                x.IsApproved ? item.ApprovedDt = new Date() : item.RejectedDate = new Date();
                 x.IsApproved ? item.ApprovedBy = this.createdBy : item.RejectedBy = this.createdBy;
                 item.ApproverDepartmentId = x.IsApproved ? this.currentDepartmentId : item.ApproverDepartmentId;
                 item.DemandStatusDescription = item.IsApproved ? `Approved by ${this.createdByName} (${this.currentDepartmentName}) and pending with ${x.TargetDepartmentName}` :
@@ -274,8 +254,8 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
                 return item;
             });
 
-            if (demandCompletion.length == 0) {
-                this.toastrService.error("Please select at least one request");
+            if (demandCompletion.length === 0) {
+                this.toastrService.error('Please select at least one request');
             }
             else {
                 this.demandService.UpdateBulkForApproval(demandCompletion)
@@ -286,23 +266,23 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
                     }, (error: any) => {
                         console.log(`Error: ${error}`);
                     });
-            };
+            }
         }
         else {
-            this.toastrService.error("There is no request to be approved");
+            this.toastrService.error('There is no request to be approved');
         }
-    };
+    }
 
     ngOnInit(): any {
 
-        this.currentDepartmentId = +UtilityService.GetFromSession("CurrentDepartmentId");
-        if (this._router.url.indexOf("archivedashboard") > -1) {
+        this.currentDepartmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
+        if (this._router.url.indexOf('archivedashboard') > -1) {
             this.isArchive = true;
-            this.currentIncidentId = +UtilityService.GetFromSession("ArchieveIncidentId");
+            this.currentIncidentId = +UtilityService.GetFromSession('ArchieveIncidentId');
         }
         else {
             this.isArchive = false;
-            this.currentIncidentId = +UtilityService.GetFromSession("CurrentIncidentId");
+            this.currentIncidentId = +UtilityService.GetFromSession('CurrentIncidentId');
         }
         this.getDemandsForApproval(this.currentDepartmentId, this.currentIncidentId);
         this.credential = UtilityService.getCredentialDetails();
@@ -312,18 +292,7 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
         this.getCurrentDepartmentName(this.currentDepartmentId);
         this.globalState.Subscribe('incidentChangefromDashboard', (model: KeyValue) => this.incidentChangeHandler(model));
         this.globalState.Subscribe('departmentChangeFromDashboard', (model: KeyValue) => this.departmentChangeHandler(model));
-    };
-
-    private incidentChangeHandler(incident: KeyValue): void {
-        this.currentIncidentId = incident.Value;
-        this.getDemandsForApproval(this.currentDepartmentId, this.currentIncidentId);
-    };
-
-    private departmentChangeHandler(department: KeyValue): void {
-        this.currentDepartmentId = department.Value;
-        this.getDemandsForApproval(this.currentDepartmentId, this.currentIncidentId);
-        this.currentDepartmentName = department.Key;
-    };
+    }
 
     getCurrentDepartmentName(departmentId): void {
         this.departmentService.Get(departmentId)
@@ -332,20 +301,30 @@ export class ApprovedDemandComponent implements OnInit, OnDestroy, AfterContentI
             }, (error: any) => {
                 console.log(`Error: ${error}`);
             });
-    };
+    }
 
     ngAfterContentInit(): any {
         this.setRagStatus();
-    };
+    }
 
     ngOnDestroy(): void {
         this.globalState.Unsubscribe('incidentChangefromDashboard');
         this.globalState.Unsubscribe('departmentChangeFromDashboard');
-
     }
 
     openDemandDetails(demandId: number): void {
-        this.demand = this.demandsForApproval.find(x=>x.DemandId==demandId);
+        this.demand = this.demandsForApproval.find((x) => x.DemandId === demandId);
         this.childModal.show();
+    }
+
+    private incidentChangeHandler(incident: KeyValue): void {
+        this.currentIncidentId = incident.Value;
+        this.getDemandsForApproval(this.currentDepartmentId, this.currentIncidentId);
+    }
+
+    private departmentChangeHandler(department: KeyValue): void {
+        this.currentDepartmentId = department.Value;
+        this.getDemandsForApproval(this.currentDepartmentId, this.currentIncidentId);
+        this.currentDepartmentName = department.Key;
     }
 }

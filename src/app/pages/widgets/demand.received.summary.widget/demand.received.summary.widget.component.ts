@@ -3,20 +3,20 @@ import {
     ViewEncapsulation, Input, ViewChild, SimpleChange
 } from '@angular/core';
 import { UtilityService, GlobalStateService } from '../../../shared';
-import { WidgetUtilityService } from "../widget.utility";
+import { WidgetUtilityService } from '../widget.utility';
 import {
     DemandReceivedSummaryModel,
     DemandReceivedModel,
     AllDeptDemandReceivedSummary,
     SubDeptDemandReceivedSummary
 } from './demand.received.summary.widget.model';
-import { IncidentModel, IncidentService } from "../../incident";
+import { IncidentModel, IncidentService } from '../../incident';
 import {
     GraphObject
 } from '../demand.raised.summary.widget/demand.raised.summary.widget.model';
 import { DemandModel } from '../../shared.components/demand/components/demand.model';
 import { DemandReceivedSummaryWidgetService } from './demand.received.summary.widget.service';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Rx';
 import * as Highcharts from 'highcharts';
 
@@ -49,6 +49,7 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
     public hasDemandReceivedList: boolean = false;
     public arrGraphData: GraphObject[];
     public showDemandReceivedGraph: boolean = false;
+    public showGraph: boolean = false;
     private $selfElement: JQuery;
     private $placeholder: JQuery;
 
@@ -56,6 +57,7 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
         private demandReceivedSummaryWidgetService: DemandReceivedSummaryWidgetService, private incidentService: IncidentService) { }
 
     public ngOnInit(): void {
+        this.showGraph = false;
         this.arrGraphData = [];
         this.demandReceivedSummary = new DemandReceivedSummaryModel();
         this.demandReceivedSummary = this.demandReceivedSummaryWidgetService
@@ -64,7 +66,6 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
         this.globalState.Subscribe('DemandApproved', () => this.onDemandAddedUpdatedSuccess());
         this.globalState.Subscribe('DemandAssigned', () => this.onDemandAddedUpdatedSuccess());
         this.globalState.Subscribe('DemandCompleted', () => this.onDemandAddedUpdatedSuccess());
-        //this.setDemandReceivedGraphData();
     }
 
     public onDemandAddedUpdatedSuccess(): void {
@@ -73,6 +74,7 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
     }
 
     public ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
+        this.showGraph = false;
         if (changes['incidentId'] !== undefined && (changes['incidentId'].currentValue !==
             changes['incidentId'].previousValue) &&
             changes['incidentId'].previousValue !== undefined) {
@@ -86,7 +88,6 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
     }
 
     public ngAfterViewInit(): void {
-
     }
 
     // TODO: Need to refactor
@@ -99,8 +100,6 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
                 this.childModalViewAllDemandReceivedSummary.show();
                 if (item.length > 0)
                     this.graphDataFormationForDemandReceivedSummeryWidget(item);
-                // this.hasDemandReceivedList = item.length > 0;
-                // this.setDemandReceivedGraphData();
             });
     }
 
@@ -153,7 +152,6 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
     public hideAllDeptSubCompleted(): void {
         this.showAllDeptSubCompleted = false;
         this.showAllDeptSubPending = false;
-
     }
 
     // TODO: Need to refactor
@@ -174,9 +172,7 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
         });
 
         UtilityService.SetRAGStatus(this.allDeptDemandReceivedSummaries, 'Demand');
-
         this.showAllDeptSubPending = true;
-
         this.showAllDeptSubCompleted = false;
     }
 
@@ -242,29 +238,33 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
     }
 
     public onViewAllDemandReceivedShown($event: ModalDirective): void {
-        jQuery("#demand-table tbody tr:nth-child(1)").addClass("bg-blue-color");
+        jQuery('#demand-table tbody tr:nth-child(1)').addClass('bg-blue-color');
     }
 
     public graphDataFormationForDemandReceivedSummeryWidget(entity: DemandReceivedModel[]): void {
         this.arrGraphData = [];
-        entity.map((item: DemandReceivedModel) => {
-            item.demandModelList.map((itemDemand: DemandModel) => {
-                let graphObject: GraphObject = new GraphObject();
-                graphObject.requesterDepartmentName = item.targetDepartmentName;
-                graphObject.requesterDepartmentId = item.departmentId;
-                graphObject.isAssigned = true;
-                if (itemDemand.ClosedOn != null) {
-                    graphObject.isClosed = true;
-                    graphObject.closedOn = new Date(itemDemand.ClosedOn);
-                }
-                else {
-                    graphObject.isPending = true;
-                }
-                graphObject.CreatedOn = new Date(itemDemand.CreatedOn);
-                this.arrGraphData.push(graphObject);
+         this.showGraph = false;
+        if (entity.length > 0) {
+            entity.map((item: DemandReceivedModel) => {
+                item.demandModelList.map((itemDemand: DemandModel) => {
+                    let graphObject: GraphObject = new GraphObject();
+                    graphObject.requesterDepartmentName = item.targetDepartmentName;
+                    graphObject.requesterDepartmentId = item.departmentId;
+                    graphObject.isAssigned = true;
+                    if (itemDemand.ClosedOn != null) {
+                        graphObject.isClosed = true;
+                        graphObject.closedOn = new Date(itemDemand.ClosedOn);
+                    }
+                    else {
+                        graphObject.isPending = true;
+                    }
+                    graphObject.CreatedOn = new Date(itemDemand.CreatedOn);
+                    this.arrGraphData.push(graphObject);
+                });
             });
-        });
-        this.GetDemandReceivedGraph(entity[0].departmentId, null);
+            this.showGraph = true;
+            this.GetDemandReceivedGraph(entity[0].departmentId, null);
+        }
     }
 
     public GetDemandReceivedGraph(targetDepartmentId: number, $event: any) {
@@ -279,5 +279,4 @@ export class DemandReceivedSummaryWidgetComponent implements OnInit, AfterViewIn
                 this.showDemandReceivedGraph = true;
             });
     }
-
 }

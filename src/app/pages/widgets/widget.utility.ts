@@ -68,6 +68,7 @@ export class WidgetUtilityService {
     public static GetGraphDemand(requesterDepartmentId: number, Highcharts: any, arrGraphData: GraphObject[],
         containerName: string, graphSubjectType: string, emergencyDate: Date): void {
         console.log(requesterDepartmentId);
+        this.elapsedHourForGraph = GlobalConstants.ELAPSED_HOUR_COUNT_FOR_DEMAND_GRAPH_CREATION;
         let filterDepartments = arrGraphData.filter((item: GraphObject) => {
             return item.requesterDepartmentId == requesterDepartmentId;
         });
@@ -189,7 +190,7 @@ export class WidgetUtilityService {
                 enabled: false
             },
             series: [{
-                name: 'Completed',
+                name: 'Closed',
                 data: arrGraphCompleted,
                 color: '#119272'
 

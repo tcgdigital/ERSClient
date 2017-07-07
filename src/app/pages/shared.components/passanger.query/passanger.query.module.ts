@@ -6,14 +6,16 @@ import { MdCheckboxModule } from '@angular2-material/checkbox';
 
 import { PassangerQueryRouting } from './passanger.query.routing';
 import { PassangerQueryComponent } from './passanger.query.components';
-import { PassangerQueryAssignedCallsListComponent, PassangerQueryRecievedCallsListComponent } from './components';
+import {
+    PassangerQueryAssignedCallsListComponent,
+    PassangerQueryRecievedCallsListComponent
+} from './components';
 import { EnquiryService, CallCentreModule } from '../call.centre';
 import { CommunicationLogService } from '../communicationlogs';
 
 import { CallCenterOnlyPageService } from '../../callcenteronlypage/component';
 import { DataExchangeService, SharedModule } from '../../../shared';
-import { ModalModule } from 'ng2-bootstrap/modal';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     imports: [

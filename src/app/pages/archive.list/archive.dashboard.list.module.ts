@@ -11,7 +11,7 @@ import { ArchiveDashboardListComponent } from './archive.dashboard.list.componen
 import { WidgetModule } from '../widgets';
 import { IncidentService } from '../incident';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
-import { ModalModule, ModalDirective } from 'ng2-bootstrap';
+import { ModalModule, ModalDirective } from 'ngx-bootstrap';
 import {
     FlightService,
     InvolvePartyService,

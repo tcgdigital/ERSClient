@@ -40,7 +40,7 @@ export class NotificationConnection implements INotificationConnection {
     }
 
     public start(): Promise<any> {
-        let $promise: Promise<any> = new Promise<any>((resolve, reject) => {
+        const $promise: Promise<any> = new Promise<any>((resolve, reject) => {
             this._jConnection.start()
                 .done((...results: any[]) => {
                     resolve(results);
@@ -59,7 +59,7 @@ export class NotificationConnection implements INotificationConnection {
 
         this.log(`SignalRConnection. Start invoking \'${method}\'...`);
 
-        let $promise: Promise<any> = new Promise<any>((resolve, reject) => {
+        const $promise: Promise<any> = new Promise<any>((resolve, reject) => {
             this._jProxy.invoke(method, ...parameters)
                 .done((result: any) => {
                     this.log(`\'${method}\' invoked succesfully. Resolving promise...`);
@@ -87,7 +87,7 @@ export class NotificationConnection implements INotificationConnection {
                 if (args.length === 0) {
                     return;
                 }
-                casted = <T>args[0];
+                casted = args[0] as T;
                 this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
 
                 listener.next(casted);
@@ -100,7 +100,7 @@ export class NotificationConnection implements INotificationConnection {
         if (event == null || event === '')
             throw new Error('Failed to listen. Argument \'event\' can not be empty');
 
-        let listener = new BroadcastEventListener<T>(event);
+        const listener = new BroadcastEventListener<T>(event);
         this.listen(listener);
         return listener;
     }
@@ -110,7 +110,7 @@ export class NotificationConnection implements INotificationConnection {
     }
 
     private wireUpErrorsAsObservable(): Observable<any> {
-        let sError = new Subject<any>();
+        const sError = new Subject<any>();
 
         this._jConnection.error((error: any) => {
             this._zone.run(() => {
@@ -121,8 +121,8 @@ export class NotificationConnection implements INotificationConnection {
     }
 
     private wireUpStatusEventsAsObservable(): Observable<ConnectionStatus> {
-        let sStatus = new Subject<ConnectionStatus>();
-        let connStatusNames = ['starting', 'received', 'connectionSlow', 'reconnecting', 'reconnected', 'stateChanged', 'disconnected'];
+        const sStatus = new Subject<ConnectionStatus>();
+        const connStatusNames = ['starting', 'received', 'connectionSlow', 'reconnecting', 'reconnected', 'stateChanged', 'disconnected'];
         // aggregate all signalr connection status handlers into 1 observable.
         connStatusNames.forEach((statusName) => {
             // handler wire up, for signalr connection status callback.

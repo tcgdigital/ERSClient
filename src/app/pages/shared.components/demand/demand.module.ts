@@ -8,7 +8,7 @@ import { DemandeRouting } from './demand.routing';
 import { DemandComponent } from './demand.component';
 import {
     DemandService, ApprovedDemandComponent, AssignedDemandComponent,
-    CompletedDemandComponent, MyDemandComponent, DemandEntryComponent, DemandRemarkLogService ,DemandTrailService
+    CompletedDemandComponent, MyDemandComponent, DemandEntryComponent, DemandRemarkLogService, DemandTrailService
 } from './components';
 import { AffectedPeopleService, AffectedObjectsService } from '../../shared.components';
 import { CallerService } from '../caller';
@@ -16,14 +16,9 @@ import { DemandTypeService } from '../../masterdata/demandtype';
 import { InvolvePartyService } from '../involveparties';
 import { DepartmentService } from '../../masterdata/department';
 import { PageService } from '../../masterdata/department.functionality';
-import { ModalModule} from 'ng2-bootstrap/modal';
-import { FileUploadService } from '../../../shared'
-import { FileStoreService } from '../../../shared/services/common.service'
-
-
-
-
-//import { DepartmentService } from '../department';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { FileUploadService } from '../../../shared';
+import { FileStoreService } from '../../../shared/services/common.service';
 import { DataExchangeService, SharedModule } from '../../../shared';
 
 @NgModule({
@@ -36,7 +31,7 @@ import { DataExchangeService, SharedModule } from '../../../shared';
         MdCheckboxModule,
         DemandeRouting,
         ModalModule
-        
+
     ],
     declarations: [
         DemandComponent,
@@ -59,7 +54,7 @@ import { DataExchangeService, SharedModule } from '../../../shared';
         InvolvePartyService,
         FileUploadService,
         FileStoreService
-        
+
     ]
 })
 export class DemandModule { }

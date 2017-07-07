@@ -6,13 +6,16 @@ import { MdCheckboxModule } from '@angular2-material/checkbox';
 
 import { CustomerDissatisfactionRoutesRouting } from './customer.dissatisfaction.routing';
 import { CustomerDissatisfactionComponent } from './customer.dissatisfaction.components';
-import { CustomerDissatisfactionAssignedCallsListComponent, CustomerDissatisfactionRecievedCallsListComponent } from './components';
+import {
+    CustomerDissatisfactionAssignedCallsListComponent,
+    CustomerDissatisfactionRecievedCallsListComponent
+} from './components';
 import { EnquiryService, CallCentreModule } from '../call.centre';
 import { CommunicationLogService } from '../communicationlogs';
 
 import { CallCenterOnlyPageService } from '../../callcenteronlypage/component';
 import { DataExchangeService, SharedModule } from '../../../shared';
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({

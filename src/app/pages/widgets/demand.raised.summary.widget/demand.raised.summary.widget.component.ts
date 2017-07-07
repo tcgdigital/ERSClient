@@ -11,12 +11,15 @@ import {
     SubDeptDemandRaisedSummary,
     GraphObject
 } from './demand.raised.summary.widget.model';
-import { WidgetUtilityService } from "../widget.utility";
-import { UtilityService, GlobalConstants, DataExchangeService, GlobalStateService } from '../../../shared';
+import { WidgetUtilityService } from '../widget.utility';
+import {
+    UtilityService, GlobalConstants,
+    DataExchangeService, GlobalStateService
+} from '../../../shared';
 import { DemandRaisedSummaryWidgetService } from './demand.raised.summary.widget.service';
 import { DemandModel } from '../../shared.components/demand/components/demand.model';
-import { IncidentModel, IncidentService } from "../../incident";
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { IncidentModel, IncidentService } from '../../incident';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Rx';
 import * as Highcharts from 'highcharts';
 
@@ -54,6 +57,7 @@ export class DemandRaisedSummaryWidgetComponent implements OnInit {
     public baseLocationURl: string = window.location.pathname;
     public showDemandRaisedGraph: boolean = false;
     public arrGraphData: GraphObject[];
+    public showGraph: boolean = false;
     //public elapsedHourForGraph: number = GlobalConstants.ELAPSED_HOUR_COUNT_FOR_DEMAND_GRAPH_CREATION;
     public graphCategories: string[] = [];
     constructor(private demandRaisedSummaryWidgetService: DemandRaisedSummaryWidgetService,
@@ -61,6 +65,7 @@ export class DemandRaisedSummaryWidgetComponent implements OnInit {
         private dataExchange: DataExchangeService<DemandModel>) { }
 
     public ngOnInit(): void {
+        this.showGraph = false;
         this.arrGraphData = [];
         this.demandRaisedSummary = new DemandRaisedSummaryModel();
         this.showAllDeptSubCompleted = false;
@@ -82,6 +87,7 @@ export class DemandRaisedSummaryWidgetComponent implements OnInit {
     }
 
     public ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
+        this.showGraph = false;
         if (changes['incidentId'] !== undefined
             && (changes['incidentId'].currentValue !== changes['incidentId'].previousValue)
             && changes['incidentId'].previousValue !== undefined) {
@@ -134,8 +140,8 @@ export class DemandRaisedSummaryWidgetComponent implements OnInit {
                 this.allDemandRaisedList = Observable.of(item);
 
                 this.childModalViewAllDemandRaisedSummary.show();
-                if (item.length > 0)
-                    this.graphDataFormationForDemandRaisedSummeryWidget(item);
+                //if (item.length > 0)
+                this.graphDataFormationForDemandRaisedSummeryWidget(item);
             });
     }
 
@@ -217,7 +223,7 @@ export class DemandRaisedSummaryWidgetComponent implements OnInit {
 
 
     public onViewAllDemandRaisedShown($event: ModalDirective): void {
-        jQuery("#demand-table tbody tr:nth-child(1)").addClass("bg-blue-color");
+        jQuery('#demand-table tbody tr:nth-child(1)').addClass('bg-blue-color');
     }
 
     // TODO: Need to refactor
@@ -276,24 +282,29 @@ export class DemandRaisedSummaryWidgetComponent implements OnInit {
 
     public graphDataFormationForDemandRaisedSummeryWidget(entity: DemandRaisedModel[]): void {
         this.arrGraphData = [];
-        entity.map((item: DemandRaisedModel) => {
-            item.demandModelList.map((itemDemand: DemandModel) => {
-                let graphObject: GraphObject = new GraphObject();
-                graphObject.requesterDepartmentName = item.requesterDepartmentName;
-                graphObject.requesterDepartmentId = item.departmentId;
-                graphObject.isAssigned = true;
-                if (itemDemand.ClosedOn != null) {
-                    graphObject.isClosed = true;
-                    graphObject.closedOn = new Date(itemDemand.ClosedOn);
-                }
-                else {
-                    graphObject.isPending = true;
-                }
-                graphObject.CreatedOn = new Date(itemDemand.CreatedOn);
-                this.arrGraphData.push(graphObject);
+        this.showGraph = false;
+        if (entity.length > 0) {
+            entity.map((item: DemandRaisedModel) => {
+                item.demandModelList.map((itemDemand: DemandModel) => {
+                    let graphObject: GraphObject = new GraphObject();
+                    graphObject.requesterDepartmentName = item.requesterDepartmentName;
+                    graphObject.requesterDepartmentId = item.departmentId;
+                    graphObject.isAssigned = true;
+                    if (itemDemand.ClosedOn != null) {
+                        graphObject.isClosed = true;
+                        graphObject.closedOn = new Date(itemDemand.ClosedOn);
+                    }
+                    else {
+                        graphObject.isPending = true;
+                    }
+                    graphObject.CreatedOn = new Date(itemDemand.CreatedOn);
+                    this.arrGraphData.push(graphObject);
+                });
             });
-        });
-        this.GetDemandRaisedGraph(entity[0].departmentId, null);
+            this.showGraph = true;
+            this.GetDemandRaisedGraph(entity[0].departmentId, null);
+        }
+
     }
 
     public GetDemandRaisedGraph(requesterDepartmentId: number, $event: any) {

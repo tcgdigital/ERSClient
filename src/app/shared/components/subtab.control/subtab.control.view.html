@@ -1,0 +1,14 @@
+<!--<div class="card card-without-top-border ">-->
+<div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+        <ng-container *ngFor="let tabLink of allowedTabLinks; let i = index;">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="[tabLink.url]" [routerLinkActive]="['active']">{{ tabLink.title }}</a>
+            </li>
+        </ng-container>
+    </ul>
+</div>
+<div class="card-block">
+    <ng-content select="[outlet-body]"></ng-content>
+</div>
+<!--</div>-->

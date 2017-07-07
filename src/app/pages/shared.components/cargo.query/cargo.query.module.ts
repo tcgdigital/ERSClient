@@ -12,8 +12,7 @@ import { CommunicationLogService } from '../communicationlogs';
 
 import { CallCenterOnlyPageModule, CallCenterOnlyPageService } from '../../callcenteronlypage';
 import { DataExchangeService, SharedModule } from '../../../shared';
-import { ModalModule } from 'ng2-bootstrap/modal';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     imports: [

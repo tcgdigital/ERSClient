@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { IncidentModel } from '../incident';
 
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'incident-main',
@@ -9,10 +9,7 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
     templateUrl: './views/incident.html'
 })
 export class IncidentComponent implements OnInit {
-    
-
     constructor() {
-
     }
 
     ngOnInit(): any {
@@ -20,6 +17,4 @@ export class IncidentComponent implements OnInit {
 
     ngOnDestroy(): void {
     }
-
-    
 }

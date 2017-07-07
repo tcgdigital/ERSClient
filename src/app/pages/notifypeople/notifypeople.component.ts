@@ -1,14 +1,15 @@
-import { Component, ViewEncapsulation, OnInit, ElementRef, ViewChild } from '@angular/core';
-
-
+import {
+    Component, ViewEncapsulation,
+    OnInit, ElementRef, ViewChild
+} from '@angular/core';
 import { DepartmentModel } from '../masterdata/department/components/department.model';
 import { UserProfileModel } from '../masterdata/userprofile/components/userprofile.model';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NotifyPeopleService } from './components/notifypeople.service';
 import { NotifyPeopleModel } from './components/notifypeople.model';
-import { TemplateModel } from "../masterdata/template/components";
-import { AppendedTemplateModel } from "../masterdata/appendedtemplate/components/appendedtemplate.model";
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { TemplateModel } from '../masterdata/template/components';
+import { AppendedTemplateModel } from '../masterdata/appendedtemplate/components/appendedtemplate.model';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import {
     FormGroup, FormControl, FormBuilder, Validators,
     ReactiveFormsModule
@@ -35,50 +36,35 @@ export class NotifyPeopleComponent implements OnInit {
     departments: DepartmentModel[] = [];
     notificationModel: NotifyPeopleModel[] = [];
     treeExpanded: boolean;
-    private $document: JQuery;
-    private $tree: JQuery;
     public allDepartmentUserPermission: NotifyPeopleModel[] = [];
     public allDepartmentUserPermissionString: string = '';
     currentDepartmentId: number;
     currentIncidentId: number;
     public tree: any;
     public form: FormGroup;
+    private $document: JQuery;
+    private $tree: JQuery;
+
     constructor(formBuilder: FormBuilder,
         private toastrService: ToastrService,
         private toastrConfig: ToastrConfig,
         private notifyPeopleService: NotifyPeopleService,
         private elementRef: ElementRef,
-        private globalState: GlobalStateService) { };
-
+        private globalState: GlobalStateService) { }
 
     ngOnInit(): any {
         this.treeExpanded = false;
         this.resetAdditionalForm();
-        this.currentDepartmentId = +UtilityService.GetFromSession("CurrentDepartmentId");
+        this.currentDepartmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
         this.globalState.Subscribe('departmentChange', (model: KeyValue) => this.departmentChangeHandler(model));
         this.appendedTemplate = new AppendedTemplateModel();
-        this.currentIncidentId = +UtilityService.GetFromSession("CurrentIncidentId");
+        this.currentIncidentId = +UtilityService.GetFromSession('CurrentIncidentId');
         this.globalState.Subscribe('incidentChange', (model: KeyValue) => this.incidentChangeHandler(model));
         this.PopulateNotifyDepartmentUsers(this.currentDepartmentId, this.currentIncidentId);
-
-
     }
 
-    private resetAdditionalForm(): void {
-        this.form = new FormGroup({
-            AdditionalData: new FormControl('')
-        });
-    }
-    private departmentChangeHandler(department: KeyValue): void {
-        this.currentDepartmentId = department.Value;
-        this.PopulateNotifyDepartmentUsers(this.currentDepartmentId, this.currentIncidentId);
-    }
-
-    private incidentChangeHandler(incident: KeyValue): void {
-        this.currentIncidentId = incident.Value;
-    }
     public ExpandCollapseAll(): void {
-        if (this.tree != undefined) {
+        if (this.tree !== undefined) {
             this.treeExpanded = !this.treeExpanded;
             if (this.treeExpanded) {
                 this.tree.expandAll();
@@ -95,25 +81,24 @@ export class NotifyPeopleComponent implements OnInit {
             this.allDepartmentUserPermission = result;
             this.allDepartmentUserPermissionString = JSON.stringify(this.allDepartmentUserPermission);
             this.$tree = jQuery(this.elementRef.nativeElement).find('#tree');
-            if (this.tree != undefined) {
+            if (this.tree !== undefined) {
                 this.tree.destroy();
             }
             this.tree = this.$tree.tree({
                 primaryKey: 'id',
                 uiLibrary: 'bootstrap',
                 iconsLibrary: 'fontawesome',
-                dataSource: jQuery.parseJSON(this.allDepartmentUserPermissionString),//this.allDepartmentUserPermissionString,
                 checkboxes: true
-            })
-            var node = this.tree.getNodeByText(result[0].text);
+            });
+            const node = this.tree.getNodeByText(result[0].text);
             jQuery('#tree ul.gj-tree-bootstrap-list li div[data-role="wrapper"]:eq(0)').hide();
-            jQuery('#tree ul.gj-tree-bootstrap-list li ul.gj-tree-bootstrap-list:eq(0)').addClass("first-row-alignment");
+            jQuery('#tree ul.gj-tree-bootstrap-list li ul.gj-tree-bootstrap-list:eq(0)').addClass('first-row-alignment');
             this.tree.expand(node);
         });
     }
 
     public notify(): void {
-        let checkedIds: number[] = this.tree.getCheckedNodes();
+        const checkedIds: number[] = this.tree.getCheckedNodes();
         this.notifyPeopleService.NotifyPeopleCall(checkedIds, this.currentDepartmentId, this.currentIncidentId, (item: TemplateModel) => {
             this.appendedTemplate.AppendedTemplateId = 0;
             this.appendedTemplate.TemplateId = item.TemplateId;
@@ -133,7 +118,7 @@ export class NotifyPeopleComponent implements OnInit {
     }
 
     public saveNotificationMessage(): void {
-        let additionalData: string = this.form.controls['AdditionalData'].value;
+        const additionalData: string = this.form.controls['AdditionalData'].value;
         this.appendedTemplate.Description = this.appendedTemplate.Description + ' ' + additionalData;
         this.notifyPeopleService.CreateAppendedTemplate(this.appendedTemplate,
             this.currentIncidentId, this.currentDepartmentId, (item: boolean) => {
@@ -146,5 +131,19 @@ export class NotifyPeopleComponent implements OnInit {
                     console.log('Notify User Clicked error');
                 }
             });
+    }
+
+    private resetAdditionalForm(): void {
+        this.form = new FormGroup({
+            AdditionalData: new FormControl('')
+        });
+    }
+    private departmentChangeHandler(department: KeyValue): void {
+        this.currentDepartmentId = department.Value;
+        this.PopulateNotifyDepartmentUsers(this.currentDepartmentId, this.currentIncidentId);
+    }
+
+    private incidentChangeHandler(incident: KeyValue): void {
+        this.currentIncidentId = incident.Value;
     }
 }

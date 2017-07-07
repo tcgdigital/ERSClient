@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import {
     ResponseModel, DataExchangeService,
@@ -20,7 +20,7 @@ import { FileData } from '../../../shared/models';
 @Component({
     selector: 'masterdatauploadlist-main',
     encapsulation: ViewEncapsulation.None,
-    templateUrl: '../views/masterdata.upload.list.view.html'   
+    templateUrl: '../views/masterdata.upload.list.view.html'
 })
 
 export class MasterDataUploadListComponent implements OnInit, OnDestroy {
@@ -105,7 +105,6 @@ export class MasterDataUploadListComponent implements OnInit, OnDestroy {
 
     getFileDetails(e: any, type: string): void {
         this.disableUploadButton = false;
-        //this.filesToUpload = [];
 
         for (let i = 0; i < e.target.files.length; i++) {
             const extension = e.target.files[i].name.split('.').pop();
@@ -116,13 +115,12 @@ export class MasterDataUploadListComponent implements OnInit, OnDestroy {
                 this.objFileData.file = e.target.files[i];
                 this.filesToUpload.push(this.objFileData);
             }
-            else
-            {
-                 this.toastrService.error('Invalid File Format!', 'Error', this.toastrConfig);
-                 this.inputFileCargo.nativeElement.value = "";
-                 this.inputFileCrew.nativeElement.value = "";
-                 this.inputFilePax.nativeElement.value = "";
-                 this.disableUploadButton = true;
+            else {
+                this.toastrService.error('Invalid File Format!', 'Error', this.toastrConfig);
+                this.inputFileCargo.nativeElement.value = '';
+                this.inputFileCrew.nativeElement.value = '';
+                this.inputFilePax.nativeElement.value = '';
+                this.disableUploadButton = true;
             }
         }
     }

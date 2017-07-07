@@ -15,8 +15,7 @@ import { DataExchangeService, FileUploadService, SharedModule } from '../../../s
 import { InvolvePartyService } from '../../shared.components/involveparties';
 import { FlightService } from '../../shared.components/flights';
 import { MomentModule } from 'angular2-moment';
-import { ModalModule} from 'ng2-bootstrap/modal';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     imports: [

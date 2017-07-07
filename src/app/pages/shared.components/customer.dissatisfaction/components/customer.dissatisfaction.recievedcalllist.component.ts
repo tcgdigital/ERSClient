@@ -5,11 +5,9 @@ import {
 } from '../../../../shared';
 import { Observable, Subscription } from 'rxjs/Rx';
 
-import { CallCenterOnlyPageService, ExternalInputModel } from "../../../callcenteronlypage/component";
+import { CallCenterOnlyPageService, ExternalInputModel } from '../../../callcenteronlypage/component';
 import { Router, NavigationEnd } from '@angular/router';
-import { ModalDirective } from 'ng2-bootstrap/modal';
-
-
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'passengerquery-assignedcalls',
@@ -25,25 +23,25 @@ export class CustomerDissatisfactionRecievedCallsListComponent implements OnInit
     callId: number;
     callcenterload: boolean = false;
     public isArchive: boolean = false;
-    constructor(private callcenteronlypageservice: CallCenterOnlyPageService, private _router: Router,
-        private globalState: GlobalStateService) {
 
+    constructor(private callcenteronlypageservice: CallCenterOnlyPageService,
+        private _router: Router,
+        private globalState: GlobalStateService) {
     }
 
     ngOnInit() {
-        if (this._router.url.indexOf("archivedashboard") > -1) {
+        if (this._router.url.indexOf('archivedashboard') > -1) {
             this.isArchive = true;
-            this.currentIncidentId = +UtilityService.GetFromSession("ArchieveIncidentId");
+            this.currentIncidentId = +UtilityService.GetFromSession('ArchieveIncidentId');
         }
         else {
             this.isArchive = false;
-            this.currentIncidentId = +UtilityService.GetFromSession("CurrentIncidentId");
+            this.currentIncidentId = +UtilityService.GetFromSession('CurrentIncidentId');
         }
 
         this.getAllCustomerDissatisfactionCallsRecieved(this.currentIncidentId);
         this.globalState.Subscribe('incidentChangefromDashboard', (model: KeyValue) => this.incidentChangeHandler(model));
         this.globalState.Subscribe('CallRecieved', (model: number) => this.getAllCustomerDissatisfactionCallsRecieved(this.currentIncidentId));
-
     }
 
     incidentChangeHandler(incident: KeyValue): void {
@@ -59,8 +57,6 @@ export class CustomerDissatisfactionRecievedCallsListComponent implements OnInit
                 this.allAssignedCalls = response.Records;
             });
     }
-
-
 
     openCallcenter(externalInputId): void {
         this.callId = externalInputId;

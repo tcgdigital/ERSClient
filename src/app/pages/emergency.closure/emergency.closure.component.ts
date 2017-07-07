@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-
-
 import { DepartmentClosureService } from '../department.closure/components/department.closure.service';
 import { DepartmentClosureModel } from '../department.closure';
 import { IncidentService } from '../incident/components/incident.service';
@@ -15,8 +13,8 @@ import { ActionableService } from '../shared.components/actionables/components/a
 import { DemandService } from '../shared.components/demand/components/demand.service';
 import { NotifyPeopleModel, UserDepartmentNotificationMapper, NotificationContactsWithTemplateModel } from '../notifypeople';
 import { ActionableModel, DemandModel } from '../shared.components';
-import { UtilityService, ResponseModel, BaseModel, GlobalStateService, KeyValue,AuthModel } from '../../shared';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { UtilityService, ResponseModel, BaseModel, GlobalStateService, KeyValue, AuthModel } from '../../shared';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { ReportPath } from './components/emergency.closure.model';
 import { EmergencyClosureService } from './components/emergency.closure.service';
@@ -24,9 +22,6 @@ import { UserPermissionService } from '../masterdata/userpermission/components/u
 import { UserPermissionModel } from '../masterdata/userpermission';
 import { AuthenticationService } from '../login/components/authentication.service';
 import { Router } from '@angular/router';
-
-
-
 
 @Component({
 	selector: 'emergency-closure',
@@ -231,7 +226,7 @@ export class EmergencyClosureComponent implements OnInit {
 			this.incident.SavedOn = new Date();
 			this.incidentService.Update(this.incident, this.incident.IncidentId)
 				.subscribe(() => {
-					
+
 					this.toastrService.info('Closure Report Saved Successfully.', 'Success', this.toastrConfig);
 				}, (error) => {
 					this.toastrService.info('Some error occured.', 'Error', this.toastrConfig);
@@ -253,7 +248,7 @@ export class EmergencyClosureComponent implements OnInit {
 			this.incident.ActiveFlag = 'InActive';
 			this.incidentService.Update(this.incident, this.incident.IncidentId)
 				.subscribe((resultIncident: IncidentModel) => {
-					this.toastrService.success('Closure Report Saved Successfully.You will be logged out.', 'Success', this.toastrConfig);					
+					this.toastrService.success('Closure Report Saved Successfully.You will be logged out.', 'Success', this.toastrConfig);
 					this.emergencyClosureService.GetEmergencyClosureDocumentPDFPath(this.incident.IncidentId)
 						.map((reportPath: ReportPath) => {
 							this.reportPath = new ReportPath();

@@ -11,7 +11,7 @@ import {
 import { BroadcastWidgetModel } from './broadcast.widget.model';
 import { BroadCastModel } from '../../shared.components';
 import { BroadcastWidgetService } from './broadcast.widget.service';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'broadcast-widget',

@@ -10,7 +10,7 @@ import { DepartmentService, DepartmentModel } from './masterdata';
 import { IncidentService, IncidentModel } from './incident';
 import { PAGES_MENU } from './pages.menu';
 import { UtilityService } from '../shared/services';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { AuthenticationService } from './login/components/authentication.service';
 import { UserPermissionService } from './masterdata/userpermission/components';
 import { UserPermissionModel } from './masterdata/userpermission/components';
@@ -35,9 +35,9 @@ export class PagesComponent implements OnInit {
     userName: string;
     lastLogin: Date;
     userId: number;
-    private sub: any;
     isLanding: boolean = false;
     showQuicklink: boolean = false;
+    private sub: any;
 
     /**
      * Creates an instance of PagesComponent.
@@ -69,7 +69,7 @@ export class PagesComponent implements OnInit {
 
         this.getIncidents();
         this.userName = localStorage.getItem('CurrentLoggedInUserName');
-        this.userId = +UtilityService.GetFromSession("CurrentUserId");
+        this.userId = +UtilityService.GetFromSession('CurrentUserId');
         this.getDepartments();
         this.lastLogin = new Date(localStorage.getItem('LastLoginTime'));
         this.globalState.Subscribe('incidentCreate', (model: number) => this.incidentCreateHandler(model));
@@ -118,7 +118,7 @@ export class PagesComponent implements OnInit {
 
     public closeQuickLinkModel(): void {
         this.quickLinkModel.hide();
-        this.showQuicklink=false;
+        this.showQuicklink = false;
     }
 
     public onDepartmentChange(selectedDepartment: KeyValue): void {
@@ -128,8 +128,10 @@ export class PagesComponent implements OnInit {
 
     public onIncidentChange(selectedIncident: KeyValue): void {
         UtilityService.SetToSession({ CurrentIncidentId: selectedIncident.Value });
-        UtilityService.SetToSession({CurrentOrganizationId: this.incidentOrganizations
-                            .find(z=>z.Key === selectedIncident.Value.toString()).Value});
+        UtilityService.SetToSession({
+            CurrentOrganizationId: this.incidentOrganizations
+                .find((z) => z.Key === selectedIncident.Value.toString()).Value
+        });
         this.globalState.NotifyDataChanged('incidentChange', selectedIncident);
     }
 
@@ -138,10 +140,6 @@ export class PagesComponent implements OnInit {
         if ($event === 'quicklink') {
             this.quickLinkModel.show();
         }
-        // window.alert($event);
-        //this.showQuicklink = true;
-        //  let num = UtilityService.UUID;
-        //  this.globalState.NotifyDataChanged('quicklinkclicked', num);
     }
 
     private getDepartments(): void {
@@ -155,7 +153,7 @@ export class PagesComponent implements OnInit {
                 this.departments = x.map((y: UserPermissionModel) =>
                     new KeyValue(y.Department.DepartmentName, y.Department.DepartmentId));
                 if (this.departments.length > 0) {
-                    let departmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
+                    const departmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
                     if (departmentId > 0) {
                         this.currentDepartmentId = departmentId;
                     }
@@ -164,15 +162,9 @@ export class PagesComponent implements OnInit {
                         UtilityService.SetToSession({ CurrentDepartmentId: this.currentDepartmentId });
                     }
                     console.log(this.currentDepartmentId);
-                 //   this.isLanding = false;
-                    // console.log(this.isLanding+"-----page");
-
-                    // this.currentDepartmentId = this.departments[0].Value;
-                    // console.log(this.currentDepartmentId);
-                    // UtilityService.SetToSession({ CurrentDepartmentId: this.currentDepartmentId });
                 }
                 else {
-                   // this.isLanding = true;
+                    // this.isLanding = true;
                 }
             });
     }
@@ -187,7 +179,7 @@ export class PagesComponent implements OnInit {
                 this.incidents = x.map((y: IncidentModel) => new KeyValue(y.EmergencyName, y.IncidentId));
                 this.incidentOrganizations = x.map((y: IncidentModel) => new KeyValue(y.IncidentId.toString(), y.OrganizationId));
                 if (this.incidents.length > 0) {
-                    let incidentId = +UtilityService.GetFromSession('CurrentIncidentId');
+                    const incidentId = +UtilityService.GetFromSession('CurrentIncidentId');
 
                     if (incidentId > 0) {
                         this.currentIncidentId = incidentId;
@@ -196,8 +188,10 @@ export class PagesComponent implements OnInit {
                         this.currentIncidentId = this.incidents[0].Value;
                         UtilityService.SetToSession({ CurrentIncidentId: this.currentIncidentId });
                     }
-                    UtilityService.SetToSession({CurrentOrganizationId: this.incidentOrganizations
-                        .find(z=>z.Key === this.currentIncidentId.toString()).Value})
+                    UtilityService.SetToSession({
+                        CurrentOrganizationId: this.incidentOrganizations
+                            .find((z) => z.Key === this.currentIncidentId.toString()).Value
+                    });
                     console.log(this.currentIncidentId);
 
                     this.isLanding = false;

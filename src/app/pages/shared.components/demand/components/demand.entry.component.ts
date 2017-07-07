@@ -30,7 +30,7 @@ import {
     GlobalConstants, KeyValue, AutocompleteComponent,
     UtilityService, GlobalStateService, AuthModel, DateTimePickerOptions
 } from '../../../../shared';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import * as moment from 'moment/moment';
 import { DateTimePickerSelectEventArgs } from '../../../../shared/directives/datetimepicker';
 import { FileStoreModel } from '../../../../shared/models/file.store.model';
@@ -45,7 +45,7 @@ import { FileStoreService } from '../../../../shared/services/common.service';
 })
 export class DemandEntryComponent implements OnInit, OnDestroy {
     @ViewChild('childModal') public childModal: ModalDirective;
-    @ViewChild('inputFileDemand') inputFileDemand: any
+    @ViewChild('inputFileDemand') inputFileDemand: any;
 
     public form: FormGroup;
     datepickerOption: DateTimePickerOptions = new DateTimePickerOptions();
@@ -58,20 +58,20 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
     filtereddepartments: DepartmentModel[] = [];
     affectedPeople: AffectedPeopleToView[] = [];
     affectedObjects: AffectedObjectsToView[] = [];
-    pdas: Array<KeyValue> = [];
-    awbs: Array<KeyValue> = [];
+    pdas: KeyValue[] = [];
+    awbs: KeyValue[] = [];
     currentIncidentId: number;
     currentOrganizationId: number;
     currentDepartmentId: number;
     parentDeptId: number = null;
-    currentDepartmentName: string = "Command Centre";
+    currentDepartmentName: string = 'Command Centre';
     communicationLogs: CommunicationLogModel[];
     communicationLog: CommunicationLogModel;
-    showAdd: Boolean = true;
+    showAdd: boolean = true;
     demandTrail: DemandTrailModel;
     demandTrails: DemandTrailModel[];
     departments: DepartmentModel[];
-    buttonValue: String = "";
+    buttonValue: string = '';
     createdBy: number;
     demandModelEdit: DemandModel;
     credentialName: string;
@@ -91,18 +91,18 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
 
     /**
      * Creates an instance of DemandEntryComponent.
-     * @param {DemandService} demandService 
-     * @param {DemandTypeService} demandTypeService 
-     * @param {DepartmentService} departmentService 
-     * @param {PageService} pageService 
-     * @param {DemandTrailService} demandTrailService 
-     * @param {CallerService} callerService 
-     * @param {InvolvePartyService} involvedPartyService 
-     * @param {AffectedObjectsService} affectedObjectsService 
-     * @param {AffectedPeopleService} affectedPeopleService 
-     * @param {GlobalStateService} globalState 
-     * @param {DataExchangeService<number>} dataExchange 
-     * 
+     * @param {DemandService} demandService
+     * @param {DemandTypeService} demandTypeService
+     * @param {DepartmentService} departmentService
+     * @param {PageService} pageService
+     * @param {DemandTrailService} demandTrailService
+     * @param {CallerService} callerService
+     * @param {InvolvePartyService} involvedPartyService
+     * @param {AffectedObjectsService} affectedObjectsService
+     * @param {AffectedPeopleService} affectedPeopleService
+     * @param {GlobalStateService} globalState
+     * @param {DataExchangeService<number>} dataExchange
+     *
      * @memberOf DemandEntryComponent
      */
     constructor(private demandService: DemandService,
@@ -121,7 +121,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
         private fileStoreService: FileStoreService,
         private toastrConfig: ToastrConfig, private _router: Router) {
         this.showAdd = false;
-        this.buttonValue = "Create Demand";
+        this.buttonValue = 'Create Demand';
         this.departments = [];
         this.globalStateProxyOpen = injector.get(GlobalStateService);
     }
@@ -140,17 +140,17 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
         this.filesToUpload = [];
         for (var i = 0; i < e.target.files.length; i++) {
             const extension = e.target.files[i].name.split('.').pop();
-            if (extension != "exe" && extension != "dll")
+            if (extension !== 'exe' && extension !== 'dll')
                 this.filesToUpload.push(e.target.files[i]);
             else {
                 this.toastrService.error('Invalid File Format!', 'Error', this.toastrConfig);
-                this.inputFileDemand.nativeElement.value = "";
+                this.inputFileDemand.nativeElement.value = '';
             }
         }
     }
 
     getPageSpecifiedDepartments(): void {
-        this.pageService.GetDepartmentsByPageCode("ViewDepartmentSpecificDemands")
+        this.pageService.GetDepartmentsByPageCode('ViewDepartmentSpecificDemands')
             .subscribe((response: ResponseModel<PageModel>) => {
                 let pagePermissions = UtilityService.pluck(response.Records[0], ['PagePermissions'])[0];
                 pagePermissions.forEach(x => {
@@ -167,7 +167,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
             .subscribe((response: ResponseModel<DepartmentModel>) => {
                 this.departments = response.Records;
             }, (error: any) => {
-                console.log("error:  " + error);
+                console.log('error:  ' + error);
             });
     }
 
@@ -178,7 +178,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
         let answer = '';
         let descchanged = '';
 
-        demandTrail.Answers = "";
+        demandTrail.Answers = '';
         demandTrail.IncidentId = demand.IncidentId;
         demandTrail.DemandTypeId = demand.DemandTypeId;
         demandTrail.DemandCode = demand.DemandCode;
@@ -187,13 +187,15 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
         demandTrail.Priority = demand.Priority;
         demandTrail.RequiredLocation = demand.RequiredLocation;
         demandTrail.RequesterName = demand.RequestedBy;
-        demandTrail.RequesterDepartmentName = this.departments.some(x => x.DepartmentId == demand.RequesterDepartmentId) ?
-            this.departments.find(x => x.DepartmentId == demand.RequesterDepartmentId).DepartmentName : null;
-        demandTrail.RequesterParentDepartmentName = this.departments.some(x => x.DepartmentId == demand.RequesterParentDepartmentId) ?
-            this.departments.find(x => x.DepartmentId == demand.RequesterParentDepartmentId).DepartmentName : null;
-        demandTrail.TargetDepartmentName = this.departments.find(x => x.DepartmentId == demand.TargetDepartmentId).DepartmentName;
-        demandTrail.ApproverDepartmentName = this.departments.some(x => x.DepartmentId == demand.ApproverDepartmentId) ?
-            this.departments.find(x => x.DepartmentId == demand.ApproverDepartmentId).DepartmentName : null;
+        demandTrail.RequesterDepartmentName = this.departments
+            .some((x) => x.DepartmentId === demand.RequesterDepartmentId) ?
+            this.departments.find((x) => x.DepartmentId === demand.RequesterDepartmentId).DepartmentName : null;
+        demandTrail.RequesterParentDepartmentName = this.departments
+            .some((x) => x.DepartmentId === demand.RequesterParentDepartmentId) ?
+            this.departments.find((x) => x.DepartmentId === demand.RequesterParentDepartmentId).DepartmentName : null;
+        demandTrail.TargetDepartmentName = this.departments.find((x) => x.DepartmentId === demand.TargetDepartmentId).DepartmentName;
+        demandTrail.ApproverDepartmentName = this.departments.some((x) => x.DepartmentId === demand.ApproverDepartmentId) ?
+            this.departments.find((x) => x.DepartmentId === demand.ApproverDepartmentId).DepartmentName : null;
         demandTrail.RequesterType = demand.RequesterType;
         demandTrail.DemandDesc = demand.DemandDesc;
         demandTrail.IsApproved = demand.IsApproved;
@@ -210,7 +212,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
         demandTrail.CreatedBy = demand.CreatedBy ? demand.CreatedBy : this.createdBy;
         demandTrail.CreatedOn = demand.CreatedOn ? demand.CreatedOn : new Date();
 
-        var TargetDepartmentName = this.departments.some(x => x.DepartmentId == demandForAnswer.TargetDepartmentId) ?
+        let TargetDepartmentName = this.departments.some(x => x.DepartmentId == demandForAnswer.TargetDepartmentId) ?
             this.departments.find(x => x.DepartmentId == demandForAnswer.TargetDepartmentId).DepartmentName : undefined;
         let date = new Date();
 
@@ -248,7 +250,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
                 editedFields = editedFields + `<strong>Required At Location</strong> : ${demandForAnswer.RequiredLocation} `;
             }
 
-            if (demandForAnswer.DemandStatusDescription.length > 0) {
+            if (demandForAnswer.DemandStatusDescription != undefined  &&  demandForAnswer.DemandStatusDescription.length > 0) {
                 descchanged = `. ${demandForAnswer.DemandStatusDescription}.`;
             }
         }
@@ -333,6 +335,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
 
         this.demandModel.Caller.LastName = "";
         this.Action = "Submit";
+        this.freshDemand = true;
         this.isReadonly = false;
         this.childModal.show();
     };
@@ -412,7 +415,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
                 this.showAdd = true;
                 this.isReadonly = true;
                 this.childModal.show();
-                this.submitted=false;
+                this.submitted = false;
                 this.form.controls["PDATicketNumber"].reset({ value: this.demandModel.PDATicketNumber, disabled: true });
                 this.form.controls["AffectedPersonId"].reset({ value: this.demandModel.AffectedPersonId, disabled: true });
                 this.form.controls["AffectedObjectId"].reset({ value: this.demandModel.AffectedObjectId, disabled: true });
@@ -481,16 +484,7 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
         this.globalState.Subscribe('departmentChangeFromDashboard', (model: KeyValue) => this.departmentChangeHandler(model));
     };
 
-    private incidentChangeHandler(incident: KeyValue): void {
-        this.currentIncidentId = incident.Value;
-        this.getPassengersCrews(this.currentIncidentId);
-        this.getCargo(this.currentIncidentId);
-    };
 
-    private departmentChangeHandler(department: KeyValue): void {
-        this.currentDepartmentId = department.Value;
-        this.getDepartmentNameAndParentDepartment(this.currentDepartmentId);
-    };
 
     getDepartmentNameAndParentDepartment(departmentId): void {
         this.departmentService.Get(departmentId)
@@ -838,6 +832,10 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
                     console.log("Error");
                 });
         }
+        else {
+            this.submitted  =  false;
+            this.childModal.hide();
+        }
     }
 
     public dateTimeSet(date: DateTimePickerSelectEventArgs, controlName: string): void {
@@ -847,8 +845,19 @@ export class DemandEntryComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.dataExchange.Unsubscribe("OnDemandUpdate");
+        this.dataExchange.Unsubscribe('OnDemandUpdate');
         this.globalState.Unsubscribe('incidentChangefromDashboard');
         this.globalState.Unsubscribe('departmentChangeFromDashboard');
-    };
+    }
+
+    private incidentChangeHandler(incident: KeyValue): void {
+        this.currentIncidentId = incident.Value;
+        this.getPassengersCrews(this.currentIncidentId);
+        this.getCargo(this.currentIncidentId);
+    }
+
+    private departmentChangeHandler(department: KeyValue): void {
+        this.currentDepartmentId = department.Value;
+        this.getDepartmentNameAndParentDepartment(this.currentDepartmentId);
+    }
 }

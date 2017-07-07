@@ -1,259 +1,275 @@
-<div [hidden]="showCallcenterModal">
-    <div class="card card-without-top-border noBorder">
-        <div class="entryHolder">
-            <div [hidden]="enquiryType!=1 && enquiryType!=3">
-                <div class="row">
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="FirstName">PDA First Name </label>
-                        <label class="form-control grey-input">{{pdaenquery.FirstName}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="LastName">PDA Last Name </label>
-                        <label class="form-control grey-input">{{pdaenquery.LastName}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="Nationality">Nationality </label>
-                        <label class="form-control grey-input">{{pdaenquery.Nationality}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="Age">Age </label>
-                        <label class="form-control grey-input">{{pdaenquery.Age}}</label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="PermanentAddress">Permanent Address </label>
-                        <label class="form-control grey-input">{{pdaenquery.PermanentAddress}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="FlightNumber">Flight Number </label>
-                        <label class="form-control grey-input">{{pdaenquery.FlightNumber}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="DepartedFrom">Departed From </label>
-                        <label class="form-control grey-input">{{pdaenquery.DepartedFrom}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="TravellingTo">Travelling To </label>
-                        <label class="form-control grey-input">{{pdaenquery.TravellingTo}}</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="KINFirstName">KIN First Name </label>
-                        <label class="form-control grey-input">{{pdaenquery.KINFirstName}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="KINLastName">KIN Last Name </label>
-                        <label class="form-control grey-input">{{pdaenquery.KINLastName}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="KINContactNumber">KIN Contact Number </label>
-                        <label class="form-control grey-input">{{pdaenquery.KINContactNumber}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="KINRelationShip">KIN Relationship </label>
-                        <label class="form-control grey-input">{{pdaenquery.KINRelationShip}}</label>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                        <label for="EnquiryReason">Enquiry Reason </label>
-                        <label class="form-control grey-input">{{pdaenquery.EnquiryReason}}</label>
-                    </div>
-                    <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                        <label for="TravellingWith">Travelling With </label>
-                        <label class="form-control grey-input">{{pdaenquery.TravellingWith}}</label>
-                    </div>
-                </div>
-
+<ng-container *ngIf="!showCallcenterModal">
+    <!--<div [hidden]="showCallcenterModal">-->
+    <!--<div class="card card-without-top-border noBorder">-->
+    <!--<div class="entryHolder">-->
+    <ng-container *ngIf="(enquiryType == 1 || enquiryType == 3)">
+        <!--<div [hidden]="enquiryType!=1 && enquiryType!=3">-->
+        <div class="row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="FirstName">PDA First Name</label>
+                <label class="form-control grey-input">{{pdaenquery.FirstName}}&nbsp;</label>
             </div>
-
-            <div [hidden]=" enquiryType!=2">
-                <div class="row">
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="ShippersName">Shipper's Name </label>
-                        <label class="form-control grey-input">{{cargoquery.ShippersName}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="ShippersAddress">Shipper's Address </label>
-                        <label class="form-control grey-input">{{cargoquery.ShippersAddress}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="ShippersContactNumber">Shipper's Contact Number </label>
-                        <label class="form-control grey-input">{{cargoquery.ShippersContactNumber}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="ConsigneesName">Consignee's Name </label>
-                        <label class="form-control grey-input">{{cargoquery.ConsigneesName}}</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="ConsigneesAddress">Consignee's Address </label>
-                        <label class="form-control grey-input">{{cargoquery.ConsigneesAddress}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="ConsigneesContactNumber">Consignee's Contac tNumber </label>
-                        <label class="form-control grey-input">{{cargoquery.ConsigneesContactNumber}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="EnquiryReason">Enquiry Reason </label>
-                        <label class="form-control grey-input">{{cargoquery.EnquiryReason}}</label>
-                    </div>
-                    <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                        <label for="Query">Query </label>
-                        <label class="form-control grey-input">{{cargoquery.Query}}</label>
-                    </div>
-                </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="LastName">PDA Last Name </label>
+                <label class="form-control grey-input">{{pdaenquery.LastName}}&nbsp;</label>
             </div>
-
-            <div [hidden]="enquiryType<4">
-                <div class="form-group col-lg-3 col-sm-12 col-md-6">
-                    <label for="source">Source </label>
-                    <label class="form-control grey-input">{{otherquery.source}}</label>
-                </div>
-                <!--<div class="form-group col-lg-3 col-sm-12 col-md-6">
-                    <label for="Query">Query </label>
-                    <label class="form-control grey-input">{{otherquery.Query}}</label>
-                </div>-->
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="Nationality">Nationality</label>
+                <label class="form-control grey-input">{{pdaenquery.Nationality}}&nbsp;</label>
             </div>
-            <div class="row">
-                <div class="col-lg-8">
-                    <form [formGroup]="form">
-                        <input type="hidden" formControlName="EnquiryId" name="EnquiryId" />
-                        <div class="col-lg-12">
-                            <div class="form-group col-lg-6 col-sm-12 col-md-6">
-                                <label for="Query">Query<span class="required">*</span></label>
-                                <input id="Query" class="form-control" type="text" name="Query" formControlName="Queries" placeholder="Enter Query" />
-                                <small [hidden]="form.controls.Queries.valid || (form.controls.Queries.pristine && !submitted)" class="text-danger">Required or invalid</small>
-                            </div>
-                            <div class="form-group col-lg-6 col-sm-12 col-md-6" [hidden]="enquiryType!=1">
-                                <label for="Passengers">PDA Name:<span class="red">*</span></label>
-                                <autocomplete [items]="passengers" (notify)="onNotifyPassenger($event)" [actionLinks]="actionLinks" [initialvalue]="initialvalue"
-                                    (actionClickHandler)="onActionClick($event)">
-                                </autocomplete>
-                            </div>
-                            <div class="form-group col-lg-6 col-sm-12 col-md-6" [hidden]="enquiryType!=3">
-                                <label for="Passengers">PDA Name:<span class="red">*</span></label>
-                                <autocomplete [items]="crews" (notify)='onNotifyCrew($event)' [initialvalue]="initialvalue"></autocomplete>
-                            </div>
-                            <div class="form-group col-lg-6 col-sm-12 col-md-6" [hidden]="enquiryType!=2">
-                                <label for="awb">AWB:<span class="red">*</span></label>
-                                <autocomplete [items]="awbs" (notify)='onNotifyCargo($event)' [initialvalue]="initialvalue"></autocomplete>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="Age">Age </label>
+                <label class="form-control grey-input">{{pdaenquery.Age}}&nbsp;</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="PermanentAddress">Permanent Address </label>
+                <label class="form-control grey-input">{{pdaenquery.PermanentAddress}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="FlightNumber">Flight Number </label>
+                <label class="form-control grey-input">{{pdaenquery.FlightNumber}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="DepartedFrom">Departed From </label>
+                <label class="form-control grey-input">{{pdaenquery.DepartedFrom}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="TravellingTo">Travelling To </label>
+                <label class="form-control grey-input">{{pdaenquery.TravellingTo}}&nbsp;</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="KINFirstName">KIN First Name </label>
+                <label class="form-control grey-input">{{pdaenquery.KINFirstName}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="KINLastName">KIN Last Name </label>
+                <label class="form-control grey-input">{{pdaenquery.KINLastName}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="KINContactNumber">KIN Contact Number </label>
+                <label class="form-control grey-input">{{pdaenquery.KINContactNumber}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="KINRelationShip">KIN Relationship </label>
+                <label class="form-control grey-input">{{pdaenquery.KINRelationShip}}&nbsp;</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <label for="EnquiryReason">Enquiry Reason </label>
+                <label class="form-control grey-input">{{pdaenquery.EnquiryReason}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <label for="TravellingWith">Travelling With </label>
+                <label class="form-control grey-input">{{pdaenquery.TravellingWith}}&nbsp;</label>
+            </div>
+        </div>
+        <!--</div>-->
+    </ng-container>
 
-                            </div>
-                            <div class="form-group col-lg-6 col-sm-12 col-md-6" [hidden]="enquiryType!=1">
-                                <label for="LastName">Passengers with same PNR </label>
-                                <div class="multiselect-container">
-                                    <div class="multiselect-selector" (click)="showListsamepnr(); $event.stopPropagation();">
-                                        <i class="fa fa-caret-down fa-pull-right fa-fw" aria-hidden="true"></i> {{selectedcountpnr>0?
-                                        selectedcountpnr + ' Passengers(s) selected' : 'Select Co-passenger'}}
-                                    </div>
-                                    <ul class="multiselect-list1 dropdown-menu-down" [hidden]="!list1Selected" (click)="$event.stopPropagation();">
-                                        <li *ngFor="let copassenger of copassengerlistpnr">
-                                            <input type="checkbox" aria-label="Callback" [checked]="copassenger.IsSelected" (change)="selectCopassengerpnr($event,copassenger)"
-                                            />
-                                            <span>{{copassenger.PassengerName}}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6 col-sm-12 col-md-6" [hidden]="enquiryType!=1">
-                                <label for="LastName">All Passengers</label>
-                                <div class="multiselect-container">
-                                    <div class="multiselect-selector" (click)="showListPassengers(); $event.stopPropagation();">
-                                        <i class="fa fa-caret-down fa-pull-right fa-fw" aria-hidden="true"></i> {{selectedcountpassenger>0?
-                                        selectedcountpassenger + ' Passengers(s) selected' : 'Select Co-passenger'}}
-                                    </div>
-                                    <ul class="multiselect-list1 dropdown-menu-down" [hidden]="!list2Selected" (click)="$event.stopPropagation();">
-                                        <li *ngFor="let copassenger of copassengerlistPassengerForMappedPerson">
-                                            <input type="checkbox" aria-label="Callback" [checked]="copassenger.IsSelected" (change)="selectCopassengerfrompassenger($event,copassenger)"
-                                            />
-                                            <span>{{copassenger.PassengerName}}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div [hidden]="enquiryType!=1  && enquiryType!=2 && enquiryType!=3" class="col-lg-6 col-sm-12">
-                                <md-checkbox id="IsCallBack" formControlName="IsCallBack" aria-label="Add">
-                                    Callback:
-                                </md-checkbox>
-                                <br>
-                                <md-checkbox id="IsTravelRequest" formControlName="IsTravelRequest" aria-label="Add">
-                                    Travel Request:
-                                </md-checkbox>
-                                <br>
-                                <md-checkbox id="IsAdminRequest" formControlName="IsAdminRequest" aria-label="Add">
-                                    Admin Request:
-                                </md-checkbox>
-                            </div>
-                            <div class="form-group col-lg-6 col-sm-12 col-md-6"> <button class="btn btn-primary" type="button" (click)="saveEnquiryDemandCaller()">Submit</button></div>
-                        </div>
-                    </form>
-                </div>
+    <ng-container *ngIf="enquiryType == 2">
+        <!--<div [hidden]=" enquiryType!=2">-->
+        <div class="row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="ShippersName">Shipper's Name</label>
+                <label class="form-control grey-input">{{cargoquery.ShippersName}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="ShippersAddress">Shipper's Address</label>
+                <label class="form-control grey-input">{{cargoquery.ShippersAddress}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="ShippersContactNumber">Shipper's Contact Number </label>
+                <label class="form-control grey-input">{{cargoquery.ShippersContactNumber}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="ConsigneesName">Consignee's Name</label>
+                <label class="form-control grey-input">{{cargoquery.ConsigneesName}}&nbsp;</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="ConsigneesAddress">Consignee's Address</label>
+                <label class="form-control grey-input">{{cargoquery.ConsigneesAddress}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="ConsigneesContactNumber">Consignee's Contac tNumber</label>
+                <label class="form-control grey-input">{{cargoquery.ConsigneesContactNumber}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="EnquiryReason">Enquiry Reason</label>
+                <label class="form-control grey-input">{{cargoquery.EnquiryReason}}&nbsp;</label>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <label for="Query">Query </label>
+                <label class="form-control grey-input">{{cargoquery.Query}}</label>
+            </div>
+        </div>
+        <!--</div>-->
+    </ng-container>
 
-
-                <div class="form-group col-lg-4 col-sm-12 col-md-6" [hidden]="enquiryType!=1">
-                    <responsive-table [scrollableclass]="true">
-                        <table responsive-table-body>
-                            <thead>
-                                <th></th>
-                                <th>Select copassanger</th>
-                            </thead>
-                            <tbody>
-                                <tr [hidden]="consolidatedCopassengers.length>1"></tr>
-                                <tr *ngFor="let copassenger of consolidatedCopassengers">
-                                    <td> <input type="checkbox" aria-label="Callback" [checked]="copassenger.IsSelected" (change)="selectCopassengerAll($event,copassenger)"
-                                        /></td>
-                                    <td>{{copassenger.PassengerName}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </responsive-table>
+    <ng-container *ngIf="enquiryType >= 4">
+        <!--<div [hidden]="enquiryType<4">-->
+        <div class="row">
+            <div class="col-lg-3 col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label for="source">Source</label>
+                    <label class="form-control grey-input">{{otherquery.source}}&nbsp;</label>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <!--</div>-->
+    </ng-container>
 
-<div [hidden]="hideModal">
+    <div class="row">
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <div class="row">
+                <form [formGroup]="form">
+                    <input type="hidden" formControlName="EnquiryId" name="EnquiryId" />
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="Query">Query<span class="required">*</span></label>
+                        <input id="Query" class="form-control" type="text" name="Query" formControlName="Queries" placeholder="Enter Query" />
+                        <small [hidden]="form.controls.Queries.valid || (form.controls.Queries.pristine && !submitted)" class="text-danger">Required or invalid</small>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" [hidden]="enquiryType!=1">
+                        <label for="Passengers">PDA Name:<span class="red">*</span></label>
+                        <autocomplete [items]="passengers" (notify)="onNotifyPassenger($event)" [actionLinks]="actionLinks" [initialvalue]="initialvalue"
+                            (actionClickHandler)="onActionClick($event)">
+                        </autocomplete>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" [hidden]="enquiryType!=3">
+                        <label for="Passengers">PDA Name:<span class="red">*</span></label>
+                        <autocomplete [items]="crews" (notify)='onNotifyCrew($event)' [initialvalue]="initialvalue"></autocomplete>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" [hidden]="enquiryType!=2">
+                        <label for="awb">AWB:<span class="red">*</span></label>
+                        <autocomplete [items]="awbs" (notify)='onNotifyCargo($event)' [initialvalue]="initialvalue"></autocomplete>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" [hidden]="enquiryType!=1">
+                        <label for="LastName">Passangers with same PNR </label>
+                        <div class="multiselect-container">
+                            <div class="multiselect-selector" (click)="showListsamepnr(); $event.stopPropagation();">
+                                <i class="fa fa-caret-down fa-pull-right fa-fw" aria-hidden="true"></i> {{selectedcountpnr>0?
+                                selectedcountpnr + ' Passengers(s) selected' : 'Select Co-passenger'}}
+                            </div>
+                            <ul class="multiselect-list1 dropdown-menu-down" [hidden]="!list1Selected" (click)="$event.stopPropagation();">
+                                <li *ngFor="let copassenger of copassengerlistpnr">
+                                    <input type="checkbox" aria-label="Callback" [checked]="copassenger.IsSelected" (change)="selectCopassengerpnr($event,copassenger)"
+                                    />
+                                    <span>{{copassenger.PassengerName}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" [hidden]="enquiryType!=1">
+                        <label for="LastName">All Passangers</label>
+                        <div class="multiselect-container">
+                            <div class="multiselect-selector" (click)="showListPassengers(); $event.stopPropagation();">
+                                <i class="fa fa-caret-down fa-pull-right fa-fw" aria-hidden="true"></i> {{selectedcountpassenger>0?
+                                selectedcountpassenger + ' Passengers(s) selected' : 'Select Co-passenger'}}
+                            </div>
+                            <ul class="multiselect-list1 dropdown-menu-down" [hidden]="!list2Selected" (click)="$event.stopPropagation();">
+                                <li *ngFor="let copassenger of copassengerlistPassengerForMappedPerson">
+                                    <input type="checkbox" aria-label="Callback" [checked]="copassenger.IsSelected" (change)="selectCopassengerfrompassenger($event,copassenger)"
+                                    />
+                                    <span>{{copassenger.PassengerName}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12" [hidden]="enquiryType!=1  && enquiryType!=2 && enquiryType!=3">
+                        <md-checkbox id="IsCallBack" formControlName="IsCallBack" aria-label="Add">
+                            Callback:
+                        </md-checkbox>
+                        <br>
+                        <md-checkbox id="IsTravelRequest" formControlName="IsTravelRequest" aria-label="Add">
+                            Travel Request:
+                        </md-checkbox>
+                        <br>
+                        <md-checkbox id="IsAdminRequest" formControlName="IsAdminRequest" aria-label="Add">
+                            Admin Request:
+                        </md-checkbox>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <button class="btn btn-primary" type="button" (click)="saveEnquiryDemandCaller()">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="form-group col-lg-4 col-md-6 col-sm-12" [hidden]="enquiryType!=1">
+            <responsive-table [scrollableclass]="true">
+                <table responsive-table-body>
+                    <thead>
+                        <th>Select</th>
+                        <th>Co-Passengers</th>
+                    </thead>
+                    <tbody>
+                        <tr [hidden]="consolidatedCopassengers.length>1">
+                            <td colspan="2">No Co-Passengers mapped yet</td>
+                        </tr>
+                        <tr *ngFor="let copassenger of consolidatedCopassengers">
+                            <td> <input type="checkbox" aria-label="Callback" [checked]="copassenger.IsSelected" (change)="selectCopassengerAll($event,copassenger)"
+                                /></td>
+                            <td>{{copassenger.PassengerName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </responsive-table>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+</ng-container>
+
+<ng-container *ngIf="!hideModal">
+    <!--<div [hidden]="hideModal">-->
     <div class="row">
         <div class="col-lg-6 col-md-8 col-sm-8">
             <h4 class="modal-title pull-left">Communication Trail</h4>
         </div>
         <div class="col-lg-6 col-md-4 col-sm-2">
             <button type="button" class="close pull-right" aria-label="Close" (click)="cancelModal()">
-                  <span aria-hidden="true">&times;</span>
-                   </button>
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     </div>
 
     <div class="row modalBodyHeaderStyle">
         <div class="col-sm-6 form-group">
             <label class="lebelHeaderStyle"><strong>PDA Name</strong></label>
-            <br>
-            <label class="form-control">{{pdaNameForTrail}}</label>
+            <label class="form-control">{{pdaNameForTrail}}&nbsp;</label>
         </div>
         <div class="col-sm-6 form-group">
             <label class="lebelHeaderStyle"><strong>Reference Number</strong></label>
-            <br>
-            <label class="form-control">{{ticketNumber}}</label>
+            <label class="form-control">{{ticketNumber}}&nbsp;</label>
         </div>
     </div>
-    <br>
-    <responsive-table>
-        <table responsive-table-body>
-            <tbody>
-                <tr *ngFor="let comm of communications">
-                    <td data-title="comm"><strong>{{comm.RequesterType}}</strong> logged by
-                        <span [hidden]="comm.RequesterDepartment.length==0"><strong>{{comm.RequesterName}} (Dept: {{comm.RequesterDepartment}})</strong></span>
-                        <span> on <strong>{{comm.CreatedOn | date: 'dd-MMM-yyyy hh:mm a'}}&nbsp;:</strong></span> {{comm.Answers}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </responsive-table>
-</div>
+
+    <div class="row">
+        <div class="col-12">
+            <responsive-table>
+                <table responsive-table-body>
+                    <tbody>
+                        <tr *ngFor="let comm of communications">
+                            <td data-title="comm"><strong>{{comm.RequesterType}}</strong> logged by
+                                <span [hidden]="comm.RequesterDepartment.length==0">
+                                    <strong>{{comm.RequesterName}} (Dept: {{comm.RequesterDepartment}})</strong>
+                                </span>
+                                <span> on 
+                                    <strong>{{comm.CreatedOn | date: 'dd-MMM-yyyy hh:mm a'}}&nbsp;:</strong>
+                                </span> {{comm.Answers}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </responsive-table>
+        </div>
+    </div>
+    <!--</div>-->
+</ng-container>

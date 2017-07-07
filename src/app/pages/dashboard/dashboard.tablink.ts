@@ -1,6 +1,6 @@
 import { ITabLinkInterface } from '../../shared';
 
-export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
+export const TAB_LINKS: ITabLinkInterface[] = [
     {
         id: 'Actionables',
         title: 'Checklists',
@@ -8,7 +8,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/actionable',
         selected: false,
         hidden: false,
-        order: 1
+        order: 1,
+        subtab: [
+            {
+                id: 'ActivaChecklist',
+                title: 'Open Checklist',
+                url: './open',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'ClosedChecklist',
+                title: 'Close Checklist',
+                url: './close',
+                selected: false,
+                hidden: false,
+                order: 1
+            }
+        ]
     }, {
         id: 'Demand',
         title: 'Demand',
@@ -16,7 +33,38 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/demand',
         selected: false,
         hidden: false,
-        order: 2
+        order: 2,
+        subtab: [
+            {
+                id: 'AssignedDemand',
+                title: 'Assigned To Me',
+                url: './assigned',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'OwnDemand',
+                title: 'My Demands',
+                url: './own',
+                selected: false,
+                hidden: false,
+                order: 2
+            }, {
+                id: 'PendingDemand',
+                title: 'Approval Pending',
+                url: './approval',
+                selected: false,
+                hidden: false,
+                order: 3
+            }, {
+                id: 'CompletedDemand',
+                title: 'Completed',
+                url: './completed',
+                selected: false,
+                hidden: false,
+                order: 4
+            }
+        ]
     }, {
         id: 'AffectedPeople',
         title: 'Affected People',
@@ -24,7 +72,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/people',
         selected: true,
         hidden: false,
-        order: 3
+        order: 3,
+        subtab: [
+            {
+                id: 'AffectedPeople',
+                title: 'Affected People',
+                url: './detail',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'VerifyAffectedPeople',
+                title: 'Verify Affected People',
+                url: './verify',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'AffectedObjects',
         title: 'Affected Cargo',
@@ -32,16 +97,25 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/cargo',
         selected: false,
         hidden: false,
-        order: 4
+        order: 4,
+        subtab: [
+            {
+                id: 'Cargo',
+                title: 'Cargo',
+                url: './detail',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'VerifyCargo',
+                title: 'Verify Cargo',
+                url: './verify',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
-        //     id: 'CallCenters',
-        //     title: 'Call Centers',
-        //     // icon: 'fa fa-drupal fa-2x',
-        //     url: '/pages/dashboard/callCentre',
-        //     selected: false,
-        //     hidden: false,
-        //     order: 4
-        // }, {
         id: 'BroadcastMessages',
         title: 'Broadcast Messages',
         // icon: 'fa fa-envira fa-2x',
@@ -56,7 +130,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/presidentMessage',
         selected: false,
         hidden: false,
-        order: 6
+        order: 6,
+        subtab: [
+            {
+                id: 'PresidentMessageRelease',
+                title: 'President Message Release',
+                url: './release',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'PresidentMessagePendingApprovals',
+                title: 'Pending Approvals',
+                url: './approvalpending',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'MediaManagement',
         title: 'Media Messages',
@@ -64,7 +155,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/media',
         selected: false,
         hidden: false,
-        order: 7
+        order: 7,
+        subtab: [
+            {
+                id: 'MediaMessageRelease',
+                title: 'Media Release',
+                url: './release',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'MediaMessagePendingApprovals',
+                title: 'Pending Approvals',
+                url: './approvalpending',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'OtherQuery',
         title: 'Other Query',
@@ -72,7 +180,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/otherQuery',
         selected: false,
         hidden: false,
-        order: 9
+        order: 9,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'CrewQuery',
         title: 'Crew Query',
@@ -80,7 +205,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/crewQuery',
         selected: false,
         hidden: false,
-        order: 9
+        order: 9,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'PassengerQuery',
         title: 'Passenger Query',
@@ -88,17 +230,49 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/passengerquery',
         selected: false,
         hidden: false,
-        order: 10
-    }
-    , {
+        order: 10,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
+    }, {
         id: 'CargoQuery',
         title: 'Cargo Query',
         // icon: 'fa fa-twitter fa-2x',
         url: '/pages/dashboard/cargoquery',
         selected: false,
         hidden: false,
-        order: 11
-
+        order: 11,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'MediaQuery',
         title: 'Media Query',
@@ -106,7 +280,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/mediaquery',
         selected: false,
         hidden: false,
-        order: 12
+        order: 12,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'FutureTravelQuery',
         title: 'Future Travel Query',
@@ -114,7 +305,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/futuretravelquery',
         selected: false,
         hidden: false,
-        order: 13
+        order: 13,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'GeneralUpdateQuery',
         title: 'General Update Query',
@@ -122,7 +330,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/generalupdatequery',
         selected: false,
         hidden: false,
-        order: 14
+        order: 14,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'SituationalUpdatesQuery',
         title: 'Situational Updates Query',
@@ -130,7 +355,24 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/situationalupdatesquery',
         selected: false,
         hidden: false,
-        order: 15
+        order: 15,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }, {
         id: 'CustomerDissatisfactionQuery',
         title: 'Customer Dissatisfaction Query',
@@ -138,6 +380,23 @@ export const TAB_LINKS: ITabLinkInterface[] = <ITabLinkInterface[]>[
         url: '/pages/dashboard/customerdissatisfactionquery',
         selected: false,
         hidden: false,
-        order: 16
+        order: 16,
+        subtab: [
+            {
+                id: 'ReceivedCalls',
+                title: 'Received Calls',
+                url: './receivedCalls',
+                selected: false,
+                hidden: false,
+                order: 1
+            }, {
+                id: 'AssignedCalls',
+                title: 'Assigned Calls',
+                url: './assignedcalls',
+                selected: false,
+                hidden: false,
+                order: 2
+            }
+        ]
     }
-];
+] as ITabLinkInterface[];

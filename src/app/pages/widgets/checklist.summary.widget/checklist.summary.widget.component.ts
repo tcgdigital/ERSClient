@@ -4,13 +4,13 @@ import {
 } from '@angular/core';
 import { CheckListSummeryModel, DeptCheckListModel, SubDeptCheckListModel } from './checklist.summary.widget.model';
 import { ChecklistSummaryWidgetService } from './checklist.summary.widget.service';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Rx';
 import { ActionableModel } from '../../shared.components/actionables/components/actionable.model';
 import { ResponseModel, GlobalStateService, KeyValue } from '../../../shared';
 import { DepartmentModel } from '../../masterdata/department/components/department.model';
 import * as Highcharts from 'highcharts';
-import { WidgetUtilityService } from "../widget.utility";
+import { WidgetUtilityService } from '../widget.utility';
 import {
     GraphObject
 } from '../demand.raised.summary.widget/demand.raised.summary.widget.model';
@@ -64,7 +64,6 @@ export class ChecklistSummaryWidgetComponent implements OnInit, OnDestroy {
         this.globalState.Subscribe('checkListStatusChange', () => this.checkListStatusChangeHandler());
         this.showAllDeptSubChecklistCompleted = false;
         this.showAllDeptSubChecklistPending = false;
-        //this.setChecklistGraphData();
     }
 
     public ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
@@ -118,7 +117,7 @@ export class ChecklistSummaryWidgetComponent implements OnInit, OnDestroy {
                     depCM.departmentName = itemDepartment.DepartmentName;
                     depCM.assigned = actionableListOfSameDepartment.length;
                     depCM.pending = actionableListOfSameDepartment.filter((item: ActionableModel) => {
-                        return item.CompletionStatus != 'Closed';
+                        return item.CompletionStatus !== 'Closed';
                     }).length;
 
                     depCM.completed = actionableListOfSameDepartment.filter((item: ActionableModel) => {
@@ -165,7 +164,7 @@ export class ChecklistSummaryWidgetComponent implements OnInit, OnDestroy {
                     depCM.departmentName = itemDepartment.DepartmentName;
                     depCM.assigned = actionableListOfSameDepartment.length;
                     depCM.pending = actionableListOfSameDepartment.filter((item: ActionableModel) => {
-                        return item.CompletionStatus != 'Closed';
+                        return item.CompletionStatus !== 'Closed';
                     }).length;
 
                     depCM.completed = actionableListOfSameDepartment.filter((item: ActionableModel) => {
@@ -187,7 +186,7 @@ export class ChecklistSummaryWidgetComponent implements OnInit, OnDestroy {
     }
 
     public onViewAllCheckListShown($event: ModalDirective): void {
-        jQuery("#checklist-table tbody tr:nth-child(1)").addClass("bg-blue-color");
+        jQuery('#checklist-table tbody tr:nth-child(1)').addClass('bg-blue-color');
     }
 
     public hideViewAllChecklist(): void {
@@ -324,7 +323,7 @@ export class ChecklistSummaryWidgetComponent implements OnInit, OnDestroy {
         this.showSubDeptSubChecklistPending = false;
         const subdeptChecklists: SubDeptCheckListModel[] = [];
         const completionStatusActionables = deptCheckListModel.actionableModelList.filter((item: ActionableModel) => {
-            return item.CompletionStatus != 'Closed';
+            return item.CompletionStatus !== 'Closed';
         });
         this.setSubDeptRagStatusForPending(completionStatusActionables);
         this.showSubDeptSubChecklistPending = true;
@@ -408,97 +407,4 @@ export class ChecklistSummaryWidgetComponent implements OnInit, OnDestroy {
     private checkListStatusChangeHandler(): void {
         this.getActionableCount(this.currentIncidentId, this.currentDepartmentId);
     }
-
-    // private graphDataFormationForCheckListWidget(entity: DeptCheckListModel[]): void {
-    //     this.arrGraphData = [];
-    //     entity.map((item: DeptCheckListModel) => {
-    //         item.actionableModelList.map((itemActionable: ActionableModel) => {
-    //             let graphObject: GraphObject = new GraphObject();
-    //             graphObject.requesterDepartmentName = item.departmentName;
-    //             graphObject.requesterDepartmentId = item.departmentId;
-    //             graphObject.isAssigned = true;
-    //             if (itemActionable.ActualClose != null) {
-    //                 graphObject.isClosed = true;
-    //                 graphObject.closedOn = new Date(itemActionable.ActualClose);
-    //             }
-    //             else {
-    //                 graphObject.isPending = true;
-    //             }
-    //             graphObject.CreatedOn = new Date(itemActionable.CreatedOn);
-    //             this.arrGraphData.push(graphObject);
-    //         });
-    //     });
-    //     this.GetCheckListGraph(entity[0].departmentId, null);
-    // }
-
-    // public GetCheckListGraph(requesterDepartmentId: number, $event: any) {
-    //     if ($event !== null) {
-    //         const $currentRow: JQuery = jQuery($event.currentTarget);
-    //         $currentRow.closest('tbody').find('tr').removeClass('bg-blue-color');
-    //         $currentRow.closest('tr').addClass('bg-blue-color');
-    //     }
-
-    //     WidgetUtilityService.GetGraphCheckList(requesterDepartmentId, Highcharts, this.arrGraphData, 'checklist-graph-container');
-    //     this.showCheckListGraph = true;
-    // }
-
-    // private setChecklistGraphData(): void {
-    //     Highcharts.chart('checklist-graph-container', {
-    //         chart: {
-    //             type: 'column'
-    //         },
-    //         title: {
-    //             text: 'Monthly Average Rainfall'
-    //         },
-    //         subtitle: {
-    //             text: 'Source: WorldClimate.com'
-    //         },
-    //         xAxis: {
-    //             categories: [
-    //                 'Jan',
-    //                 'Feb',
-    //                 'Mar',
-    //                 'Apr',
-    //                 'May',
-    //                 'Jun',
-    //                 'Jul',
-    //                 'Aug',
-    //                 'Sep',
-    //                 'Oct',
-    //                 'Nov',
-    //                 'Dec'
-    //             ],
-    //             crosshair: true
-    //         },
-    //         yAxis: {
-    //             min: 0,
-    //             title: {
-    //                 text: 'Rainfall (mm)'
-    //             }
-    //         },
-    //         tooltip: {
-    //             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-    //             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-    //             '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-    //             footerFormat: '</table>',
-    //             shared: true,
-    //             useHTML: true
-    //         },
-    //         plotOptions: {
-    //             column: {
-    //                 pointPadding: 0.2,
-    //                 borderWidth: 0
-    //             }
-    //         },
-    //         series: [{
-    //             name: 'Tokyo',
-    //             data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-    //         }, {
-    //             name: 'New York',
-    //             data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-    //         }]
-    //     });
-    // }
 }

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { SharedModule } from '../../shared/shared.module';
-import { ModalModule, ModalDirective } from 'ng2-bootstrap';
+import { ModalModule, ModalDirective } from 'ngx-bootstrap';
 import { DashboardRouting } from './dashboard.routing';
 import { DashboardComponent } from './dashboard.component';
 import { WidgetModule } from '../widgets';
@@ -17,9 +17,6 @@ import {
     OrganizationService,
     AircraftTypeService
 } from '../shared.components';
-
-//import { QuickLinkQuickViewWidgetComponent } from "widgets/quicklink.quickview.widget";
-
 
 @NgModule({
     imports: [

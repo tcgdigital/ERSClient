@@ -87,7 +87,7 @@
                                             <tr>
                                                 <th>Requester Department</th>
                                                 <th>Allocated</th>
-                                                <th>Completed</th>
+                                                <th>Closed</th>
                                                 <th>Pending</th>
                                             </tr>
                                         </thead>
@@ -117,7 +117,7 @@
                                     </table>
                                 </responsive-table>
                             </div>
-                            <div class="col-md-12 col-lg-6">
+                            <div *ngIf="showGraph" class="col-md-12 col-lg-6">
                                 <div id="demand-raised-graph-container">
                                 </div>
                             </div>

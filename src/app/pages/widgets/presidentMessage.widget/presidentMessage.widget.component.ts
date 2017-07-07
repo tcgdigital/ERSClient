@@ -2,10 +2,12 @@ import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { PresidentMessageWidgetModel } from './presidentMessage.widget.model';
 import { PresidentMessageModel } from '../../shared.components';
-import { PresidentMessageWidgetService } from './presidentMessage.widget.service'
-import { DataServiceFactory, DataExchangeService, GlobalStateService, 
-    TextAccordionModel, KeyValue, UtilityService, GlobalConstants } from '../../../shared'
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { PresidentMessageWidgetService } from './presidentMessage.widget.service';
+import {
+    DataServiceFactory, DataExchangeService, GlobalStateService,
+    TextAccordionModel, KeyValue, UtilityService, GlobalConstants
+} from '../../../shared';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'presidentMessage-widget',
@@ -30,28 +32,13 @@ export class PresidentMessageWidgetComponent implements OnInit, OnDestroy {
         private globalState: GlobalStateService) { }
 
     public ngOnInit(): void {
-        // this.incidentId= +UtilityService.GetFromSession("CurrentDepartmentId");
-	    // this.departmentId = +UtilityService.GetFromSession("CurrentIncidentId");
         this.currentIncidentId = this.incidentId;
         this.currentDepartmentId = this.departmentId;
         this.getLatestPresidentsMessages(this.currentIncidentId);
         this.getAllPresidentsMessages();
-        this.downloadPath =  GlobalConstants.EXTERNAL_URL + 'api/Report/GenerateMediareleaseReport/PresidentMessage/' + this.currentIncidentId + '/';
+        this.downloadPath = GlobalConstants.EXTERNAL_URL + 'api/Report/GenerateMediareleaseReport/PresidentMessage/' + this.currentIncidentId + '/';
         this.globalState.Subscribe('incidentChange', (model: KeyValue) => this.incidentChangeHandler(model));
-        this.globalState.Subscribe('PresidentMessagePublished', model => this.onPresidentMessagePublish(model));
-    }
-
-    private onPresidentMessagePublish(presidentMessage: PresidentMessageModel): void {
-        if(presidentMessage.IsPublished){           
-            this.getLatestPresidentsMessages(this.currentIncidentId);
-        }
-    }
-
-    private incidentChangeHandler(incident: KeyValue): void {
-        this.currentIncidentId = incident.Value;
-        this.downloadPath =  GlobalConstants.EXTERNAL_URL + 'api/Report/GenerateMediareleaseReport/PresidentMessage/' + this.currentIncidentId + '/';
-        this.getLatestPresidentsMessages(this.currentIncidentId);
-        this.getAllPresidentsMessages();
+        this.globalState.Subscribe('PresidentMessagePublished', (model) => this.onPresidentMessagePublish(model));
     }
 
     public ngOnDestroy(): void {
@@ -63,25 +50,25 @@ export class PresidentMessageWidgetComponent implements OnInit, OnDestroy {
         let data: PresidentMessageWidgetModel[] = [];
         this.presidentMessagewidgetService
             .GetAllPresidentMessageByIncident(incidentId)
-            .flatMap(x => x)
+            .flatMap((x) => x)
             .take(2)
-            .subscribe(x => {
+            .subscribe((x) => {
                 data.push(x);
-            }, (error: any) => { 
-                 console.log(`Error: ${error}`);
+            }, (error: any) => {
+                console.log(`Error: ${error}`);
             },
             () => this.presidentMessages = Observable.of(data
-                    .map((x: PresidentMessageWidgetModel) => 
+                .map((x: PresidentMessageWidgetModel) =>
                     new TextAccordionModel(x.PresidentMessageType, x.PublishedOn,
-                    this.downloadPath + x.PresidentsMessageId))));
+                        this.downloadPath + x.PresidentsMessageId))));
     }
 
     getAllPresidentsMessages(callback?: Function): void {
         let data: PresidentMessageWidgetModel[] = [];
         this.presidentMessagewidgetService
             .GetAllPresidentMessageByIncident(this.currentIncidentId)
-            .flatMap(x => x)
-            .subscribe(x => {
+            .flatMap((x) => x)
+            .subscribe((x) => {
                 data.push(x);
             }, (error: any) => { },
             () => {
@@ -100,5 +87,18 @@ export class PresidentMessageWidgetComponent implements OnInit, OnDestroy {
 
     hidePresidentMessages(): void {
         this.childModal.hide();
+    }
+
+    private onPresidentMessagePublish(presidentMessage: PresidentMessageModel): void {
+        if (presidentMessage.IsPublished) {
+            this.getLatestPresidentsMessages(this.currentIncidentId);
+        }
+    }
+
+    private incidentChangeHandler(incident: KeyValue): void {
+        this.currentIncidentId = incident.Value;
+        this.downloadPath = GlobalConstants.EXTERNAL_URL + 'api/Report/GenerateMediareleaseReport/PresidentMessage/' + this.currentIncidentId + '/';
+        this.getLatestPresidentsMessages(this.currentIncidentId);
+        this.getAllPresidentsMessages();
     }
 }

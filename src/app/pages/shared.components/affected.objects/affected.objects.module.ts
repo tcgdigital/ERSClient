@@ -6,14 +6,14 @@ import { MdCheckboxModule } from '@angular2-material/checkbox';
 
 import { AffectedObjectsComponent } from './affected.objects.component';
 import { AffectedObjectsRouting } from './affected.objects.routing';
-import { AffectedObjectsService,
-     AffectedObjectsListComponent, 
-     AffectedObjectsVerificationComponent} from './components';
-import {SharedModule, DataExchangeService } from '../../../shared';
-import { ModalModule} from 'ng2-bootstrap/modal';
-import {  CallerService } from '../caller';
-
-
+import {
+    AffectedObjectsService,
+    AffectedObjectsListComponent,
+    AffectedObjectsVerificationComponent
+} from './components';
+import { SharedModule, DataExchangeService } from '../../../shared';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CallerService } from '../caller';
 
 @NgModule({
     imports: [
@@ -25,7 +25,6 @@ import {  CallerService } from '../caller';
         AffectedObjectsRouting,
         SharedModule,
         ModalModule
-        
     ],
     declarations: [
         AffectedObjectsComponent,

@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
-import { ModalModule, ModalDirective } from 'ng2-bootstrap';
+import { ModalModule, ModalDirective } from 'ngx-bootstrap';
 import { AgmCoreModule } from '@agm/core';
-
 import { LandingRouting } from './landing.routing';
 import { LandingComponent } from './landing.component';
 
@@ -18,9 +17,6 @@ import { LandingComponent } from './landing.component';
     ],
     declarations: [
         LandingComponent
-    ],
-    providers: [
-        
     ]
 })
 export class LandingModule { }

@@ -1,8 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { PresidentMessageModel } from './components';
-import { UtilityService } from '../../../shared/services';
-import { Router, NavigationEnd } from '@angular/router';
-import {Subscription } from 'rxjs/Rx';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { ITabLinkInterface } from '../../../shared/components/tab.control';
+import * as _ from 'underscore';
+import { GlobalConstants } from '../../../shared/constants';
 
 
 @Component({
@@ -10,8 +9,11 @@ import {Subscription } from 'rxjs/Rx';
     encapsulation: ViewEncapsulation.None,
     templateUrl: './views/presidentMessage.view.html',
     styleUrls: ['./styles/presidents.message.style.scss']
-
 })
-export class PresidentMessageComponent {    
-    
+export class PresidentMessageComponent implements OnInit {
+    public subTabs: ITabLinkInterface[] = new Array<ITabLinkInterface>();
+
+    public ngOnInit(): void {
+        this.subTabs = _.find(GlobalConstants.TabLinks, (x) => x.id === 'PresidentMessages').subtab;
+    }
 }

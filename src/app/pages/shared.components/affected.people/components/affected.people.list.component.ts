@@ -2,14 +2,11 @@ import { Component, ViewEncapsulation, OnInit, ViewChild, Injector } from '@angu
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription, Observable } from 'rxjs/Rx';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
-
-
 import { InvolvePartyModel, CommunicationLogModel } from '../../../shared.components';
 import { InvolvePartyService } from '../../involveparties';
-//import { EnquiryService } from '../../call.centre/components/call.centre.service';
 import { EnquiryModel } from '../../call.centre/components/call.centre.model';
 import { CallerModel, CallerService } from '../../caller';
-import { PassengerService, CoPassengerMappingModel, PassengerModel } from "../../passenger/components";
+import { PassengerService, CoPassengerMappingModel, PassengerModel } from '../../passenger/components';
 import { NextOfKinModel } from '../../nextofkins';
 import { AffectedPeopleToView, AffectedPeopleModel } from './affected.people.model';
 import { AffectedPeopleService } from './affected.people.service';
@@ -18,7 +15,7 @@ import {
     GlobalStateService, UtilityService, KeyValue, FileUploadService, SearchConfigModel,
     SearchTextBox, SearchDropdown, NameValue
 } from '../../../../shared';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FileStoreModel } from '../../../../shared/models/file.store.model';
 import { FileStoreService } from '../../../../shared/services/common.service';
 import * as _ from 'underscore';
@@ -40,10 +37,10 @@ export class AffectedPeopleListComponent implements OnInit {
     IsDestroyed: boolean;
     affectedPersonModelForStatus: AffectedPeopleToView = new AffectedPeopleToView();
     medicalStatus: any[] = GlobalConstants.MedicalStatus;
-    pdaNameForTrail: string = "";
-    pdaReferenceNumberForTrail: string = "";
+    pdaNameForTrail: string = '';
+    pdaReferenceNumberForTrail: string = '';
     communications: CommunicationLogModel[] = [];
-    ticketNumber: string = "";
+    ticketNumber: string = '';
     currentDepartmentId: number;
     protected _onRouteChange: Subscription;
     isArchive: boolean = false;
@@ -60,65 +57,57 @@ export class AffectedPeopleListComponent implements OnInit {
 
     /**
      * Creates an instance of AffectedPeopleListComponent.
-     * 
+     *
      * @param {AffectedPeopleService} affectedPeopleService
      * @param {InvolvePartyService} involvedPartyService
      * @param {DataExchangeService<number>} dataExchange
      * @param {GlobalStateService} globalState
-     * 
+     *
      * @memberOf AffectedPeopleListComponent
      */
-    constructor(private affectedPeopleService: AffectedPeopleService, private injector: Injector, private callerservice: CallerService,
-        private involvedPartyService: InvolvePartyService, private dataExchange: DataExchangeService<number>,
-        private globalState: GlobalStateService, private _router: Router, private toastrService: ToastrService,
-        private toastrConfig: ToastrConfig, private fileUploadService: FileUploadService,
-        private fileStoreService: FileStoreService, private passangerService: PassengerService
-        //, private enquiryService: EnquiryService
-    ) {
+    constructor(private affectedPeopleService: AffectedPeopleService,
+        private injector: Injector,
+        private callerservice: CallerService,
+        private involvedPartyService: InvolvePartyService,
+        private dataExchange: DataExchangeService<number>,
+        private globalState: GlobalStateService,
+        private _router: Router,
+        private toastrService: ToastrService,
+        private toastrConfig: ToastrConfig,
+        private fileUploadService: FileUploadService,
+        private fileStoreService: FileStoreService,
+        private passangerService: PassengerService) {
         this.downloadFilePath = GlobalConstants.EXTERNAL_URL + 'api/FileDownload/GetFile/Affected People/';
         this.globalStateProxyOpen = injector.get(GlobalStateService);
     }
 
-    //   medicalStatusForm: string = "";
-
-    /**
-     * 
-     * 
-     * @param {AffectedPeopleToView} affectedPerson
-     * 
-     * @memberOf AffectedPeopleListComponent
-     */
     openAffectedPersonDetail(affectedPerson: AffectedPeopleToView): void {
         this.copassangers = [];
         this.affectedPersonModelForStatus = affectedPerson;
 
-        if (affectedPerson.MedicalStatus != "NA") {
-            this.affectedPersonModelForStatus["MedicalStatusToshow"] = this.medicalStatus.find(x => { return x.value == affectedPerson.MedicalStatus; }).value;
+        if (affectedPerson.MedicalStatus !== 'NA') {
+            this.affectedPersonModelForStatus['MedicalStatusToshow'] = this.medicalStatus
+                .find((x) => x.value === affectedPerson.MedicalStatus).value;
         }
         this.affectedPeopleService.GetCallerListForAffectedPerson(affectedPerson.AffectedPersonId)
             .subscribe((response: ResponseModel<EnquiryModel>) => {
-                this.callers = response.Records.map(x => {
+                this.callers = response.Records.map((x) => {
                     return x.Caller;
                 });
-                if (affectedPerson.PassengerId != 0 && affectedPerson.GroupId != 0) {
+                if (affectedPerson.PassengerId !== 0 && affectedPerson.GroupId !== 0) {
                     this.passangerService.getCoPassengers(affectedPerson.GroupId)
                         .subscribe((response: ResponseModel<CoPassengerMappingModel>) => {
                             if (response.Records.length > 0) {
                                 this.copassangers = _.flatten(_.pluck(response.Records, 'Passenger'));
                                 this.copassangers = _.without(this.copassangers, _.findWhere(this.copassangers, { PassengerId: affectedPerson.PassengerId }));
-                                //_.flatten(_.pluck(response.Records[0].Passenger.CoPassengerMappings, 'Passenger'));
                                 this.childModal.show();
                             }
-                        })
+                        });
                 }
                 else {
                     this.childModal.show();
                 }
-
             });
-
-
-
     }
 
     cancelModal() {
@@ -129,25 +118,24 @@ export class AffectedPeopleListComponent implements OnInit {
         this.filesToUpload = [];
         for (var i = 0; i < e.target.files.length; i++) {
             const extension = e.target.files[i].name.split('.').pop();
-            if (extension != "exe" && extension != "dll")
+            if (extension !== 'exe' && extension !== 'dll')
                 this.filesToUpload.push(e.target.files[i]);
             else {
                 this.toastrService.error('Invalid File Format!', 'Error', this.toastrConfig);
-                this.inputFileCrew.nativeElement.value = "";
+                this.inputFileCrew.nativeElement.value = '';
             }
         }
-
     }
 
     uploadFile(): void {
         if (this.filesToUpload.length) {
             let baseUrl = GlobalConstants.EXTERNAL_URL;
-
-            let organizationId = +UtilityService.GetFromSession("CurrentOrganizationId");
-            let moduleName = "Affected People"
+            let organizationId = +UtilityService.GetFromSession('CurrentOrganizationId');
+            let moduleName = 'Affected People'
             let param = `${this.currentIncident}/${organizationId}/${this.currentDepartmentId}/${moduleName}`;
+
             this.date = new Date();
-            this.fileUploadService.uploadFiles<string>(baseUrl + "./api/fileUpload/UploadFilesModuleWise/" + param,
+            this.fileUploadService.uploadFiles<string>(baseUrl + './api/fileUpload/UploadFilesModuleWise/' + param,
                 this.filesToUpload, this.date.toString()).subscribe((result: string) => {
                     console.log(result);
                     let fileStore: FileStoreModel = new FileStoreModel();
@@ -175,7 +163,7 @@ export class AffectedPeopleListComponent implements OnInit {
     saveUpdateAffectedPerson(affectedModifiedForm: AffectedPeopleToView): void {
         this.affectedPersonToUpdate.AffectedPersonId = affectedModifiedForm.AffectedPersonId;
         this.affectedPersonToUpdate.Identification = affectedModifiedForm.Identification;
-        this.affectedPersonToUpdate.MedicalStatus = affectedModifiedForm["MedicalStatusToshow"];
+        this.affectedPersonToUpdate.MedicalStatus = affectedModifiedForm['MedicalStatusToshow'];
         this.affectedPersonToUpdate.Remarks = affectedModifiedForm.Remarks;
         this.affectedPeopleService.Update(this.affectedPersonToUpdate)
             .subscribe((response: AffectedPeopleModel) => {
@@ -184,10 +172,9 @@ export class AffectedPeopleListComponent implements OnInit {
                     this.uploadFile();
                 }
                 this.getAffectedPeople(this.currentIncident);
-                affectedModifiedForm["MedicalStatusToshow"] = affectedModifiedForm.MedicalStatus;
+                affectedModifiedForm['MedicalStatusToshow'] = affectedModifiedForm.MedicalStatus;
                 let num = UtilityService.UUID();
                 this.globalStateProxyOpen.NotifyDataChanged('AffectedPersonStatusChanged', num);
-                //this.globalState.NotifyDataChanged('AffectedPersonStatusChanged', num);
                 this.childModal.hide();
             }, (error: any) => {
                 alert(error);
@@ -205,11 +192,10 @@ export class AffectedPeopleListComponent implements OnInit {
         this.involvedPartyService.GetFilterByIncidentId(currentIncident)
             .subscribe((response: ResponseModel<InvolvePartyModel>) => {
                 this.affectedPeople = this.affectedPeopleService.FlattenAffectedPeople(response.Records[0]);
-                this.affectedPeople.forEach(x =>
-                    function () {
-                        x["MedicalStatusToshow"] = x.MedicalStatus;
-                        x["showDiv"] = false;
-                    });
+                this.affectedPeople.forEach((x) => {
+                    x['MedicalStatusToshow'] = x.MedicalStatus;
+                    x['showDiv'] = false;
+                });
             }, (error: any) => {
                 console.log(`Error: ${error}`);
             });
@@ -219,11 +205,10 @@ export class AffectedPeopleListComponent implements OnInit {
         this.involvedPartyService.GetQuery(query, incidentId)
             .subscribe((response: ResponseModel<InvolvePartyModel>) => {
                 this.affectedPeople = this.affectedPeopleService.FlattenAffectedPeople(response.Records[0]);
-                this.affectedPeople.forEach(x =>
-                    function () {
-                        x["MedicalStatusToshow"] = x.MedicalStatus;
-                        x["showDiv"] = false;
-                    });
+                this.affectedPeople.forEach((x) => {
+                    x['MedicalStatusToshow'] = x.MedicalStatus;
+                    x['showDiv'] = false;
+                });
                 console.log(this.affectedPeople);
             }, (error: any) => {
                 console.log(`Error: ${error}`);
@@ -234,23 +219,20 @@ export class AffectedPeopleListComponent implements OnInit {
         this.currentIncident = incident.Value;
         this.getAffectedPeople(this.currentIncident);
     }
-    private departmentChangeHandler(department: KeyValue): void {
-        this.currentDepartmentId = department.Value;
-    };
 
     ngOnInit(): any {
 
-        if (this._router.url.indexOf("archivedashboard") > -1) {
+        if (this._router.url.indexOf('archivedashboard') > -1) {
             this.isArchive = true;
-            this.currentIncident = +UtilityService.GetFromSession("ArchieveIncidentId");
-            this.currentDepartmentId = +UtilityService.GetFromSession("CurrentDepartmentId");
+            this.currentIncident = +UtilityService.GetFromSession('ArchieveIncidentId');
+            this.currentDepartmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
 
             this.getAffectedPeople(this.currentIncident);
         }
         else {
             this.isArchive = false;
-            this.currentIncident = +UtilityService.GetFromSession("CurrentIncidentId");
-            this.currentDepartmentId = +UtilityService.GetFromSession("CurrentDepartmentId");
+            this.currentIncident = +UtilityService.GetFromSession('CurrentIncidentId');
+            this.currentDepartmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
             this.getAffectedPeople(this.currentIncident);
         }
         this.credential = UtilityService.getCredentialDetails();
@@ -300,13 +282,12 @@ export class AffectedPeopleListComponent implements OnInit {
         this.affectedPersonModel = affectedperson;
         this.affectedPeopleService.GetCallerListForAffectedPerson(affectedperson.AffectedPersonId)
             .subscribe((response: ResponseModel<EnquiryModel>) => {
-                this.callers = response.Records.map(x => {
+                this.callers = response.Records.map((x) => {
                     return x.Caller;
                 });
-                this.callers.forEach(x => {
-                    x["isnok"] = false;
+                this.callers.forEach((x) => {
+                    x['isnok'] = false;
                 });
-                //  this.childModalForCallers.show();
             });
     }
 
@@ -322,7 +303,7 @@ export class AffectedPeopleListComponent implements OnInit {
             nok.CallerId = caller.CallerId;
             nok.ContactNumber = caller.ContactNumber;
             nok.IncidentId = this.currentIncident;
-            nok.NextOfKinName = caller.FirstName + "  " + caller.LastName;
+            nok.NextOfKinName = caller.FirstName + '  ' + caller.LastName;
             nok.Relationship = caller.Relationship;
             nok.Location = caller.Location;
             let callertoupdate = new CallerModel();
@@ -331,7 +312,7 @@ export class AffectedPeopleListComponent implements OnInit {
             this.affectedPeopleService.CreateNok(nok)
                 .flatMap(() => this.callerservice.Update(callertoupdate, caller.CallerId))
                 .subscribe(() => {
-                    this.toastrService.success('NOK updated.')
+                    this.toastrService.success('NOK updated.');
                 });
         }
         else {
@@ -340,10 +321,9 @@ export class AffectedPeopleListComponent implements OnInit {
             callertoupdate.deleteAttributes();
             this.callerservice.Update(callertoupdate, caller.CallerId)
                 .subscribe(() => {
-                    this.toastrService.success('NOK updated.')
+                    this.toastrService.success('NOK updated.');
                 });
         }
-
     }
 
     invokeSearch(query: string): void {
@@ -376,18 +356,18 @@ export class AffectedPeopleListComponent implements OnInit {
     }
 
     private selectCurrentIncident() {
-        if (this._router.url.indexOf("archivedashboard") > -1) {
+        if (this._router.url.indexOf('archivedashboard') > -1) {
             this.isArchive = true;
-            this.currentIncident = +UtilityService.GetFromSession("ArchieveIncidentId");
+            this.currentIncident = +UtilityService.GetFromSession('ArchieveIncidentId');
         }
         else {
             this.isArchive = false;
-            this.currentIncident = +UtilityService.GetFromSession("CurrentIncidentId");
+            this.currentIncident = +UtilityService.GetFromSession('CurrentIncidentId');
         }
     }
 
     private initiateSearchConfigurations(): void {
-        let medstatus: Array<NameValue<string>> = GlobalConstants.MedicalStatus.map(x => new NameValue<string>(x.caption, x.caption))
+        let medstatus: Array<NameValue<string>> = GlobalConstants.MedicalStatus.map((x) => new NameValue<string>(x.caption, x.caption));
         const status: Array<NameValue<string>> = [
             new NameValue<string>('Informed', 'true'),
             new NameValue<string>('Not Informed', 'false'),
@@ -434,6 +414,10 @@ export class AffectedPeopleListComponent implements OnInit {
                 Value: '',
                 ListData: Observable.of(status)
             })
-        ]
+        ];
+    }
+
+    private departmentChangeHandler(department: KeyValue): void {
+        this.currentDepartmentId = department.Value;
     }
 }

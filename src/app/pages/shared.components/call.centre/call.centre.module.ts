@@ -14,7 +14,7 @@ import { DemandService } from '../demand';
 import { DataExchangeService, SharedModule } from '../../../shared';
 import { InvolvePartyService } from '../involveparties';
 import { CommunicationLogService } from '../communicationlogs';
-import { ModalModule} from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -33,6 +33,6 @@ import { ModalModule} from 'ng2-bootstrap/modal';
     exports: [
         EnquiryEntryComponent
     ]
- 
+
 })
 export class CallCentreModule { }

@@ -28,6 +28,10 @@ import 'zone.js/dist/zone';
 // Typescript emit helpers polyfill
 import 'ts-helpers';
 
+// Polyfill for Proxy
+// import 'proxy-oo-polyfill';
+import '../node_modules/proxy-oo-polyfill/proxy-oo-polyfill.min';
+
 if ('production' === ENV) {
     // Production
 } else {

@@ -6,13 +6,16 @@ import { MdCheckboxModule } from '@angular2-material/checkbox';
 
 import { MediaQueryRouting } from './media.query.routing';
 import { MediaQueryComponent } from './media.query.components';
-import { MediaQueryAssignedCallsListComponent, MediaQueryRecievedCallsListComponent } from './components';
+import {
+    MediaQueryAssignedCallsListComponent,
+    MediaQueryRecievedCallsListComponent
+} from './components';
 import { EnquiryService, CallCentreModule } from '../call.centre';
 import { CommunicationLogService } from '../communicationlogs';
 
 import { CallCenterOnlyPageService } from '../../callcenteronlypage/component';
 import { DataExchangeService, SharedModule } from '../../../shared';
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({

@@ -7,13 +7,12 @@ import * as moment from 'moment/moment';
 import { IncidentModel } from './incident.model';
 import { EmergencyTypeModel, EmergencyTypeService } from '../../masterdata';
 import { DateTimePickerSelectEventArgs } from '../../../shared/directives/datetimepicker';
-import { EmergencyLocationService, EmergencyLocationModel } from "../../masterdata/emergencylocation";
+import { EmergencyLocationService, EmergencyLocationModel } from '../../masterdata/emergencylocation';
 import { IncidentService } from './incident.service';
 
 import {
     ResponseModel,
     GlobalStateService,
-    //DataExchangeService,
     Severity,
     KeyValue,
     KeyVal,
@@ -24,7 +23,7 @@ import {
     Location,
     DateTimePickerOptions
 } from '../../../shared';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FlightModel, InvolvePartyModel } from '../../shared.components';
 import { IncidentDataExchangeModel } from './incidentDataExchange.model';
 
@@ -34,7 +33,6 @@ import { IncidentDataExchangeModel } from './incidentDataExchange.model';
     encapsulation: ViewEncapsulation.None,
     templateUrl: '../views/incident.view.html'
 })
-
 export class IncidentViewComponent {
     @Input() IncidentId: number;
     @ViewChild('childModalViewIncident') public childModalViewIncident: ModalDirective;
@@ -48,7 +46,7 @@ export class IncidentViewComponent {
     isFlightRelatedPopup: boolean = false;
     isOffSet: boolean = false;
     isOffSetPopup: boolean = false;
-    buttonValue: String = '';
+    buttonValue: string = '';
     incidentModel: IncidentModel = null;
     involvePartyModel: InvolvePartyModel = null;
     incidentDataExchangeModel: IncidentDataExchangeModel = null;
@@ -65,6 +63,7 @@ export class IncidentViewComponent {
     public DepartureDate: Date;
     public globalStateProxy: GlobalStateService;
     public IsDrillPopup: boolean;
+
     constructor(formBuilder: FormBuilder,
         private router: Router,
         private incidentService: IncidentService,
@@ -79,25 +78,24 @@ export class IncidentViewComponent {
         this.DepartureDate = new Date();
         this.datepickerOptionED = new DateTimePickerOptions();
         this.datepickerOptionFLT = new DateTimePickerOptions();
-
     }
 
     ngOnInit(): void {
         this.datepickerOptionED.maxDate = new Date();
         this.datepickerOptionFLT.position = 'top left';
-        this.currentDepartmentId = +UtilityService.GetFromSession("CurrentDepartmentId");
+        this.currentDepartmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
         this.isFlightRelated = false;
         this.disableIsDrill = true;
         this.disableIsDrillPopup = true;
-        this.IsDrillPopup=false;
+        this.IsDrillPopup = false;
         this.isOffSet = false;
         this.getAllActiveEmergencyTypes();
         this.resetIncidentViewForm();
-        //this.dataExchangeDecision.Subscribe('incidentViewPreCheck', model => this.onIncidentViewPreCheck(model));
+
         this.emergencyLocationService.GetAllActiveEmergencyLocations()
             .subscribe((result: ResponseModel<EmergencyLocationModel>) => {
                 result.Records.forEach((item: EmergencyLocationModel) => {
-                    let emergencyLocationModel: EmergencyLocationModel = new EmergencyLocationModel();
+                    const emergencyLocationModel: EmergencyLocationModel = new EmergencyLocationModel();
                     emergencyLocationModel.IATA = item.IATA;
                     emergencyLocationModel.AirportName = item.AirportName;
                     this.affectedStations.push(emergencyLocationModel);
@@ -108,10 +106,10 @@ export class IncidentViewComponent {
     }
 
     loadDataIncidentViewPopup() {
-        let offsetVal: string = '';
+        const offsetVal: string = '';
         this.disableIsDrill = true;
         this.isOffSetPopup = false;
-        if (this.incidentDataExchangeModel.IncidentModel.EmergencyLocation == 'Offset') {
+        if (this.incidentDataExchangeModel.IncidentModel.EmergencyLocation === 'Offset') {
             this.isOffSetPopup = true;
         }
         this.formPopup = new FormGroup({
@@ -120,13 +118,12 @@ export class IncidentViewComponent {
             AffectedStationIdPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.EmergencyLocation),
             OffsiteDetailsPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.OffSetLocation),
             EmergencyNamePopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.EmergencyName),
-            //AlertMessagePopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.AlertMessage),
             DescriptionPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.Description),
             EmergencyDatePopup: new FormControl(moment(this.incidentDataExchangeModel.IncidentModel.EmergencyDate).format('DD/MM/YYYY h:mm a')),
             SeverityPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.Severity)
-
         });
-        this.IsDrillPopup=this.incidentDataExchangeModel.IncidentModel.IsDrill;
+
+        this.IsDrillPopup = this.incidentDataExchangeModel.IncidentModel.IsDrill;
         this.isFlightRelatedPopup = false;
         if (this.incidentDataExchangeModel.FLightModel != null) {
             this.formPopup = new FormGroup({
@@ -135,7 +132,6 @@ export class IncidentViewComponent {
                 AffectedStationIdPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.EmergencyLocation),
                 OffsiteDetailsPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.OffSetLocation),
                 EmergencyNamePopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.EmergencyName),
-                //AlertMessagePopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.AlertMessage),
                 DescriptionPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.Description),
                 EmergencyDatePopup: new FormControl(moment(this.incidentDataExchangeModel.IncidentModel.EmergencyDate).format('DD/MM/YYYY h:mm a')),
                 SeverityPopup: new FormControl(this.incidentDataExchangeModel.IncidentModel.Severity),
@@ -146,7 +142,7 @@ export class IncidentViewComponent {
                 ScheduledarrivalPopup: new FormControl(moment(this.incidentDataExchangeModel.FLightModel.ArrivalDate).format('DD/MM/YYYY h:mm a')),
                 FlightTailNumberPopup: new FormControl(this.incidentDataExchangeModel.FLightModel.FlightTaleNumber)
             });
-            this.IsDrillPopup=this.incidentDataExchangeModel.IncidentModel.IsDrill;
+            this.IsDrillPopup = this.incidentDataExchangeModel.IncidentModel.IsDrill;
             this.isFlightRelatedPopup = true;
         }
     }
@@ -167,7 +163,7 @@ export class IncidentViewComponent {
     resetIncidentViewForm(): void {
         this.formPopup = new FormGroup({
             IncidentId: new FormControl(0),
-            IsDrill:new FormControl(false),
+            IsDrill: new FormControl(false),
             EmergencyTypeIdPopup: new FormControl('0'),
             AffectedStationIdPopup: new FormControl('0'),
             OffsiteDetailsPopup: new FormControl(''),
@@ -183,7 +179,7 @@ export class IncidentViewComponent {
             ScheduledarrivalPopup: new FormControl(''),
             FlightTailNumberPopup: new FormControl('')
         });
-        this.IsDrillPopup=false;
+        this.IsDrillPopup = false;
     }
 
 }

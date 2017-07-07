@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ChangePasswordComponent } from './change.password.component';
 import { ChangePasswordRouting } from './change.password.routing';
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';

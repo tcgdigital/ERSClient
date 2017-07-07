@@ -4,9 +4,15 @@ import {
 } from '@angular/core';
 import * as moment from 'moment/moment';
 import { TAB_LINKS } from './dashboard.tablink';
-import { IncidentModel, IncidentService, IncidentDataExchangeModel } from '../incident';
-import { DepartmentService } from '../masterdata/department'
-import { EmergencyLocationService, EmergencyLocationModel } from "../masterdata/emergencylocation";
+import {
+    IncidentModel, IncidentService,
+    IncidentDataExchangeModel
+} from '../incident';
+import { DepartmentService } from '../masterdata/department';
+import {
+    EmergencyLocationService,
+    EmergencyLocationModel
+} from '../masterdata/emergencylocation';
 import {
     ITabLinkInterface,
     GlobalStateService,
@@ -33,14 +39,13 @@ import {
     ReactiveFormsModule
 } from '@angular/forms';
 import { EmergencyTypeModel, EmergencyTypeService } from '../masterdata';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'dashboard',
     templateUrl: './dashboard.view.html',
     styleUrls: ['./dashboard.style.scss'],
     encapsulation: ViewEncapsulation.None,
-
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     public incidentDate: Date;
@@ -54,18 +59,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     disableIsDrillPopup: boolean;
     currentUserId: number;
     isFlightRelatedPopup: boolean = false;
-    private sub: any;
     userId: number;
     severities: KeyValue[] = [];
     isOffSetPopup: boolean = false;
     public IsDrillPopup: boolean;
     activeEmergencyTypes: EmergencyTypeModel[] = [];
     affectedStations: EmergencyLocationModel[] = [];
-
     activeOrganizations: OrganizationModel[] = [];
     activeAircraftTypes: AircraftTypeModel[] = [];
     incidentsToPickForReplication: IncidentModel[] = [];
-    showQuicklink : boolean = false;
+    showQuicklink: boolean = false;
+    private sub: any;
 
     constructor(private globalState: GlobalStateService,
         private departmentService: DepartmentService,
@@ -89,7 +93,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.emergencyLocationService.GetAllActiveEmergencyLocations()
             .subscribe((result: ResponseModel<EmergencyLocationModel>) => {
                 result.Records.forEach((item: EmergencyLocationModel) => {
-                    let emergencyLocationModel: EmergencyLocationModel = new EmergencyLocationModel();
+                    const emergencyLocationModel: EmergencyLocationModel = new EmergencyLocationModel();
                     emergencyLocationModel.IATA = item.IATA;
                     emergencyLocationModel.AirportName = item.AirportName;
                     this.affectedStations.push(emergencyLocationModel);
@@ -106,7 +110,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.globalState.Subscribe('departmentChange', (model: KeyValue) => this.departmentChangeHandler(model));
     }
 
-   
     getAllActiveOrganizations(): void {
         this.organizationService.GetAllActiveOrganizations()
             .subscribe((response: ResponseModel<OrganizationModel>) => {
@@ -153,7 +156,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private getIncident(incidentId: number): void {
         this.incidentService.Get(incidentId)
-            .subscribe((data:IncidentModel) => {
+            .subscribe((data: IncidentModel) => {
                 this.currentIncident = new KeyValue(data.EmergencyName, data.IncidentId);
                 this.incidentDate = new Date(data.EmergencyDate);
             });

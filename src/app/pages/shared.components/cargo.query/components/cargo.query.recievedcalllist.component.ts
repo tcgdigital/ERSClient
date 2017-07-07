@@ -5,9 +5,9 @@ import {
 } from '../../../../shared';
 import { Observable, Subscription } from 'rxjs/Rx';
 
-import { CallCenterOnlyPageService, ExternalInputModel } from "../../../callcenteronlypage/component";
+import { CallCenterOnlyPageService, ExternalInputModel } from '../../../callcenteronlypage/component';
 import { Router, NavigationEnd } from '@angular/router';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 
 
@@ -24,20 +24,20 @@ export class CargoQueryRecievedCallsListComponent implements OnInit {
     protected _onRouteChange: Subscription;
     callId: number;
     callcenterload: boolean = false;
-    public isArchive:boolean = false;
+    public isArchive: boolean = false;
     constructor(private callcenteronlypageservice: CallCenterOnlyPageService, private _router: Router,
         private globalState: GlobalStateService) {
 
     }
 
     ngOnInit() {
-        if (this._router.url.indexOf("archivedashboard") > -1) {
+        if (this._router.url.indexOf('archivedashboard') > -1) {
             this.isArchive = true;
-            this.currentIncidentId = +UtilityService.GetFromSession("ArchieveIncidentId");
+            this.currentIncidentId = +UtilityService.GetFromSession('ArchieveIncidentId');
         }
         else {
             this.isArchive = false;
-            this.currentIncidentId = +UtilityService.GetFromSession("CurrentIncidentId");
+            this.currentIncidentId = +UtilityService.GetFromSession('CurrentIncidentId');
         }
 
         this.getAllCargoQueryCallsRecieved(this.currentIncidentId);

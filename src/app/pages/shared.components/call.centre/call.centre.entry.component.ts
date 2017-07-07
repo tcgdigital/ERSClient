@@ -24,14 +24,13 @@ import { CommunicationLogService } from '../communicationlogs';
 import { CallerModel } from '../caller';
 import { DepartmentService, DepartmentModel } from '../../masterdata/department';
 import { InvolvePartyService } from '../involveparties';
-//import { PassengerService } from '../passenger';
 import {
     CallCenterOnlyPageService, ExternalInputModel,
     PDAEnquiryModel, CargoEnquiryModel, MediaAndOtherQueryModel
 } from '../../callcenteronlypage/component';
 
 import { IAutocompleteActions } from '../../../shared/components/autocomplete/IAutocompleteActions';
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import * as _ from 'underscore';
 
 @Component({
@@ -150,7 +149,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
     pdaenquiryid: number;
     affectedId: number;
     createdBy: number;
-    createdByName : string;
+    createdByName: string;
     // grouidlistselected: number[] = [];
 
 
@@ -449,7 +448,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
         demandTrail.CreatedBy = demand.CreatedBy ? demand.CreatedBy : this.createdBy;
         demandTrail.CreatedOn = demand.CreatedOn ? demand.CreatedOn : new Date();
 
-         let date = new Date();
+        let date = new Date();
         answer = `<div><p> ${demand.DemandStatusDescription} <strong>Date :</strong>  ${date.toLocaleString()}  </p><div>`;
         answer = answer + '</p><div>';
         demandTrail.Answers = answer;
@@ -481,9 +480,15 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
             //     this.enquiry.AffectedPersonId : null;
             demand.AffectedObjectId = (this.enquiryType == 2) ?
                 this.enquiry.AffectedObjectId : null;
-            demand.AffectedId = (this.enquiryType == 1 || this.enquiryType == 3) ?
-                this.affectedPeople.find((x) => x.AffectedPersonId === demand.AffectedPersonId).AffectedId :
-                ((this.enquiryType == 2) ? this.affectedObjects.find((x) => x.AffectedObjectId === demand.AffectedObjectId).AffectedId : 0);
+            // demand.AffectedId = (this.enquiryType == 1 || this.enquiryType == 3) ?
+            //     this.affectedPeople.find((x) => x.AffectedPersonId === demand.AffectedPersonId).AffectedId :
+            //     ((this.enquiryType == 2) ? this.affectedObjects.find((x) => x.AffectedObjectId === demand.AffectedObjectId).AffectedId : 0);
+            demand.AffectedId  =  (this.enquiryType  ==  3)  ?
+                this.affectedPeople.find((x)  =>  x.AffectedPersonId  ===  demand.AffectedPersonId).AffectedId  :
+                ((this.enquiryType  ==  2)  ?  this.affectedObjects.find((x)  =>  x.AffectedObjectId  ===  demand.AffectedObjectId).AffectedId  :  0);
+            if  (demand.AffectedId  ==  0) {
+                delete  demand.AffectedId;
+            }
             demand.AWB = (this.enquiryType == 2) ?
                 this.affectedObjects.find((x) => x.AffectedObjectId === demand.AffectedObjectId).AWB : null;
             demand.ContactNumber = this.caller.ContactNumber;
@@ -494,7 +499,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
             demand.DemandCode = 'DEM-' + UtilityService.UUID();
             demand.DemandDesc = (this.enquiryType == 1 || this.enquiryType == 3) ?
                 (type + ' Requested for ' + personName + ' (' + this.selctedEnquiredPerson.TicketNumber + ')') : (type + ' Requested for ' + this.selctedEnquiredObject.AWB + ' (' + this.selctedEnquiredObject.TicketNumber + ')');
-            demand.DemandStatusDescription = `New demand by ${this.createdByName} (${this.currentDepartmentName})` ;
+            demand.DemandStatusDescription = `New demand by ${this.createdByName} (${this.currentDepartmentName})`;
             demand.DemandTypeId = GlobalConstants.DemandTypeId;
             demand.CallerId = this.caller.CallerId;
             demand.IncidentId = this.currentIncident;
@@ -510,7 +515,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
             demand.RequiredLocation = GlobalConstants.RequiredLocation;
             demand.ScheduleTime = scheduleTime.toString();
             demand.RequesterType = "Others";
-            demand.DemandTrails=this.createDemandTrail(demand);
+            demand.DemandTrails = this.createDemandTrail(demand);
             demand.CommunicationLogs = this.SetCommunicationLog("Demand", GlobalConstants.InteractionDetailsTypeDemand);
             demand.CommunicationLogs[0].Queries = demand.CommunicationLogs[0].Queries + ' Demand Code: ' + demand.DemandCode;
             this.demands.push(demand);
@@ -674,7 +679,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
         this.enquiry.EnquiryType = this.enquiryTypes.find((x) => x.value == this.enquiryType).caption;
         this.enquiry.ExternalInputId = this.callid;
         this.createdBy = +this.credential.UserId;
-         this.createdByName = this.credential.UserName;
+        this.createdByName = this.credential.UserName;
     }
 
     onActionClick(eventArgs: any) {
@@ -725,7 +730,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
     saveEnquiryDemandCaller(): void {
         this.submitted = true;
         if (this.form.valid && (((this.enquiryType == 1 || this.enquiryType == 3) && this.nullorwhitecheck(this.enquiry.AffectedPersonId)) ||
-            (this.enquiryType == 2 && this.nullorwhitecheck(this.enquiry.AffectedObjectId) || (this.enquiryType >=4)))) {
+            (this.enquiryType == 2 && this.nullorwhitecheck(this.enquiry.AffectedObjectId) || (this.enquiryType >= 4)))) {
             UtilityService.setModelFromFormGroup<EnquiryModel>(this.enquiry, this.form,
                 (x) => x.IsAdminRequest, (x) => x.IsCallBack, (x) => x.IsTravelRequest, (x) => x.Queries);
             this.enquiry.IncidentId = this.currentIncident;
