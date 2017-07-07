@@ -97,7 +97,7 @@ export const PAGES_MENU: IMenuItem[] = [
                 path: 'quickviewquicklink',
                 data: {
                     menu: {
-                        title: 'Quick View',
+                        title: 'Quick Link',
                         icon: 'fa fa-link fa-lg',
                         selected: false,
                         expanded: false,

@@ -108,7 +108,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
     demands: DemandModel[] = new Array<DemandModel>();
     affectedObjects: AffectedObjectsToView[];
     currentDepartmentId: number;
-    currentDepartmentName: string = 'Command Centre';
+    currentDepartmentName: string = '';
     currentIncident: number;
     departments: DepartmentModel[];
     selctedEnquiredPerson: AffectedPeopleToView;
@@ -196,6 +196,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
         this.departmentService.GetAll()
             .subscribe((response: ResponseModel<DepartmentModel>) => {
                 this.departments = response.Records;
+                 this.currentDepartmentName = this.departments.find(x=>x.DepartmentId==this.currentDepartmentId).DepartmentName;
             }, (error: any) => {
                 console.log(`Error: ${error}`);
             });
@@ -657,6 +658,7 @@ export class EnquiryEntryComponent /*implements OnInit*/ {
 
         this.currentIncident = +UtilityService.GetFromSession('CurrentIncidentId');
         this.currentDepartmentId = +UtilityService.GetFromSession('CurrentDepartmentId');
+       
         this.credential = UtilityService.getCredentialDetails();
         if (this.enquiryType == 1 || this.enquiryType == 3) {
             this.getPassengersCrews(this.currentIncident);

@@ -43,7 +43,7 @@
                             <tr>
                                 <th>Department Name</th>
                                 <th>Check List Completed</th>
-                                <th>Request Completed</th>
+                                <th>Demand Completed</th>
                                 <th>Closure Report Submitted</th>
                                 <th>System Notified</th>
                                 <th>Notified by SPOC</th>
@@ -58,8 +58,8 @@
                                 <td data-title="Department Name">{{crisis.Department.DepartmentName}}&nbsp;</td>
                                 <td data-title="Check List Completed" [hidden]="crisis.Checklistnumber !== 0">No Checklist(s) were found for this department&nbsp;</td>
                                 <td data-title="Check List Completed" [hidden]="crisis.Checklistnumber===0">{{crisis.ChecklistClosednumber}} Out Of {{crisis.Checklistnumber}} Completed&nbsp;</td>
-                                <td data-title="Request Completed" [hidden]="crisis.demandnumber!==0">No Request(s) were found for this department&nbsp;</td>
-                                <td data-title="Request Completed" [hidden]="crisis.demandnumber===0">{{crisis.demandClosednumber}} Out Of {{crisis.demandnumber}} Closed&nbsp;</td>
+                                <td data-title="Demand Completed" [hidden]="crisis.demandnumber!==0">No Demand(s) were found for this department&nbsp;</td>
+                                <td data-title="Demand Completed" [hidden]="crisis.demandnumber===0">{{crisis.demandClosednumber}} Out Of {{crisis.demandnumber}} Closed&nbsp;</td>
                                 <td data-title="Closure Report Submitted" [hidden]="crisis.IsSubmitted==false">{{crisis.SubmittedOn}}&nbsp;</td>
                                 <td data-title="Closure Report Submitted" [hidden]="crisis.IsSubmitted==true"> <i class="fa fa-question fa-2x fontAmber" aria-hidden="true" title="Closure report not submitted by this department"></i></td>
                                 <td data-title="System Notified"> <i class="fa fa-check fa-2x fontGreen" aria-hidden="true" [hidden]="crisis.InitialNotify == false"></i>&nbsp;</td>

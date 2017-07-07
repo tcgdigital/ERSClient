@@ -92,7 +92,6 @@ export class AffectedPeopleListComponent implements OnInit {
         this.copassangers = [];
         this.affectedPersonModelForStatus = affectedPerson;
 
-
         if (affectedPerson.MedicalStatus != "NA") {
             this.affectedPersonModelForStatus["MedicalStatusToshow"] = this.medicalStatus.find(x => { return x.value == affectedPerson.MedicalStatus; }).value;
         }
