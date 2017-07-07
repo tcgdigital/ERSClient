@@ -143,7 +143,7 @@
                     <div class="row">
                         <div class="form-group col-lg-4 col-sm-12 col-md-4">
                             <label for="Identification Details">Identification Details:</label>
-                            <input value="{{affectedPersonModelForStatus.Identification}}" type="text" class="form-control" />
+                            <input value="{{affectedPersonModelForStatus.Identification}}" [(ngModel)]="affectedPersonModelForStatus.Identification" type="text" class="form-control" />
                         </div>
 
                         <div class="form-group col-lg-4 col-sm-12 col-md-4">
@@ -239,11 +239,11 @@
                                 <table responsive-table-body>
                                     <thead>
                                         <tr>
-                                            <th> Co Passangers</th>
+                                            <th> Co Passengers</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr [hidden]="copassangers.length>1">No copassangers mapped yet</tr>
+                                        <tr [hidden]="copassangers.length>1">No copassengers mapped yet</tr>
                                         <tr *ngFor="let copassenger of copassangers">
                                             <td>{{copassenger.PassengerName}}</td>
                                         </tr>
@@ -255,7 +255,7 @@
                     <div class="row">
                         <div class="form-group col-lg-4 col-sm-12 col-md-4">
                             <label for="Identification Details">Identification Details:</label>
-                            <input value="{{affectedPersonModelForStatus.Identification}}" type="text" class="form-control" />
+                            <input value="{{affectedPersonModelForStatus.Identification}}" [(ngModel)]="affectedPersonModelForStatus.Identification" type="text" class="form-control" />
                         </div>
 
                         <div class="form-group col-lg-4 col-sm-12 col-md-4">

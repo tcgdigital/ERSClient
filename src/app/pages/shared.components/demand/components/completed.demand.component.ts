@@ -53,7 +53,7 @@ export class CompletedDemandComponent implements OnInit, OnDestroy {
     isArchive: boolean = false;
     demandFilePath: string;
     public globalStateProxyOpen: GlobalStateService;
-    demand : DemandModelToView = new DemandModelToView();
+    demand: DemandModelToView = new DemandModelToView();
     /**
      * Creates an instance of CompletedDemandComponent.
      * @param {DemandService} demandService 
@@ -77,8 +77,8 @@ export class CompletedDemandComponent implements OnInit, OnDestroy {
         this.globalStateProxyOpen = injector.get(GlobalStateService);
     }
 
-     openDemandDetails(demandId: number): void {
-        this.demand = this.completedDemands.find(x=>x.DemandId==demandId);
+    openDemandDetails(demandId: number): void {
+        this.demand = this.completedDemands.find(x => x.DemandId == demandId);
         this.childModal.show();
     }
 
@@ -91,8 +91,8 @@ export class CompletedDemandComponent implements OnInit, OnDestroy {
             });
     };
 
-    cancelModal() : any {
-        this.demand= new DemandModelToView();
+    cancelModal(): any {
+        this.demand = new DemandModelToView();
         this.childModal.hide();
     }
 
@@ -138,7 +138,11 @@ export class CompletedDemandComponent implements OnInit, OnDestroy {
         this.demandTrail.CreatedOn = demand.CreatedOn
 
         let date = new Date();
-        let answer = '<div><p>' + demand.DemandStatusDescription + '   <strong>Date :</strong>  ' + date.toLocaleString() + '  </p><div>';
+        let rej = "";
+        if (!flag) {
+            rej = "Rejected and status changed to: ";
+        }
+        let answer = '<div><p>' + rej + demand.DemandStatusDescription + '   <strong>Date :</strong>  ' + date.toLocaleString() + '  </p><div>';
         this.demandTrail.Answers = answer;
         this.demandTrails.push(this.demandTrail);
         return this.demandTrails;
@@ -185,7 +189,7 @@ export class CompletedDemandComponent implements OnInit, OnDestroy {
         this.communicationLog.Answers = `Closed by ${this.currentDepartmentName}, ${demand.DemandTypeName} request for ${demand.TargetDepartmentName}. Request Details : ${demand.DemandDesc}. Request Code ${demand.DemandCode}`;
         this.communicationLog.RequesterName = demand.RequestedBy;
         this.communicationLog.RequesterDepartment = demand.TargetDepartmentName;
-        this.communicationLog.RequesterType = "Request";
+        this.communicationLog.RequesterType = "Demand";
         this.communicationLog.DemandId = demand.DemandId;
         this.communicationLog.InteractionDetailsType = GlobalConstants.InteractionDetailsTypeDemand;
         if (demand.AffectedPersonId != null) {
